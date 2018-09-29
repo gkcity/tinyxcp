@@ -1,0 +1,13 @@
+[submodule "tiny"]
+	path = tiny
+	url = https://github.com/jxfengzi/tiny.git
+[submodule "tinyfx"]
+	path = tinyfx
+	url = https://github.com/jxfengzi/tinyfx.git
+	branch = xiot
+[submodule "tinymdns"]
+	path = tinymdns
+	url = https://github.com/jxfengzi/tinymdns.git
+[submodule "tinycrypto"]
+	path = tinycrypto
+	url = https://github.com/jxfengzi/tinycrypto.git

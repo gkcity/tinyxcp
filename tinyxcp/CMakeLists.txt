@@ -1,0 +1,272 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+PROJECT(TinyXCP C)
+
+SET(PROJ_NAME "TinyXCP")
+
+#---------------------------------------------------------------------------------------
+#
+# include dir
+#
+#---------------------------------------------------------------------------------------
+SET(SOURCE_ROOT ${PROJECT_SOURCE_DIR}/source/src)
+SET(TINY_ROOT ${PROJECT_SOURCE_DIR}/../tiny)
+SET(TINYFX_ROOT ${PROJECT_SOURCE_DIR}/../tinyfx)
+SET(TINYMDNS_ROOT ${PROJECT_SOURCE_DIR}/../tinymdns)
+SET(TINYCRYPTO_ROOT ${PROJECT_SOURCE_DIR}/../tinycrypto)
+
+INCLUDE_DIRECTORIES(${SOURCE_ROOT}/xcp-common)
+INCLUDE_DIRECTORIES(${SOURCE_ROOT}/xcp-message)
+INCLUDE_DIRECTORIES(${SOURCE_ROOT}/xcp-message-codec)
+#INCLUDE_DIRECTORIES(${SOURCE_ROOT}/xcp-tcp)
+INCLUDE_DIRECTORIES(${SOURCE_ROOT}/xcp-websocket)
+
+INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/TinyBase)
+INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/TinyPortable)
+INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/TinyContainer)
+INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/TinyLog)
+INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/TinyStringUtil)
+INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/TinyRandom)
+INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/Netty)
+INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/HttpClient)
+INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/TcpClient)
+INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/Json)
+INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/StringArray)
+INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/ByteBuffer)
+INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/Bson)
+INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/TinyThread)
+
+INCLUDE_DIRECTORIES(${TINYFX_ROOT}/source/src/IotLauncher)
+INCLUDE_DIRECTORIES(${TINYFX_ROOT}/source/src/IotTypedef)
+INCLUDE_DIRECTORIES(${TINYFX_ROOT}/source/src/IotOperation)
+INCLUDE_DIRECTORIES(${TINYFX_ROOT}/source/src/IotFactory)
+
+INCLUDE_DIRECTORIES(${TINYCRYPTO_ROOT}/source/src)
+INCLUDE_DIRECTORIES(${TINYCRYPTO_ROOT}/source/src/base64)
+INCLUDE_DIRECTORIES(${TINYCRYPTO_ROOT}/source/src/ed25519)
+INCLUDE_DIRECTORIES(${TINYCRYPTO_ROOT}/source/src/curve25519)
+INCLUDE_DIRECTORIES(${TINYCRYPTO_ROOT}/source/src/secret)
+INCLUDE_DIRECTORIES(${TINYCRYPTO_ROOT}/source/src/hkdf)
+INCLUDE_DIRECTORIES(${TINYCRYPTO_ROOT}/source/src/chacha20poly1305)
+
+INCLUDE_DIRECTORIES(${TINYMDNS_ROOT}/source/src/TinyMDNS)
+
+#---------------------------------------------------------------------------------------
+#
+# link dir
+#
+#---------------------------------------------------------------------------------------
+LINK_DIRECTORIES(${TINY_ROOT}/target)
+LINK_DIRECTORIES(${TINYFX_ROOT}/target)
+LINK_DIRECTORIES(${TINYMDNS_ROOT}/target)
+LINK_DIRECTORIES(${TINYCRYPTO_ROOT}/target)
+
+#-------------------------------------------------------------------------------------
+# output dir
+#-------------------------------------------------------------------------------------
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/target)
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/target)
+MESSAGE(STATUS "executable output:  ${EXECUTABLE_OUTPUT_PATH}")
+MESSAGE(STATUS "library output: ${LIBRARY_OUTPUT_PATH}")
+
+#-------------------------------------------------------------------------------------
+#
+# Source
+#
+#-------------------------------------------------------------------------------------
+SET(XcpCommon_Header
+        ${SOURCE_ROOT}/xcp-common/XcpSessionInfo.h
+        ${SOURCE_ROOT}/xcp-common/XcpKeyCreator.h
+        ${SOURCE_ROOT}/xcp-common/XcpStage.h
+        ${SOURCE_ROOT}/xcp-common/XcpClientVerifier.h
+        )
+
+SET(XcpCommon_Source
+        ${SOURCE_ROOT}/xcp-common/XcpSessionInfo.c
+        ${SOURCE_ROOT}/xcp-common/XcpKeyCreator.c
+        ${SOURCE_ROOT}/xcp-common/XcpClientVerifier.c
+        )
+
+SOURCE_GROUP(XcpCommon\\headers FILES ${XcpCommon_Header})
+SOURCE_GROUP(XcpCommon\\sources FILES ${XcpCommon_Source})
+
+SET(XcpMessageCodec_Header
+        ${SOURCE_ROOT}/xcp-message-codec/XcpMessageCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/IQCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/IQErrorCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/IQQueryCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/IQResultCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/ChildrenAddedCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/ChildrenRemovedCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/EventOccurredCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/InitializeCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/PropertiesChangedCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/SetAccessKeyCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/VerifyFinishCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/VerifyStartCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/GetPropertiesCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/SetPropertiesCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/InvokeActionCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/GetChildrenCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/xid/PIDCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/xid/AIDCodec.h
+        )
+
+SET(XcpMessageCodec_Source
+        ${SOURCE_ROOT}/xcp-message-codec/XcpMessageCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/IQCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/IQErrorCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/IQQueryCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/IQResultCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/ChildrenAddedCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/ChildrenRemovedCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/EventOccurredCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/InitializeCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/PropertiesChangedCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/SetAccessKeyCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/VerifyFinishCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/VerifyStartCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/GetPropertiesCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/SetPropertiesCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/InvokeActionCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/GetChildrenCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/xid/PIDCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/xid/AIDCodec.c
+        )
+
+SOURCE_GROUP(XcpMessageCodec\\headers FILES ${XcpMessageCodec_Header})
+SOURCE_GROUP(XcpMessageCodec\\sources FILES ${XcpMessageCodec_Source})
+
+SET(XcpMessage_Header
+        ${SOURCE_ROOT}/xcp-message/XcpMessage.h
+        ${SOURCE_ROOT}/xcp-message/XcpConstant.h
+        ${SOURCE_ROOT}/xcp-message/iq/IQ.h
+        ${SOURCE_ROOT}/xcp-message/iq/IQError.h
+        ${SOURCE_ROOT}/xcp-message/iq/IQErrorFactory.h
+        ${SOURCE_ROOT}/xcp-message/iq/IQQuery.h
+        ${SOURCE_ROOT}/xcp-message/iq/IQResult.h
+        ${SOURCE_ROOT}/xcp-message/iq/IQMethod.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/ByebyeFactory.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenAdded.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenRemoved.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/EventOccurred.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/GetAccessKey.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/GetChildren.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/GetProperties.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/GetPropertiesFactory.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/Initialize.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/InitializeFactory.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/InvokeAction.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/InvokeActionFactory.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/PingFactory.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/PongFactory.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/PropertiesChanged.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/SetAccessKey.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/SetProperties.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/SetPropertiesFactory.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyFinish.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyFinishFactory.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyStart.h
+        ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyStartFactory.h
+        ${SOURCE_ROOT}/xcp-message/handler/XcpMessageHandlerWrapper.h
+        )
+
+SET(XcpMessage_Source
+        ${SOURCE_ROOT}/xcp-message/XcpMessage.c
+        ${SOURCE_ROOT}/xcp-message/iq/IQErrorFactory.c
+        ${SOURCE_ROOT}/xcp-message/iq/IQMethod.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/ByebyeFactory.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenAdded.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenRemoved.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/EventOccurred.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/GetAccessKey.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/GetPropertiesFactory.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/GetChildren.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/InitializeFactory.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/InvokeActionFactory.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/PingFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/PongFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/PropertiesChanged.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/SetAccessKey.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/SetPropertiesFactory.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyFinishFactory.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyStartFactory.c
+        ${SOURCE_ROOT}/xcp-message/handler/XcpMessageHandlerWrapper.c
+        )
+
+SOURCE_GROUP(XcpMessage\\headers FILES ${XcpMessage_Header})
+SOURCE_GROUP(XcpMessage\\sources FILES ${XcpMessage_Source})
+
+SET(Xcpws_Header
+        ${SOURCE_ROOT}/xcp-websocket/XcpwsClientRuntime.h
+        ${SOURCE_ROOT}/xcp-websocket/XcpwsServerRuntime.h
+        ${SOURCE_ROOT}/xcp-websocket/client/XcpwsClient.h
+        ${SOURCE_ROOT}/xcp-websocket/client/handler/XcpwsClientHandler.h
+        ${SOURCE_ROOT}/xcp-websocket/client/handler/XcpwsClientHandlerContext.h
+        ${SOURCE_ROOT}/xcp-websocket/server/XcpwsServer.h
+        ${SOURCE_ROOT}/xcp-websocket/server/XcpwsServerContext.h
+        ${SOURCE_ROOT}/xcp-websocket/server/XcpwsBonjour.h
+        ${SOURCE_ROOT}/xcp-websocket/server/handler/XcpwsServerHandler.h
+        ${SOURCE_ROOT}/xcp-websocket/server/handler/XcpwsServerHandlerContext.h
+        ${SOURCE_ROOT}/xcp-websocket/codec-message/CustomDataType.h
+        ${SOURCE_ROOT}/xcp-websocket/codec-message/MessageCodec.h
+        ${SOURCE_ROOT}/xcp-websocket/codec-message/MessageCodecContext.h
+        ${SOURCE_ROOT}/xcp-websocket/codec-binary/WebSocketBinaryFrameCodec.h
+        ${SOURCE_ROOT}/xcp-websocket/codec-binary/WebSocketBinaryFrameCodecContext.h
+        ${SOURCE_ROOT}/xcp-websocket/codec-binary/WebSocketBinaryFrameCodecType.h
+        ${SOURCE_ROOT}/xcp-websocket/codec-binary/WebSocketBinaryFrameDecoder.h
+        ${SOURCE_ROOT}/xcp-websocket/codec-binary/WebSocketBinaryFrameEncoder.h
+        )
+
+SET(Xcpws_Source
+        ${SOURCE_ROOT}/xcp-websocket/XcpwsClientRuntime.c
+        ${SOURCE_ROOT}/xcp-websocket/XcpwsServerRuntime.c
+        ${SOURCE_ROOT}/xcp-websocket/client/XcpwsClient.c
+        ${SOURCE_ROOT}/xcp-websocket/client/handler/XcpwsClientHandler.c
+        ${SOURCE_ROOT}/xcp-websocket/client/handler/XcpwsClientHandlerContext.c
+        ${SOURCE_ROOT}/xcp-websocket/server/XcpwsServer.c
+        ${SOURCE_ROOT}/xcp-websocket/server/XcpwsServerContext.c
+        ${SOURCE_ROOT}/xcp-websocket/server/XcpwsBonjour.c
+        ${SOURCE_ROOT}/xcp-websocket/server/handler/XcpwsServerHandler.c
+        ${SOURCE_ROOT}/xcp-websocket/server/handler/XcpwsServerHandlerContext.c
+        ${SOURCE_ROOT}/xcp-websocket/codec-message/MessageCodec.c
+        ${SOURCE_ROOT}/xcp-websocket/codec-message/MessageCodecContext.c
+        ${SOURCE_ROOT}/xcp-websocket/codec-binary/WebSocketBinaryFrameCodec.c
+        ${SOURCE_ROOT}/xcp-websocket/codec-binary/WebSocketBinaryFrameCodecContext.c
+        ${SOURCE_ROOT}/xcp-websocket/codec-binary/WebSocketBinaryFrameDecoder.c
+        ${SOURCE_ROOT}/xcp-websocket/codec-binary/WebSocketBinaryFrameEncoder.c
+        )
+
+SOURCE_GROUP(Xcpws\\headers FILES ${Xcpws_Header})
+SOURCE_GROUP(Xcpws\\sources FILES ${Xcpws_Source})
+
+SET(SRC
+        ${XcpCommon_Header}
+        ${XcpCommon_Source}
+        ${XcpMessage_Header}
+        ${XcpMessage_Source}
+        ${XcpMessageCodec_Header}
+        ${XcpMessageCodec_Source}
+        ${Xcpws_Header}
+        ${Xcpws_Source}
+        )
+
+
+#----------------------------------------------------------------------------
+# static library
+#----------------------------------------------------------------------------
+IF (EXPORT_STATIC_LIBRARY EQUAL 1)
+ADD_LIBRARY(tinyxcpws_static STATIC ${SRC})
+SET_TARGET_PROPERTIES(tinyxcpws_static PROPERTIES OUTPUT_NAME "tinyxcpws_static")
+SET_TARGET_PROPERTIES(tinyxcpws_static PROPERTIES LINKER_LANGUAGE C)
+ENDIF ()
+
+#----------------------------------------------------------------------------
+# shared library
+#----------------------------------------------------------------------------
+IF (EXPORT_SHARED_LIBRARY EQUAL 1)
+MESSAGE(STATUS "link library: ${DEPENDENCE_LIB}")
+ADD_LIBRARY(tinyxcpws SHARED ${SRC})
+SET_TARGET_PROPERTIES(tinyxcpws PROPERTIES OUTPUT_NAME "tinyxcpws")
+SET_TARGET_PROPERTIES(tinyxcpws PROPERTIES LINKER_LANGUAGE C)
+TARGET_LINK_LIBRARIES(tinyxcpws ${DEPENDENCE_LIB})
+ENDIF ()
