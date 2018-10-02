@@ -14,9 +14,17 @@ SET(SRC
         print/PrintValue.h
         print/PrintValue.c
         iid/IID.h
-        Runner.h
-        Runner.c
+        DeviceMonitor.h
+        DeviceMonitor.c
+        DeviceStack.h
+        DeviceStack.c
+        DeviceInitializer.h
+        DeviceInitializer.c
+        CommandReader.h
+        CommandReader.c
         main.c
+        tiny_print_mem.c
+        tiny_sleep.c
         )
 
 ADD_EXECUTABLE(sample_generic_loading_dynamic ${SRC})
