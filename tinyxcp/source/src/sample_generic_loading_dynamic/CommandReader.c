@@ -23,102 +23,31 @@ static void cmd_help(void)
     fprintf(stdout, "\n------------ help --------------\n");
     fprintf(stdout, "h       -- show help information\n");
     fprintf(stdout, "x       -- exit\n");
-    fprintf(stdout, "conn    -- connect to speaker\n");
-    fprintf(stdout, "disc    -- disconnect\n");
-    fprintf(stdout, "play    -- play audio\n");
-    fprintf(stdout, "pn      -- play next audio\n");
-    fprintf(stdout, "pu      -- play url\n");
-    fprintf(stdout, "setp    -- set progress\n");
-    fprintf(stdout, "getp    -- get progress\n");
-    fprintf(stdout, "getd    -- get duration\n");
-    fprintf(stdout, "pause   -- pause\n");
-    fprintf(stdout, "resume  -- resume\n");
+    fprintf(stdout, "reset   -- reset access key\n");
+    fprintf(stdout, "gek     -- get access key\n");
 }
 
-//static void cmd_conn(void)
-//{
-//    AirTunesRet ret = AT_RET_OK;
-//
-//    char ip[256];
-//    int port;
-//    int n = 0;
-//
-//    printf("connect to server :\n");
-//
-//    memset(ip, 0, 256);
-//    printf ("Please input ip: ");
-//    n = scanf("%s", ip);
-//
-//    printf ("Please input port: ");
-//    n = scanf("%d", &port);
-//
-//    ret = airtunes_client_connect(g_client, ip, port, 1000 * 6);
-//    printf("airtunes_client_connect ret: %d\n", ret);
-//
-//    if (ret == AT_RET_OK)
-//    {
-//        printf("dacp server port: %d\n", airtunes_client_get_dacp_port(g_client));
-//        printf("dacp server id: %s\n", airtunes_client_get_dacp_id(g_client));
-//    }
-//}
-//
-//static void cmd_disc(void)
-//{
-//    AirTunesRet ret = airtunes_client_disconnect(g_client);
-//    printf("airtunes_client_disconnect: %d\n", ret);
-//}
+static void cmd_reset_access_key(void)
+{
+    // send cmd to stack by http
 
-//static void cmd_play(void)
-//{
-//    const char* file = MUSIC_FILE;
-//    AirTunesRet ret = airtunes_client_play_audio(g_client, file, 0, -10);
-//    printf("airtunes_client_play_audio: %d\n", ret);
-//}
-//
-//static void cmd_play_next(void)
-//{
-//    const char* file = NEXT_FILE;
-//    AirTunesRet ret = airtunes_client_play_audio(g_client, file, 0, -10);
-//    printf("airtunes_client_play_audio: %d\n", ret);
-//}
-//
-//static void cmd_play_url(void)
-//{
-//    const char* file = URL_MP3;
-//    AirTunesRet ret = airtunes_client_play_audio(g_client, file, 0, -10);
-//    printf("airtunes_client_play_audio: %d\n", ret);
-//}
-//
-//static void cmd_setp(void)
-//{
-//    int64_t progress = 100;
-//    AirTunesRet ret = airtunes_client_set_progress(g_client, progress);
-//    printf("airtunes_client_set_progress: %d (%ld)\n", ret, progress);
-//}
-//
-//static void cmd_getp(void)
-//{
-//    int64_t ret = airtunes_client_get_progress(g_client);
-//    printf("airtunes_client_get_progress: %ld\n", ret);
-//}
-//
-//static void cmd_getd(void)
-//{
-//    int64_t ret = airtunes_client_get_duration(g_client);
-//    printf("airtunes_client_get_duration: %ld\n", ret);
-//}
-//
-//static void cmd_pause(void)
-//{
-//    AirTunesRet ret = airtunes_client_pause(g_client);
-//    printf("airtunes_client_pause: %d\n", ret);
-//}
-//
-//static void cmd_resume(void)
-//{
-//    AirTunesRet ret = airtunes_client_resume(g_client);
-//    printf("airtunes_client_resume: %d\n", ret);
-//}
+    //    TinyRet ret = Runner_ResetAccessKey();
+//    if (RET_FAILED(ret))
+//    {
+//        printf("Runner_Reset error: %d", ret);
+//    }
+}
+
+static void cmd_get_access_key(void)
+{
+    // send cmd to stack by http
+
+//    TinyRet ret = Runner_GetAccessKey();
+//    if (RET_FAILED(ret))
+//    {
+//        printf("Runner_GetAccessKey error: %d", ret);
+//    }
+}
 
 static void cmd_exit(void)
 {
@@ -137,6 +66,8 @@ struct _cmd_exec cmd_exec[] =
         {
                 {"h",       cmd_help},
                 {"x",       cmd_exit},
+                {"reset",   cmd_reset_access_key},
+                {"getk",    cmd_get_access_key},
         };
 
 static

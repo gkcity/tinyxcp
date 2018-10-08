@@ -160,14 +160,16 @@ static bool _ChannelWrite(ChannelHandler *thiz, Channel *channel, ChannelDataTyp
             break;
         }
 
-        if (context->side == MESSAGE_CODEC_CLIENT) {
+        if (context->side == MESSAGE_CODEC_CLIENT)
+        {
             frame->mask = true;
             frame->maskingKey[0] = 0xCB;
             frame->maskingKey[1] = 0x3E;
             frame->maskingKey[2] = 0x2B;
             frame->maskingKey[3] = 0x74;
         }
-        else {
+        else
+        {
             frame->mask = false;
         }
 

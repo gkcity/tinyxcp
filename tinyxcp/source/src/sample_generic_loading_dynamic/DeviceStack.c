@@ -51,7 +51,7 @@ TinyRet StartDeviceStack(Device *device)
             break;
         }
 
-        launcher = IotLauncher_NewRuntime(device, XcpwsClientRuntime_New());
+        launcher = IotLauncher_NewRuntime(device, XcpwsClientRuntime_New(), NULL);
         if (launcher == NULL)
         {
             ret = TINY_RET_E_NEW;

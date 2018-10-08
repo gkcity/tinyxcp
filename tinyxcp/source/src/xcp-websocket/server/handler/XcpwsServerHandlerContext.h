@@ -10,8 +10,8 @@
  *
  */
 
-#ifndef __XCP_WS_CLIENT_HANDLER_CONTEXT_H__
-#define __XCP_WS_CLIENT_HANDLER_CONTEXT_H__
+#ifndef __XCP_WS_SERVER_HANDLER_CONTEXT_H__
+#define __XCP_WS_SERVER_HANDLER_CONTEXT_H__
 
 #include <tiny_base.h>
 #include <TinyMap.h>
@@ -51,4 +51,4 @@ const char *XcpwsServerHandlerContext_NextId(XcpwsServerHandlerContext *thiz);
 
 TINY_END_DECLS
 
-#endif /* __XCP_WS_CLIENT_HANDLER_CONTEXT_H__ */
+#endif /* __XCP_WS_SERVER_HANDLER_CONTEXT_H__ */

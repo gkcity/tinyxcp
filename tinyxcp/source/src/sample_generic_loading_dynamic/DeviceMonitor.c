@@ -14,63 +14,53 @@
 #include <TinyThread.h>
 #include <tiny_sleep.h>
 
-static void Fan_On_Changed(bool value)
-{
-//    TinyRet ret = TINY_RET_OK;
-//    PropertyOperation *o = PropertyOperation_New();
-//
-//    strncpy(o->pid.did, DID, DEVICE_ID_LENGTH);
-//    o->status = 0;
-//    o->pid.siid = 2;
-//    o->pid.iid = 1;
-//    o->value = JsonValue_NewBoolean(value);
-//    if (o->value == NULL)
-//    {
-//        printf("JsonValue_NewBoolean failed");
-//        PropertyOperation_Delete(o);
-//        return;
-//    }
-//
-//    ret = DeviceOperator_ChangePropertyValue(o);
-//    if (RET_FAILED(ret))
-//    {
-//        printf("Device_TryChangePropertyValue error: %d", ret);
-//    }
-//
-//    PropertyOperation_Delete(o);
-}
-
-//static void reset(void)
-//{
-//    TinyRet ret = Runner_ResetAccessKey();
-//    if (RET_FAILED(ret))
-//    {
-//        printf("Runner_Reset error: %d", ret);
-//    }
-//}
-//
-//static void get_access_key(void)
-//{
-//    TinyRet ret = Runner_GetAccessKey();
-//    if (RET_FAILED(ret))
-//    {
-//        printf("Runner_GetAccessKey error: %d", ret);
-//    }
-//}
-
 static TinyThread *_thread = NULL;
 static bool _running = true;
+static bool _fan_on = true;
+
+static void Fan_On_Changed(Device *device)
+{
+    _fan_on = ! _fan_on;
+
+    do
+    {
+        JsonValue * value = JsonValue_NewBoolean(_fan_on);
+        if (value == NULL)
+        {
+            printf("JsonValue_NewBoolean failed");
+            break;
+        }
+
+        PropertyOperation *o = PropertyOperation_NewValue(device->did, 2, 1, value);
+        if (o == NULL)
+        {
+            printf("PropertyOperation_NewValue failed");
+            JsonValue_Delete(value);
+            break;
+        }
+
+        if (RET_FAILED(Device_TryChangePropertyValue(device, o)))
+        {
+            PropertyOperation_Delete(o);
+            break;
+        }
+
+        // send property value to stack by http
+
+        PropertyOperation_Delete(o);
+    } while (false);
+}
 
 static void _loop(void *param)
 {
-    Device *devie = (Device *) param;
+    Device *device = (Device *) param;
 
     _running = true;
 
     while (_running)
     {
         tiny_sleep(1000);
-//        printf("monitor...\n");
+        Fan_On_Changed(device);
     }
 }
 

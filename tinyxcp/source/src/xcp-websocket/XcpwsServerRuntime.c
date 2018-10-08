@@ -39,7 +39,7 @@ TINY_LOR
 static TinyRet XcpwsServerRuntime_Run(IotRuntime *thiz, Bootstrap *bootstrap, Device *device)
 {
     TinyRet ret = TINY_RET_OK;
-    Channel *channel = NULL;
+    Channel *server = NULL;
     Channel *mdns = NULL;
 
     LOG_D(TAG, "XcpwsServerRuntime_Run");
@@ -49,8 +49,8 @@ static TinyRet XcpwsServerRuntime_Run(IotRuntime *thiz, Bootstrap *bootstrap, De
         XcpwsServerContext *context = (XcpwsServerContext *)thiz->context;
         context->device = device;
 
-        channel = XcpwsServer_New(context);
-        if (channel == NULL)
+        server = XcpwsServer_New(context);
+        if (server == NULL)
         {
             LOG_E(TAG, "XcpwsServer_New failed");
             ret = TINY_RET_E_INTERNAL;
@@ -69,16 +69,16 @@ static TinyRet XcpwsServerRuntime_Run(IotRuntime *thiz, Bootstrap *bootstrap, De
         if (RET_FAILED(ret))
         {
             LOG_E(TAG, "Bootstrap_AddChannel failed");
-            channel->_onRemove(channel);
+            server->_onRemove(server);
             mdns->_onRemove(mdns);
             break;
         }
 
-        ret = Bootstrap_AddChannel(bootstrap, channel);
+        ret = Bootstrap_AddChannel(bootstrap, server);
         if (RET_FAILED(ret))
         {
             LOG_E(TAG, "Bootstrap_AddChannel failed");
-            channel->_onRemove(channel);
+            server->_onRemove(server);
             mdns->_onRemove(mdns);
             break;
         }
