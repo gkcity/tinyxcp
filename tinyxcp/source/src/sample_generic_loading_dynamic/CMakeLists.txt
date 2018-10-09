@@ -30,6 +30,7 @@ SET(SRC
 ADD_EXECUTABLE(sample_generic_loading_dynamic ${SRC})
 TARGET_LINK_LIBRARIES(sample_generic_loading_dynamic
         xcpws_static
+        xcp_webcmd_static
         xcp_message_codec_static
         xcp_message_static
         xcp_common_static

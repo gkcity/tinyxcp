@@ -4,7 +4,7 @@
  * @author jxfengzi@gmail.com
  * @date   2013-11-19
  *
- * @file   XcpMessageHandlerWrapper.c
+ * @file   XcpMessageHandler.c
  *
  * @remark
  *
@@ -12,9 +12,9 @@
 
 #include <tiny_log.h>
 #include <tiny_malloc.h>
-#include "XcpMessageHandlerWrapper.h"
+#include "XcpMessageHandler.h"
 
-#define TAG "XcpMessageHandlerWrapper"
+#define TAG "XcpMessageHandler"
 
 TINY_LOR
 static TinyRet XcpMessageHandlerWrapper_Construct(XcpMessageHandlerWrapper *thiz, XcpMessageHandler handler, void *ctx)

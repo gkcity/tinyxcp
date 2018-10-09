@@ -16,7 +16,7 @@
 #include <device/Device.h>
 #include <channel/Channel.h>
 #include <XcpMessage.h>
-#include <handler/XcpMessageHandlerWrapper.h>
+#include <handler/XcpMessageHandler.h>
 
 TINY_BEGIN_DECLS
 

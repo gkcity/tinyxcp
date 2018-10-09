@@ -4,14 +4,14 @@
  * @author jxfengzi@gmail.com
  * @date   2013-11-19
  *
- * @file   XcpwsClient.h
+ * @file   XcmdClient.h
  *
  * @remark
  *
  */
 
-#ifndef __XCP_WS_CLIENT_H__
-#define __XCP_WS_CLIENT_H__
+#ifndef __XCMD_CLIENT_H__
+#define __XCMD_CLIENT_H__
 
 #include <device/Device.h>
 #include <channel/Channel.h>
@@ -21,16 +21,16 @@ TINY_BEGIN_DECLS
 
 
 TINY_LOR
-Channel * XcpwsClient_New(Device *device, const char *ip, uint16_t port);
+Channel * XcmdClient_New(Device *device, const char *ip, uint16_t port);
 
 
 //typedef void(*XcpResultHandler) (IQ *result, void *ctx);
 
 //TINY_LOR
-//TinyRet XcpwsClient_SendQuery(IQ *query, XcpResultHandler handler, void *ctx);
+//TinyRet XcmdClient_SendQuery(IQ *query, XcpResultHandler handler, void *ctx);
 
 
 
 TINY_END_DECLS
 
-#endif /* __XCP_WS_CLIENT_H__ */
+#endif /* __XCMD_CLIENT_H__ */

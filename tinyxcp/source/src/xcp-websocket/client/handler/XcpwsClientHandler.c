@@ -28,7 +28,7 @@
 #include <iq/basic/SetPropertiesFactory.h>
 #include <iq/basic/InvokeActionFactory.h>
 #include <iq/IQErrorFactory.h>
-#include <XcpClientVerifier.h>
+#include <client/verifier/XcpClientVerifier.h>
 #include <XcpKeyCreator.h>
 #include <codec-message/MessageCodecSide.h>
 #include "codec-message/CustomDataType.h"
@@ -97,9 +97,7 @@ static void onAction(ChannelHandler *thiz, Channel *channel, const char *id, Act
 
 static void _sendError(ChannelHandler *thiz, Channel *channel, const char *id, int32_t status, const char *description)
 {
-    XcpwsClientHandlerContext *context = (XcpwsClientHandlerContext *) (thiz->context);
-
-    XcpMessage * message = IQError_New(XcpwsClientHandlerContext_NextId(context), status, description);
+    XcpMessage * message = IQError_New(id, status, description);
     if (message == NULL)
     {
         LOG_D(TAG, "IQError_New FAILED!");
@@ -255,7 +253,7 @@ static void _Ping(ChannelHandler *thiz, Channel *channel)
 
     do
     {
-        XcpMessage * message = Ping_New(XcpwsClientHandlerContext_NextId(context));
+        XcpMessage * message = Ping_New("");
         if (message == NULL)
         {
             LOG_D(TAG, "XcpMessage_New FAILED!");

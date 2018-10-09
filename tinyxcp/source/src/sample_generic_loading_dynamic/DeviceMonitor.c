@@ -60,7 +60,7 @@ static void _loop(void *param)
     while (_running)
     {
         tiny_sleep(1000);
-        Fan_On_Changed(device);
+//        Fan_On_Changed(device);
     }
 }
 

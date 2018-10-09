@@ -48,8 +48,7 @@ static TinyRet XcpwsClientHandlerContext_Construct(XcpwsClientHandlerContext *th
 
         thiz->verifier = XcpClientVerifier_New(serverLTPK,
                                                device,
-                                               XcpwsClientHandlerContext_NextId,
-                                               XcpClientHandlerContext_SendQuery,
+                                               XcpwsClientHandlerContext_SendQuery,
                                                WEB_SOCKET_BINARY_FRAME_CODEC_CHACHA20_POLY1305);
         if (thiz->verifier == NULL)
         {
@@ -143,18 +142,12 @@ TinyRet XcpwsClientHandlerContext_Handle(XcpwsClientHandlerContext *thiz, XcpMes
 }
 
 TINY_LOR
-const char *XcpwsClientHandlerContext_NextId(void *context)
-{
-    XcpwsClientHandlerContext *thiz = (XcpwsClientHandlerContext *)context;
-    tiny_snprintf(thiz->messageId, MESSAGE_ID_LENGTH, "%d", thiz->messageIndex++);
-    return thiz->messageId;
-}
-
-TINY_LOR
-TinyRet XcpClientHandlerContext_SendQuery(void *context, XcpMessage *query, XcpMessageHandler handler, void *ctx)
+TinyRet XcpwsClientHandlerContext_SendQuery(void *context, XcpMessage *query, XcpMessageHandler handler, void *ctx)
 {
     TinyRet ret = TINY_RET_OK;
     XcpwsClientHandlerContext *thiz = (XcpwsClientHandlerContext *)context;
+
+    tiny_snprintf(query->iq.id, MESSAGE_ID_LENGTH, "%d", thiz->messageIndex++);
 
     ret = XcpwsClientHandlerContext_AddHandler(context, query->iq.id, handler, ctx);
     if (RET_SUCCEEDED(ret))

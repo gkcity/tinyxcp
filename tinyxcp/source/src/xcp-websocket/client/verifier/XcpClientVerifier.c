@@ -362,7 +362,6 @@ TINY_LOR
 static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
                                            const char *serverLTPK,
                                            Device *device,
-                                           XcpNextId nextId,
                                            XcpSendQuery sendQuery,
                                            uint8_t binaryCodec)
 {
@@ -379,7 +378,6 @@ static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
 
         memset(thiz, 0, sizeof(XcpClientVerifier));
         thiz->device = device;
-        thiz->nextId = nextId;
         thiz->sendQuery = sendQuery;
         thiz->binaryCodec = binaryCodec;
 
@@ -427,7 +425,6 @@ static void XcpClientVerifier_Dispose(XcpClientVerifier *thiz)
 TINY_LOR
 XcpClientVerifier * XcpClientVerifier_New(const char *serverLTPK,
                                           Device *device,
-                                          XcpNextId nextId,
                                           XcpSendQuery sendQuery,
                                           uint8_t binaryCodec)
 {
@@ -442,7 +439,7 @@ XcpClientVerifier * XcpClientVerifier_New(const char *serverLTPK,
             break;
         }
 
-        if (RET_FAILED(XcpClientVerifier_Construct(thiz, serverLTPK, device, nextId, sendQuery, binaryCodec)))
+        if (RET_FAILED(XcpClientVerifier_Construct(thiz, serverLTPK, device, sendQuery, binaryCodec)))
         {
             LOG_E(TAG, "XcpClientVerifier_Construct FAILED");
             XcpClientVerifier_Delete(thiz);
@@ -482,7 +479,7 @@ void XcpClientVerifier_Start(XcpClientVerifier *thiz,
 
     LOG_D(TAG, "Start");
 
-    message = QueryInitialize_New(thiz->nextId(thiz->ctx), "1.0", "product-id");
+    message = QueryInitialize_New("", "1.0", "product-id");
     if (message == NULL)
     {
         LOG_D(TAG, "QueryInitialize_New FAILED!");
@@ -514,7 +511,7 @@ void XcpClientVerifier_VerifyStart(XcpClientVerifier *thiz)
     memset(publicKeyBase64, 0, 128);
     base64_encode(thiz->publicKey.value, thiz->publicKey.length, publicKeyBase64);
 
-    message = QueryVerifyStart_New(thiz->nextId(thiz->ctx), publicKeyBase64);
+    message = QueryVerifyStart_New("", publicKeyBase64);
     if (message == NULL)
     {
         LOG_D(TAG, "QueryVerifyStart_New FAILED!");
@@ -549,7 +546,7 @@ void XcpClientVerifier_VerifyFinish(XcpClientVerifier *thiz)
 
     LOG_E(TAG, "signature: %s", signature);
 
-    message = QueryVerifyFinish_New(thiz->nextId(thiz->ctx),
+    message = QueryVerifyFinish_New("",
                                     did,
                                     thiz->device->productId,
                                     thiz->device->productVersion,

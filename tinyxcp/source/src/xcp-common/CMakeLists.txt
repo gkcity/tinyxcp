@@ -8,13 +8,11 @@ SET(XcpCommon_Header
         XcpSessionInfo.h
         XcpKeyCreator.h
         XcpStage.h
-        XcpClientVerifier.h
         )
 
 SET(XcpCommon_Source
         XcpSessionInfo.c
         XcpKeyCreator.c
-        XcpClientVerifier.c
         )
 
 SOURCE_GROUP(XcpCommon\\headers FILES ${XcpCommon_Header})

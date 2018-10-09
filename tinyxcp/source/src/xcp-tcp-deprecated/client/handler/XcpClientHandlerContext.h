@@ -17,10 +17,10 @@
 #include <TinyMap.h>
 #include <channel/ChannelHandler.h>
 #include <device/Device.h>
-#include <handler/XcpMessageHandlerWrapper.h>
+#include <handler/XcpMessageHandler.h>
 #include <XcpMessage.h>
 #include "XcpStage.h"
-#include "XcpClientVerifier.h"
+#include "client/verifier/XcpClientVerifier.h"
 
 
 TINY_BEGIN_DECLS

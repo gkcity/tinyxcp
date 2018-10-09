@@ -4,7 +4,7 @@
  * @author jxfengzi@gmail.com
  * @date   2013-11-19
  *
- * @file   XcmdServer.c
+ * @file   WebcmdServer.c
  *
  * @remark
  *
@@ -16,22 +16,22 @@
 #include <channel/stream/StreamServerChannelContext.h>
 #include <codec-http/HttpMessageCodec.h>
 #include <tiny_log.h>
-#include "XcmdServer.h"
-#include "handler/XcmdServerHandler.h"
+#include "WebcmdServer.h"
+#include "handler/WebcmdServerHandler.h"
 
-#define TAG     "XcmdServer"
+#define TAG     "WebcmdServer"
 
 TINY_LOR
-static void XcmdServerInitializer(Channel *channel, void *ctx)
+static void WebcmdServerInitializer(Channel *channel, void *ctx)
 {
-    LOG_D(TAG, "XcmdServerInitializer: %s", channel->id);
+    LOG_D(TAG, "WebcmdServerInitializer: %s", channel->id);
     SocketChannel_AddLast(channel, ChannelIdleStateHandler(0, 0, XCMD_CONNECTION_TIMEOUT));
     SocketChannel_AddLast(channel, HttpMessageCodec());
-    SocketChannel_AddLast(channel, XcmdServerHandler(HttpRequestHandlers *handlers));
+    SocketChannel_AddLast(channel, WebcmdServerHandler((IotRuntime *)ctx));
 }
 
 TINY_LOR
-Channel * XcmdServer_New(void)
+Channel * WebcmdServer_New(IotRuntime *runtime)
 {
     Channel *thiz = NULL;
 
@@ -43,7 +43,7 @@ Channel * XcmdServer_New(void)
             break;
         }
 
-        StreamServerChannel_Initialize(thiz, XcmdServerInitializer, NULL);
+        StreamServerChannel_Initialize(thiz, WebcmdServerInitializer, runtime);
 
         if (RET_FAILED(SocketChannel_Open(thiz, TYPE_TCP_SERVER)))
         {

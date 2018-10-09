@@ -16,6 +16,7 @@
 #include <XcpwsClientRuntime.h>
 #include <XcpwsServerRuntime.h>
 #include <TinyThread.h>
+#include <server/WebcmdServer.h>
 #include "DeviceStack.h"
 
 #define TAG "DeviceOperator"
@@ -51,7 +52,14 @@ TinyRet StartDeviceStack(Device *device)
             break;
         }
 
-        launcher = IotLauncher_NewRuntime(device, XcpwsClientRuntime_New(), NULL);
+        IotRuntime *runtime = XcpwsClientRuntime_New();
+        if (runtime == NULL)
+        {
+            ret = TINY_RET_E_NEW;
+            break;
+        }
+
+        launcher = IotLauncher_NewRuntime(device, runtime, WebcmdServer_New(runtime));
         if (launcher == NULL)
         {
             ret = TINY_RET_E_NEW;
@@ -107,18 +115,3 @@ TinyRet StopDeviceStack(void)
 
     return ret;
 }
-
-//TinyRet DeviceOperator_ChangePropertyValue(PropertyOperation *o)
-//{
-//    return Device_TryChangePropertyValue(_device, o);
-//}
-
-//TinyRet Runner_ResetAccessKey(OnGetAccessKeySucceed onSucceed, OnGetAccessKeyFailed onFailed)
-//{
-//    return Device_ResetAccessKey(_device, onSucceed, onFailed);
-//}
-//
-//TinyRet Runner_GetAccessKey(void)
-//{
-//    return Device_GetAccessKey(_device, NULL);
-//}

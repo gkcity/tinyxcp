@@ -39,58 +39,58 @@
 
 static void onGet(ChannelHandler *thiz, Channel *channel, const char *id, PropertyOperations *operations)
 {
-    XcmdServerHandlerContext *context = (XcmdServerHandlerContext *) (thiz->context);
-    XcpMessage *result = NULL;
-
-    Device_TryReadProperties(context->data->device, operations);
-
-    result = ResultGetProperties_New(id, operations);
-    if (result != NULL)
-    {
-        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, result, 0);
-    }
-    else
-    {
-        LOG_E(TAG, "ResultGetProperties_New FAILED");
-    }
+//    XcmdServerHandlerContext *context = (XcmdServerHandlerContext *) (thiz->context);
+//    XcpMessage *result = NULL;
+//
+//    Device_TryReadProperties(context->data->device, operations);
+//
+//    result = ResultGetProperties_New(id, operations);
+//    if (result != NULL)
+//    {
+//        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, result, 0);
+//    }
+//    else
+//    {
+//        LOG_E(TAG, "ResultGetProperties_New FAILED");
+//    }
 }
 
 static void onSet(ChannelHandler *thiz, Channel *channel, const char *id, PropertyOperations *operations)
 {
-    XcmdServerHandlerContext *context = (XcmdServerHandlerContext *) (thiz->context);
-    XcpMessage *result = NULL;
-
-    Device_TryWriteProperties(context->data->device, operations);
-
-    result = ResultSetProperties_New(id, operations);
-    if (result != NULL)
-    {
-        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, result, 0);
-    }
-    else
-    {
-        LOG_E(TAG, "ResultSetProperties_New FAILED");
-    }
+//    XcmdServerHandlerContext *context = (XcmdServerHandlerContext *) (thiz->context);
+//    XcpMessage *result = NULL;
+//
+//    Device_TryWriteProperties(context->data->device, operations);
+//
+//    result = ResultSetProperties_New(id, operations);
+//    if (result != NULL)
+//    {
+//        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, result, 0);
+//    }
+//    else
+//    {
+//        LOG_E(TAG, "ResultSetProperties_New FAILED");
+//    }
 }
 
 static void onAction(ChannelHandler *thiz, Channel *channel, const char *id, ActionOperation *operation)
 {
-    XcmdServerHandlerContext *context = (XcmdServerHandlerContext *) (thiz->context);
-    XcpMessage *result = NULL;
-
-    LOG_D(TAG, "onAction: %s.%d.%d", operation->aid.did, operation->aid.siid, operation->aid.iid);
-
-    Device_TryInvokeAction(context->data->device, operation);
-
-    result = ResultInvokeAction_New(id, operation);
-    if (result != NULL)
-    {
-        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, result, 0);
-    }
-    else
-    {
-        LOG_E(TAG, "ResultInvokeAction_New FAILED");
-    }
+//    XcmdServerHandlerContext *context = (XcmdServerHandlerContext *) (thiz->context);
+//    XcpMessage *result = NULL;
+//
+//    LOG_D(TAG, "onAction: %s.%d.%d", operation->aid.did, operation->aid.siid, operation->aid.iid);
+//
+//    Device_TryInvokeAction(context->data->device, operation);
+//
+//    result = ResultInvokeAction_New(id, operation);
+//    if (result != NULL)
+//    {
+//        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, result, 0);
+//    }
+//    else
+//    {
+//        LOG_E(TAG, "ResultInvokeAction_New FAILED");
+//    }
 }
 
 static void _sendError(ChannelHandler *thiz, Channel *channel, const char *id, int32_t status, const char *description)
@@ -352,31 +352,31 @@ static bool _HandleHttpRequest(Channel *channel, XcmdServerHandlerContext *conte
 {
     bool ret = false;
 
-    do
-    {
-        HttpRequestHandlerContext *c = NULL;
-
-        if (context->data->handlers == NULL)
-        {
-            break;
-        }
-
-        c = HttpRequestHandlers_Get(context->data->handlers, request->request_line.method, request->request_line.uri);
-        if (c == NULL)
-        {
-            break;
-        }
-
-        HttpMessage *response = c->handler(request, c->ctx);
-        if (response == NULL)
-        {
-            break;
-        }
-
-        SocketChannel_StartWrite(channel, DATA_HTTP_MESSAGE, response, 0);
-        HttpMessage_Delete(response);
-        ret = true;
-    } while (false);
+//    do
+//    {
+//        HttpRequestHandlerContext *c = NULL;
+//
+//        if (context->data->handlers == NULL)
+//        {
+//            break;
+//        }
+//
+//        c = HttpRequestHandlers_Get(context->data->handlers, request->request_line.method, request->request_line.uri);
+//        if (c == NULL)
+//        {
+//            break;
+//        }
+//
+//        HttpMessage *response = c->handler(request, c->ctx);
+//        if (response == NULL)
+//        {
+//            break;
+//        }
+//
+//        SocketChannel_StartWrite(channel, DATA_HTTP_MESSAGE, response, 0);
+//        HttpMessage_Delete(response);
+//        ret = true;
+//    } while (false);
 
     return ret;
 }
@@ -505,7 +505,7 @@ static void XcmdServerHandler_Delete(ChannelHandler *thiz)
 }
 
 TINY_LOR
-static TinyRet XcmdServerHandler_Construct(ChannelHandler *thiz, XcmdServerContext *data)
+static TinyRet XcmdServerHandler_Construct(ChannelHandler *thiz)
 {
     TinyRet ret = TINY_RET_OK;
 
@@ -525,7 +525,7 @@ static TinyRet XcmdServerHandler_Construct(ChannelHandler *thiz, XcmdServerConte
         thiz->channelWrite = NULL;
         thiz->channelEvent = _ChannelEvent;
 
-        thiz->context = XcmdServerHandlerContext_New(data);
+        thiz->context = XcmdServerHandlerContext_New();
         if (thiz->context == NULL)
         {
             LOG_E(TAG, "XcmdServerHandlerContext_New FAILED");
@@ -550,7 +550,7 @@ ChannelHandler * XcmdServerHandler(void)
             break;
         }
 
-        if (RET_FAILED(XcmdServerHandler_Construct(thiz, data)))
+        if (RET_FAILED(XcmdServerHandler_Construct(thiz)))
         {
             XcmdServerHandler_Delete(thiz);
             thiz = NULL;

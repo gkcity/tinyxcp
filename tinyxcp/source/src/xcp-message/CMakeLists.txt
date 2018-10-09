@@ -18,6 +18,7 @@ SET(XcpMessage_Header
         iq/basic/ChildrenRemoved.h
         iq/basic/EventOccurred.h
         iq/basic/GetAccessKey.h
+        iq/basic/GetAccessKeyFactory.h
         iq/basic/GetChildren.h
         iq/basic/GetProperties.h
         iq/basic/GetPropertiesFactory.h
@@ -29,13 +30,14 @@ SET(XcpMessage_Header
         iq/basic/PongFactory.h
         iq/basic/PropertiesChanged.h
         iq/basic/SetAccessKey.h
+        iq/basic/SetAccessKeyFactory.h
         iq/basic/SetProperties.h
         iq/basic/SetPropertiesFactory.h
         iq/basic/VerifyFinish.h
         iq/basic/VerifyFinishFactory.h
         iq/basic/VerifyStart.h
         iq/basic/VerifyStartFactory.h
-        handler/XcpMessageHandlerWrapper.h
+        handler/XcpMessageHandler.h
         )
 
 SET(XcpMessage_Source
@@ -46,19 +48,19 @@ SET(XcpMessage_Source
         iq/basic/ChildrenAdded.c
         iq/basic/ChildrenRemoved.c
         iq/basic/EventOccurred.c
-        iq/basic/GetAccessKey.c
+        iq/basic/GetAccessKeyFactory.c
         iq/basic/GetPropertiesFactory.c
         iq/basic/GetChildren.c
         iq/basic/InitializeFactory.c
         iq/basic/InvokeActionFactory.c
         iq/basic/PingFactory.c
         iq/basic/PongFactory.c
+        iq/basic/SetAccessKeyFactory.c
         iq/basic/PropertiesChanged.c
-        iq/basic/SetAccessKey.c
         iq/basic/SetPropertiesFactory.c
         iq/basic/VerifyFinishFactory.c
         iq/basic/VerifyStartFactory.c
-        handler/XcpMessageHandlerWrapper.c
+        handler/XcpMessageHandler.c
         )
 
 SOURCE_GROUP(XcpMessage\\headers FILES ${XcpMessage_Header})

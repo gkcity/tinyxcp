@@ -14,6 +14,8 @@
 #define __XCP_CLIENT_RUNTIME_H__
 
 #include <IotRuntime.h>
+#include <XcpMessage.h>
+#include <handler/XcpMessageHandler.h>
 
 TINY_BEGIN_DECLS
 
@@ -21,7 +23,8 @@ TINY_BEGIN_DECLS
 TINY_LOR
 IotRuntime * XcpwsClientRuntime_New(void);
 
-
+TINY_LOR
+TinyRet XcpwsClientRuntime_SendQuery(IotRuntime *thiz, XcpMessage *query, XcpMessageHandler handler, void *ctx);
 
 
 TINY_END_DECLS

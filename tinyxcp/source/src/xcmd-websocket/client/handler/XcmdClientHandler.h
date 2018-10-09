@@ -24,7 +24,7 @@ TINY_BEGIN_DECLS
 #define XcmdClientHandler_Name  "XcmdClientHandler"
 
 TINY_LOR
-ChannelHandler * XcmdClientHandler(Device *device);
+ChannelHandler * XcmdClientHandler(void);
 
 
 TINY_END_DECLS

@@ -19,8 +19,8 @@
 #include <device/Device.h>
 #include <XcpMessage.h>
 #include "XcpStage.h"
-#include "XcpClientVerifier.h"
-#include "handler/XcpMessageHandlerWrapper.h"
+#include "client/verifier/XcpClientVerifier.h"
+#include "handler/XcpMessageHandler.h"
 
 TINY_BEGIN_DECLS
 
@@ -28,7 +28,6 @@ TINY_BEGIN_DECLS
 typedef struct _XcpwsClientHandlerContext
 {
     uint32_t                  messageIndex;
-    char                      messageId[MESSAGE_ID_LENGTH];
     TinyMap                   handlers;
     Device                  * device;
     XcpClientVerifier       * verifier;
@@ -48,10 +47,7 @@ TINY_LOR
 TinyRet XcpwsClientHandlerContext_Handle(XcpwsClientHandlerContext *thiz, XcpMessage *message);
 
 TINY_LOR
-const char *XcpwsClientHandlerContext_NextId(void *context);
-
-TINY_LOR
-TinyRet XcpClientHandlerContext_SendQuery(void *context, XcpMessage *query, XcpMessageHandler handler, void *ctx);
+TinyRet XcpwsClientHandlerContext_SendQuery(void *context, XcpMessage *query, XcpMessageHandler handler, void *ctx);
 
 
 TINY_END_DECLS

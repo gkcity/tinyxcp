@@ -27,7 +27,7 @@
 #include <iq/basic/InvokeActionFactory.h>
 #include "XcpClientHandler.h"
 #include "XcpClientHandlerContext.h"
-#include "XcpClientVerifier.h"
+#include "client/verifier/XcpClientVerifier.h"
 #include "XcpKeyCreator.h"
 
 #define TAG     "XcpClientHandler"

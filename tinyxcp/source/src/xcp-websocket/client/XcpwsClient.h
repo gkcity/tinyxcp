@@ -16,6 +16,7 @@
 #include <device/Device.h>
 #include <channel/Channel.h>
 #include <XcpMessage.h>
+#include <handler/XcpMessageHandler.h>
 
 TINY_BEGIN_DECLS
 
@@ -23,12 +24,8 @@ TINY_BEGIN_DECLS
 TINY_LOR
 Channel * XcpwsClient_New(Device *device, const char *ip, uint16_t port);
 
-
-//typedef void(*XcpResultHandler) (IQ *result, void *ctx);
-
-//TINY_LOR
-//TinyRet XcpwsClient_SendQuery(IQ *query, XcpResultHandler handler, void *ctx);
-
+TINY_LOR
+TinyRet XcpwsClient_SendQuery(Channel *thiz, XcpMessage *query, XcpMessageHandler handler, void *ctx);
 
 
 TINY_END_DECLS

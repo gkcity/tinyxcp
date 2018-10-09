@@ -19,8 +19,7 @@
 #include <device/Device.h>
 #include <XcpMessage.h>
 #include "XcpStage.h"
-#include "XcpClientVerifier.h"
-#include "handler/XcpMessageHandlerWrapper.h"
+#include "handler/XcpMessageHandler.h"
 
 TINY_BEGIN_DECLS
 
@@ -30,13 +29,11 @@ typedef struct _XcmdClientHandlerContext
     uint32_t                  messageIndex;
     char                      messageId[MESSAGE_ID_LENGTH];
     TinyMap                   handlers;
-    Device                  * device;
-    XcpClientVerifier       * verifier;
     Channel                 * channel;
 } XcmdClientHandlerContext;
 
 TINY_LOR
-XcmdClientHandlerContext * XcmdClientHandlerContext_New(Device *device);
+XcmdClientHandlerContext * XcmdClientHandlerContext_New(void);
 
 TINY_LOR
 void XcmdClientHandlerContext_Delete(XcmdClientHandlerContext *thiz);

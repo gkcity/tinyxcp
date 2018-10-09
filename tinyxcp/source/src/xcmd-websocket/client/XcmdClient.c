@@ -4,7 +4,7 @@
  * @author jxfengzi@gmail.com
  * @date   2013-11-19
  *
- * @file   XcpwsClient.c
+ * @file   XcmdClient.c
  *
  * @remark
  *
@@ -15,23 +15,23 @@
 #include <channel/ChannelIdleStateHandler.h>
 #include <channel/stream/StreamClientChannel.h>
 #include <codec-http/HttpMessageCodec.h>
-#include "handler/XcpwsClientHandler.h"
+#include "handler/XcmdClientHandler.h"
 #include "codec-message/MessageCodec.h"
-#include "XcpwsClient.h"
+#include "XcmdClient.h"
 
-#define TAG     "XcpwsClient"
+#define TAG     "XcmdClient"
 
 TINY_LOR
-static void XcpwsClientInitializer(Channel *channel, void *ctx)
+static void XcmdClientInitializer(Channel *channel, void *ctx)
 {
-    LOG_D(TAG, "XcpwsClientInitializer: %s", channel->id);
+    LOG_D(TAG, "XcmdClientInitializer: %s", channel->id);
     SocketChannel_AddLast(channel, ChannelIdleStateHandler(0, 0, 30));
     SocketChannel_AddLast(channel, HttpMessageCodec());
-    SocketChannel_AddLast(channel, XcpwsClientHandler((Device *)ctx));
+    SocketChannel_AddLast(channel, XcmdClientHandler((Device *)ctx));
 }
 
 TINY_LOR
-Channel * XcpwsClient_New(Device *device, const char *ip, uint16_t port)
+Channel * XcmdClient_New(Device *device, const char *ip, uint16_t port)
 {
     Channel *thiz = NULL;
 
@@ -43,7 +43,7 @@ Channel * XcpwsClient_New(Device *device, const char *ip, uint16_t port)
             break;
         }
 
-        if (RET_FAILED(StreamClientChannel_Initialize(thiz, XcpwsClientInitializer, device)))
+        if (RET_FAILED(StreamClientChannel_Initialize(thiz, XcmdClientInitializer, device)))
         {
             thiz->_onRemove(thiz);
             break;
@@ -58,9 +58,3 @@ Channel * XcpwsClient_New(Device *device, const char *ip, uint16_t port)
 
     return thiz;
 }
-
-//TINY_LOR
-//TinyRet XcpwsClient_SendQuery(IQ *query, IQ *result, XcpResultHandler handler, void *ctx)
-//{
-//    SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, message, 0);
-//}

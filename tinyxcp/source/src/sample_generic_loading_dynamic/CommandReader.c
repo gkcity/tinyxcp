@@ -24,7 +24,7 @@ static void cmd_help(void)
     fprintf(stdout, "h       -- show help information\n");
     fprintf(stdout, "x       -- exit\n");
     fprintf(stdout, "reset   -- reset access key\n");
-    fprintf(stdout, "gek     -- get access key\n");
+    fprintf(stdout, "getkey  -- get access key\n");
 }
 
 static void cmd_reset_access_key(void)
@@ -67,7 +67,7 @@ struct _cmd_exec cmd_exec[] =
                 {"h",       cmd_help},
                 {"x",       cmd_exit},
                 {"reset",   cmd_reset_access_key},
-                {"getk",    cmd_get_access_key},
+                {"getkey",  cmd_get_access_key},
         };
 
 static

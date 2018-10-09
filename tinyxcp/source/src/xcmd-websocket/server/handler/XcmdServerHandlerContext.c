@@ -13,7 +13,7 @@
 #include <tiny_malloc.h>
 #include <tiny_snprintf.h>
 #include <tiny_log.h>
-#include "XXcmdServerHandlerContext.h"
+#include "XcmdServerHandlerContext.h"
 
 #define TAG     "XcmdServerHandlerContext"
 
@@ -25,7 +25,7 @@ static void _OnHandlerRemove (void * data, void *ctx)
 }
 
 TINY_LOR
-static TinyRet XcmdServerHandlerContext_Construct(XcmdServerHandlerContext *thiz, XcmdServerContext *data)
+static TinyRet XcmdServerHandlerContext_Construct(XcmdServerHandlerContext *thiz)
 {
     TinyRet ret = TINY_RET_OK;
 
@@ -33,12 +33,10 @@ static TinyRet XcmdServerHandlerContext_Construct(XcmdServerHandlerContext *thiz
     {
         memset(thiz, 0, sizeof(XcmdServerHandlerContext));
         thiz->messageIndex = 1;
-        thiz->data = data;
 
         ret = TinyMap_Construct(&thiz->handlers);
         if (RET_FAILED(ret))
         {
-            //LOG_E(TAG, "TinyMap_Construct FAILED: %s", tiny_ret_to_str(ret));
             break;
         }
         TinyMap_SetDeleteListener(&thiz->handlers, _OnHandlerRemove, NULL);
@@ -56,7 +54,7 @@ static void XcmdServerHandlerContext_Dispose(XcmdServerHandlerContext *thiz)
 }
 
 TINY_LOR
-XcmdServerHandlerContext * XcmdServerHandlerContext_New(XcmdServerContext *data)
+XcmdServerHandlerContext * XcmdServerHandlerContext_New(void)
 {
     XcmdServerHandlerContext *thiz = NULL;
 
@@ -69,7 +67,7 @@ XcmdServerHandlerContext * XcmdServerHandlerContext_New(XcmdServerContext *data)
             break;
         }
 
-        if (RET_FAILED(XcmdServerHandlerContext_Construct(thiz, data)))
+        if (RET_FAILED(XcmdServerHandlerContext_Construct(thiz)))
         {
             LOG_E(TAG, "XcmdServerHandlerContext_Construct failed");
             XcmdServerHandlerContext_Delete(thiz);

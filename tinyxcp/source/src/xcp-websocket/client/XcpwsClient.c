@@ -15,6 +15,7 @@
 #include <channel/ChannelIdleStateHandler.h>
 #include <channel/stream/StreamClientChannel.h>
 #include <codec-http/HttpMessageCodec.h>
+#include <client/handler/XcpwsClientHandlerContext.h>
 #include "handler/XcpwsClientHandler.h"
 #include "codec-message/MessageCodec.h"
 #include "XcpwsClient.h"
@@ -59,8 +60,22 @@ Channel * XcpwsClient_New(Device *device, const char *ip, uint16_t port)
     return thiz;
 }
 
-//TINY_LOR
-//TinyRet XcpwsClient_SendQuery(IQ *query, IQ *result, XcpResultHandler handler, void *ctx)
-//{
-//    SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, message, 0);
-//}
+TINY_LOR
+TinyRet XcpwsClient_SendQuery(Channel *thiz, XcpMessage *query, XcpMessageHandler handler, void *ctx)
+{
+    TinyRet ret = TINY_RET_OK;
+
+    do
+    {
+        ChannelHandler *h = SocketChannel_GetHandler(thiz, XcpwsClientHandler_Name);
+        if (h == NULL)
+        {
+            ret = TINY_RET_E_INTERNAL;
+            break;
+        }
+
+        ret = XcpwsClientHandlerContext_SendQuery(h->context, query, handler, ctx);
+    } while (false);
+
+    return ret;
+}

@@ -4,14 +4,14 @@
  * @author jxfengzi@gmail.com
  * @date   2013-11-19
  *
- * @file   XcpMessageHandlerWrapper.h
+ * @file   XcpMessageHandler.h
  *
  * @remark
  *
  */
 
-#ifndef __XCP_MESSAGE_HANDLER_WRAPPER_H__
-#define __XCP_MESSAGE_HANDLER_WRAPPER_H__
+#ifndef __XCP_MESSAGE_HANDLER_H__
+#define __XCP_MESSAGE_HANDLER_H__
 
 #include <tiny_base.h>
 #include <XcpMessage.h>
@@ -36,4 +36,4 @@ void XcpMessageHandlerWrapper_Delete(XcpMessageHandlerWrapper *thiz);
 
 TINY_END_DECLS
 
-#endif /* __XCP_MESSAGE_HANDLER_WRAPPER_H__ */
+#endif /* __XCP_MESSAGE_HANDLER_H__ */

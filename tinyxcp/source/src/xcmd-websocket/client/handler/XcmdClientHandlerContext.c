@@ -28,7 +28,7 @@ static void _OnHandlerRemove (void * data, void *ctx)
 }
 
 TINY_LOR
-static TinyRet XcmdClientHandlerContext_Construct(XcmdClientHandlerContext *thiz, Device *device, const char *serverLTPK)
+static TinyRet XcmdClientHandlerContext_Construct(XcmdClientHandlerContext *thiz)
 {
     TinyRet ret = TINY_RET_OK;
 
@@ -36,7 +36,6 @@ static TinyRet XcmdClientHandlerContext_Construct(XcmdClientHandlerContext *thiz
     {
         memset(thiz, 0, sizeof(XcmdClientHandlerContext));
         thiz->messageIndex = 1;
-        thiz->device = device;
 
         ret = TinyMap_Construct(&thiz->handlers);
         if (RET_FAILED(ret))
@@ -45,18 +44,6 @@ static TinyRet XcmdClientHandlerContext_Construct(XcmdClientHandlerContext *thiz
             break;
         }
         TinyMap_SetDeleteListener(&thiz->handlers, _OnHandlerRemove, NULL);
-
-        thiz->verifier = XcpClientVerifier_New(serverLTPK,
-                                               device,
-                                               XcmdClientHandlerContext_NextId,
-                                               XcpClientHandlerContext_SendQuery,
-                                               WEB_SOCKET_BINARY_FRAME_CODEC_CHACHA20_POLY1305);
-        if (thiz->verifier == NULL)
-        {
-            ret = TINY_RET_E_NEW;
-            //LOG_E(TAG, "XcmdClientVerifier_New FAILED: %s", tiny_ret_to_str(ret));
-            break;
-        }
     } while (0);
 
     return ret;
@@ -68,18 +55,10 @@ static void XcmdClientHandlerContext_Dispose(XcmdClientHandlerContext *thiz)
     RETURN_IF_FAIL(thiz);
 
     TinyMap_Dispose(&thiz->handlers);
-
-    if (thiz->verifier != NULL)
-    {
-        XcpClientVerifier_Delete(thiz->verifier);
-        thiz->verifier = NULL;
-    }
 }
 
-#define SERVER_LTPK     "/8meBcfecxNl7pMIO0Zxbhx70A4DSGio7C2H7VzZLB8="
-
 TINY_LOR
-XcmdClientHandlerContext * XcmdClientHandlerContext_New(Device *device)
+XcmdClientHandlerContext * XcmdClientHandlerContext_New()
 {
     XcmdClientHandlerContext *thiz = NULL;
 
@@ -92,7 +71,7 @@ XcmdClientHandlerContext * XcmdClientHandlerContext_New(Device *device)
             break;
         }
 
-        if (RET_FAILED(XcmdClientHandlerContext_Construct(thiz, device, SERVER_LTPK)))
+        if (RET_FAILED(XcmdClientHandlerContext_Construct(thiz)))
         {
             LOG_E(TAG, "XcmdClientHandlerContext_Construct failed");
             XcmdClientHandlerContext_Delete(thiz);

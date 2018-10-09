@@ -10,6 +10,7 @@ SET(Xcpws_Header
         client/XcpwsClient.h
         client/handler/XcpwsClientHandler.h
         client/handler/XcpwsClientHandlerContext.h
+        client/verifier/XcpClientVerifier.h
         server/XcpwsServer.h
         server/XcpwsServerContext.h
         server/XcpwsBonjour.h
@@ -31,6 +32,7 @@ SET(Xcpws_Source
         client/XcpwsClient.c
         client/handler/XcpwsClientHandler.c
         client/handler/XcpwsClientHandlerContext.c
+        client/verifier/XcpClientVerifier.c
         server/XcpwsServer.c
         server/XcpwsServerContext.c
         server/XcpwsBonjour.c

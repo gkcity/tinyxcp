@@ -18,7 +18,7 @@
 #include <device/Device.h>
 #include <Ed25519.h>
 #include <hkdf/HKDF.h>
-#include <handler/XcpMessageHandlerWrapper.h>
+#include <handler/XcpMessageHandler.h>
 #include "XcpStage.h"
 #include "XcpSessionInfo.h"
 
@@ -28,7 +28,6 @@ TINY_BEGIN_DECLS
 typedef void(*XcpVerifySuccessHandler) (HKDF *deviceToServerKey, HKDF *serverToDeviceKey, void *ctx);
 typedef void(*XcpVerifyFailureHandler) (void *ctx);
 
-typedef const char * (*XcpNextId)(void *ctx);
 typedef TinyRet (*XcpSendQuery) (void *context, XcpMessage *query, XcpMessageHandler handler, void *ctx);
 
 typedef struct _XcpClientVerifier
@@ -45,7 +44,6 @@ typedef struct _XcpClientVerifier
     XcpVerifySuccessHandler       onSuccess;
     XcpVerifyFailureHandler       onFailure;
     void                        * ctx;
-    XcpNextId                     nextId;
     XcpSendQuery                  sendQuery;
     uint8_t                       binaryCodec;
 } XcpClientVerifier;
@@ -53,7 +51,6 @@ typedef struct _XcpClientVerifier
 TINY_LOR
 XcpClientVerifier *XcpClientVerifier_New(const char *serverLTPK,
                                          Device *device,
-                                         XcpNextId nextId,
                                          XcpSendQuery sendQuery,
                                          uint8_t binaryCodec);
 
