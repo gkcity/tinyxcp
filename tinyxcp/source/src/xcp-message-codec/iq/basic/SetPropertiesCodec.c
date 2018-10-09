@@ -94,7 +94,7 @@ TinyRet SetPropertiesCodec_DecodeQuery(QuerySetProperties *query, JsonObject *co
             }
             else
             {
-                operation->value = JsonValue_Copy(value);
+                operation->value = JsonValue_NewFrom(value);
                 if (operation->value == NULL)
                 {
                     LOG_E(TAG, "JsonValue_Copy failed");

@@ -7,11 +7,13 @@
 SET(Webcmd_Header
         server/WebcmdServer.h
         server/handler/WebcmdServerHandler.h
+        client/WebcmdClient.h
         )
 
 SET(Webcmd_Source
         server/WebcmdServer.c
         server/handler/WebcmdServerHandler.c
+        client/WebcmdClient.c
         )
 
 SOURCE_GROUP(Xcmd\\headers FILES ${Xcmd_Header})

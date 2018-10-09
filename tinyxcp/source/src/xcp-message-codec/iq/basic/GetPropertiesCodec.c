@@ -140,7 +140,7 @@ TinyRet GetPropertiesCodec_EncodeResult(JsonObject *content, ResultGetProperties
                 continue;
             }
 
-            value = JsonValue_Copy(o->value);
+            value = JsonValue_NewFrom(o->value);
             if (value == NULL)
             {
                 JsonObject_Delete(object);

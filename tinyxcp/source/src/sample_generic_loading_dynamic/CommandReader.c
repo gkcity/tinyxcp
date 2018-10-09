@@ -11,11 +11,11 @@
  */
 
 #include "CommandReader.h"
+#include <client/WebcmdClient.h>
 
 #ifdef _WIN32
 #else
 #include <tiny_socket.h>
-#include <HttpClient.h>
 #endif
 
 static int g_loop = 0;
@@ -32,95 +32,21 @@ static void cmd_help(void)
 
 static void cmd_reset_access_key(void)
 {
-    HttpClient *client = NULL;
-    HttpExchange *exchange = NULL;
-
-    do
+    if (WebcmdClient_ResetAccessKey(g_port))
     {
-        client = HttpClient_New();
-        if (client == NULL)
-        {
-            break;
-        }
-
-        exchange = HttpExchange_New("127.0.0.1", g_port, "PUT", "/accesskey", 3, NULL, 0);
-        if (exchange == NULL)
-        {
-            break;
-        }
-
-        if (RET_FAILED(HttpClient_Send(client, exchange)))
-        {
-            break;
-        }
-
-        if (exchange->status != 200)
-        {
-            printf("reset access key failed: %d\n", exchange->status);
-            break;
-        }
-
-        printf("reset access key succeed!\n");
-    } while (false);
-
-    if (client != NULL)
-    {
-        HttpClient_Delete(client);
-    }
-
-    if (exchange != NULL)
-    {
-        HttpExchange_Delete(exchange);
+        printf("reset access key finished!\n");
     }
 }
 
 static void cmd_get_access_key(void)
 {
-    HttpClient *client = NULL;
-    HttpExchange *exchange = NULL;
+    char key[XCP_ACCESS_KEY_LEN];
 
-    do
+    memset(key, 0, XCP_ACCESS_KEY_LEN);
+
+    if (WebcmdClient_GetAccessKey(g_port, key))
     {
-        client = HttpClient_New();
-        if (client == NULL)
-        {
-            break;
-        }
-
-        exchange = HttpExchange_New("127.0.0.1", g_port, "GET", "/accesskey", 3, NULL, 0);
-        if (exchange == NULL)
-        {
-            break;
-        }
-
-        if (RET_FAILED(HttpClient_Send(client, exchange)))
-        {
-            break;
-        }
-
-        if (exchange->status != 200)
-        {
-            printf("get access key failed: %d\n", exchange->status);
-            break;
-        }
-
-        if (exchange->content == NULL)
-        {
-            printf("get access key error, content is empty\n");
-            break;
-        }
-
-        printf("get access key: %s\n", exchange->content);
-    } while (false);
-
-    if (client != NULL)
-    {
-        HttpClient_Delete(client);
-    }
-
-    if (exchange != NULL)
-    {
-        HttpExchange_Delete(exchange);
+        printf("get access key finished: %s\n", key);
     }
 }
 

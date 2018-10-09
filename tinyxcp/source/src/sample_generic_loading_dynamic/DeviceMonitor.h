@@ -18,7 +18,7 @@
 TINY_BEGIN_DECLS
 
 
-TinyRet StartDeviceMonitor(Device *device, uint16_t port);
+TinyRet StartDeviceMonitor(const char *did, uint16_t port);
 
 TinyRet StopDeviceMonitor(void);
 

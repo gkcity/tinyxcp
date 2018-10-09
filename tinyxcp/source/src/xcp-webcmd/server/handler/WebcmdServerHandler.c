@@ -192,11 +192,21 @@ static void onResetAccessKey(Channel *channel, IotRuntime *runtime)
     } while (false);
 }
 
+static void onPropertiesChanged(Channel *channel, HttpContent *content, IotRuntime *runtime)
+{
+    sendNotFound(channel);
+}
+
+static void onEventOccurred(Channel *channel, HttpContent *content, IotRuntime *runtime)
+{
+    sendNotFound(channel);
+}
+
 TINY_LOR
 static bool _ChannelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType type, const void *data, uint32_t len)
 {
     IotRuntime *runtime = (IotRuntime *) (thiz->context);
-    HttpMessage *message = (HttpMessage *)data;
+    HttpMessage *message = (HttpMessage *) data;
 
     LOG_D(TAG, "_HttpRead: %s %s", message->request_line.method, message->request_line.uri);
 
@@ -221,6 +231,18 @@ static bool _ChannelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType
 
             break;
         }
+        else if (str_equal(message->request_line.uri, "/properties", true) && str_equal(message->request_line.method, "PUT", false))
+        {
+            onPropertiesChanged(channel, &message->content, runtime);
+            break;
+        }
+        else if (str_equal(message->request_line.uri, "/event", true) && str_equal(message->request_line.method, "PUT", false))
+        {
+            onEventOccurred(channel, &message->content, runtime);
+            break;
+        }
+
+        sendNotFound(channel);
     } while (false);
 
     return true;
