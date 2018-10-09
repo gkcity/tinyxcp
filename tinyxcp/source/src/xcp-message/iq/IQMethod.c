@@ -41,7 +41,6 @@ static IQMethod_String _method_string_mappings[] =
                 {IQ_METHOD_VERIFY_START, "urn:xiot:verify-start"},
         };
 
-TINY_LOR
 const char * IQMethod_ToString(IQMethod method)
 {
     uint32_t size = DIM(_method_string_mappings);
@@ -57,7 +56,6 @@ const char * IQMethod_ToString(IQMethod method)
     return NULL;
 }
 
-TINY_LOR
 IQMethod IQMethod_FromString(const char *string)
 {
     uint32_t size = DIM(_method_string_mappings);

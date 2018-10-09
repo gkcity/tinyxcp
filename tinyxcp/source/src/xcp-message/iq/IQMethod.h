@@ -43,10 +43,8 @@ typedef enum _IQMethod
     IQ_METHOD_VERIFY_START          = 0x11,
 } IQMethod;
 
-TINY_LOR
 const char * IQMethod_ToString(IQMethod method);
 
-TINY_LOR
 IQMethod IQMethod_FromString(const char *string);
 
 

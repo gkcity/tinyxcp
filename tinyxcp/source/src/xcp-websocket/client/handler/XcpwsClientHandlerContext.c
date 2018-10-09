@@ -147,13 +147,19 @@ TinyRet XcpwsClientHandlerContext_SendQuery(void *context, XcpMessage *query, Xc
     TinyRet ret = TINY_RET_OK;
     XcpwsClientHandlerContext *thiz = (XcpwsClientHandlerContext *)context;
 
-    tiny_snprintf(query->iq.id, MESSAGE_ID_LENGTH, "%d", thiz->messageIndex++);
-
-    ret = XcpwsClientHandlerContext_AddHandler(context, query->iq.id, handler, ctx);
-    if (RET_SUCCEEDED(ret))
+    do
     {
+        tiny_snprintf(query->iq.id, MESSAGE_ID_LENGTH, "%d", thiz->messageIndex++);
+
+        ret = XcpwsClientHandlerContext_AddHandler(context, query->iq.id, handler, ctx);
+        if (RET_FAILED(ret))
+        {
+            LOG_D(TAG, "XcpwsClientHandlerContext_AddHandler FAILED!");
+            break;
+        }
+
         SocketChannel_StartWrite(thiz->channel, DATA_XCP_MESSAGE, query, 0);
-    }
+    } while (false);
 
     return ret;
 }

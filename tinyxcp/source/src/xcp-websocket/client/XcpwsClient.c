@@ -70,11 +70,17 @@ TinyRet XcpwsClient_SendQuery(Channel *thiz, XcpMessage *query, XcpMessageHandle
         ChannelHandler *h = SocketChannel_GetHandler(thiz, XcpwsClientHandler_Name);
         if (h == NULL)
         {
+            LOG_E(TAG, "SocketChannel_GetHandler FAILED: %s", XcpwsClientHandler_Name);
             ret = TINY_RET_E_INTERNAL;
             break;
         }
 
         ret = XcpwsClientHandlerContext_SendQuery(h->context, query, handler, ctx);
+        if (RET_FAILED(ret))
+        {
+            LOG_E(TAG, "XcpwsClientHandlerContext_SendQuery FAILED");
+            break;
+        }
     } while (false);
 
     return ret;

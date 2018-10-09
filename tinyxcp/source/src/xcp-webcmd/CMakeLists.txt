@@ -5,17 +5,11 @@
 #-----------------------------------------------------------------------------
 
 SET(Webcmd_Header
-#        client/WebcmdClient.h
-#        client/handler/WebcmdClientHandler.h
-#        client/handler/WebcmdClientHandlerContext.h
         server/WebcmdServer.h
         server/handler/WebcmdServerHandler.h
         )
 
 SET(Webcmd_Source
-#        client/WebcmdClient.c
-#        client/handler/WebcmdClientHandler.c
-#        client/handler/WebcmdClientHandlerContext.c
         server/WebcmdServer.c
         server/handler/WebcmdServerHandler.c
         )

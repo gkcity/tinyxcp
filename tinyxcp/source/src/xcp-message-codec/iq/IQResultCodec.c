@@ -14,6 +14,7 @@
 
 #include <tiny_log.h>
 #include <value/JsonString.h>
+#include <iq/basic/GetAccessKeyCodec.h>
 #include "basic/GetChildrenCodec.h"
 #include "basic/GetPropertiesCodec.h"
 #include "basic/SetPropertiesCodec.h"
@@ -145,6 +146,7 @@ TinyRet IQResultCodec_Decode(IQResult* result, JsonObject *object)
                 break;
 
             case IQ_METHOD_GET_ACCESS_KEY:
+                ret = GetAccessKeyCodec_DecodeResult(&result->content.getAccessKey, content);
                 break;
 
             case IQ_METHOD_INITIALIZE:

@@ -32,7 +32,7 @@ static void _loop(void *param)
     }
 }
 
-TinyRet StartDeviceStack(Device *device)
+TinyRet StartDeviceStack(Device *device, uint16_t *port)
 {
     TinyRet ret = TINY_RET_OK;
     IotLauncher *launcher = NULL;
@@ -59,7 +59,7 @@ TinyRet StartDeviceStack(Device *device)
             break;
         }
 
-        launcher = IotLauncher_NewRuntime(device, runtime, WebcmdServer_New(runtime));
+        launcher = IotLauncher_NewRuntime(device, runtime, WebcmdServer_New(runtime, port));
         if (launcher == NULL)
         {
             ret = TINY_RET_E_NEW;

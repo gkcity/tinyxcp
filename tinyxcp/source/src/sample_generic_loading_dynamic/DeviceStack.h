@@ -18,14 +18,10 @@
 TINY_BEGIN_DECLS
 
 
-TinyRet StartDeviceStack(Device *device);
+TinyRet StartDeviceStack(Device *device, uint16_t *port);
 
 TinyRet StopDeviceStack(void);
 
-//TinyRet DeviceOperator_Run(Device *device);
-//TinyRet DeviceOperator_ChangePropertyValue(PropertyOperation *o);
-//TinyRet Runner_ResetAccessKey(OnGetAccessKeySucceed onSucceed, OnGetAccessKeyFailed onFailed);
-//TinyRet Runner_GetAccessKey(void);
 
 
 TINY_END_DECLS

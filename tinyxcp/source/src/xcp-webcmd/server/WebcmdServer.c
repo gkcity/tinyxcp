@@ -31,7 +31,7 @@ static void WebcmdServerInitializer(Channel *channel, void *ctx)
 }
 
 TINY_LOR
-Channel * WebcmdServer_New(IotRuntime *runtime)
+Channel * WebcmdServer_New(IotRuntime *runtime, uint16_t *port)
 {
     Channel *thiz = NULL;
 
@@ -53,7 +53,7 @@ Channel * WebcmdServer_New(IotRuntime *runtime)
             break;
         }
 
-        if (RET_FAILED(SocketChannel_Bind(thiz, 0, false)))
+        if (RET_FAILED(SocketChannel_Bind(thiz, *port, false)))
         {
             LOG_D(TAG, "SocketChannel_Bind failed");
             thiz->_onRemove(thiz);
@@ -77,10 +77,8 @@ Channel * WebcmdServer_New(IotRuntime *runtime)
             break;
         }
 
-//        if (device->port == 0)
-//        {
-//            device->port = thiz->local.socket.port;
-//        }
+        *port = thiz->local.socket.port;
+        LOG_D(TAG, "WebcmdServer port: %d", *port);
     } while (false);
 
     return thiz;

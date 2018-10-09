@@ -4,7 +4,7 @@
  * @author jxfengzi@gmail.com
  * @date   2017-7-1
  *
- * @file   SetAccessKeyCodec.h
+ * @file   GetAccessKeyCodec.h
  *
  * @remark
  *      set tabstop=4
@@ -12,21 +12,20 @@
  *      set expandtab
  */
 
-#ifndef __SetAccessKeyCodec_H__
-#define __SetAccessKeyCodec_H__
+#ifndef __GetAccessKeyCodec_H__
+#define __GetAccessKeyCodec_H__
 
 #include <tiny_base.h>
 #include <tiny_lor.h>
 #include <JsonObject.h>
-#include <iq/basic/SetAccessKey.h>
+#include <iq/basic/GetAccessKey.h>
 
 TINY_BEGIN_DECLS
 
 
-TinyRet SetAccessKeyCodec_EncodeQuery(JsonObject *root, QuerySetAccessKey *query);
-
+TinyRet GetAccessKeyCodec_DecodeResult(ResultGetAccessKey *result, JsonObject *content);
 
 
 TINY_END_DECLS
 
-#endif /* __SetAccessKeyCodec_H__  */
+#endif /* __GetAccessKeyCodec_H__  */

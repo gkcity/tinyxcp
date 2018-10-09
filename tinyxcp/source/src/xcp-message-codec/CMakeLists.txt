@@ -22,6 +22,7 @@ SET(XcpMessageCodec_Header
         iq/basic/SetPropertiesCodec.h
         iq/basic/InvokeActionCodec.h
         iq/basic/GetChildrenCodec.h
+        iq/basic/GetAccessKeyCodec.h
         xid/PIDCodec.h
         xid/AIDCodec.h
         )
@@ -44,6 +45,7 @@ SET(XcpMessageCodec_Source
         iq/basic/SetPropertiesCodec.c
         iq/basic/InvokeActionCodec.c
         iq/basic/GetChildrenCodec.c
+        iq/basic/GetAccessKeyCodec.c
         xid/PIDCodec.c
         xid/AIDCodec.c
         )

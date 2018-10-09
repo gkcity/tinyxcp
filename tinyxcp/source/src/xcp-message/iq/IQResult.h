@@ -24,6 +24,7 @@
 #include <iq/basic/PropertiesChanged.h>
 #include <iq/basic/VerifyStart.h>
 #include <iq/basic/InvokeAction.h>
+#include <iq/basic/GetAccessKey.h>
 #include "IQMethod.h"
 
 TINY_BEGIN_DECLS
@@ -43,6 +44,7 @@ typedef struct _IQResult
 //        ResultChildrenAdded             childrenAdded;
         ResultPropertiesChanged         propertiesChanged;
         ResultVerifyStart               verifyStart;
+        ResultGetAccessKey              getAccessKey;
     } content;
 } IQResult;
 

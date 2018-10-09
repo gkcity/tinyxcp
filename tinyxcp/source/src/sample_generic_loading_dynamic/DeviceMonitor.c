@@ -64,7 +64,7 @@ static void _loop(void *param)
     }
 }
 
-TinyRet StartDeviceMonitor(Device *device)
+TinyRet StartDeviceMonitor(Device *device, uint16_t port)
 {
     TinyRet ret = TINY_RET_OK;
 

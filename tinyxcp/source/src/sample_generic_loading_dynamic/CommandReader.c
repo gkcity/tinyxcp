@@ -11,12 +11,15 @@
  */
 
 #include "CommandReader.h"
+
 #ifdef _WIN32
 #else
 #include <tiny_socket.h>
+#include <HttpClient.h>
 #endif
 
 static int g_loop = 0;
+static uint16_t g_port = 0;
 
 static void cmd_help(void)
 {
@@ -29,24 +32,96 @@ static void cmd_help(void)
 
 static void cmd_reset_access_key(void)
 {
-    // send cmd to stack by http
+    HttpClient *client = NULL;
+    HttpExchange *exchange = NULL;
 
-    //    TinyRet ret = Runner_ResetAccessKey();
-//    if (RET_FAILED(ret))
-//    {
-//        printf("Runner_Reset error: %d", ret);
-//    }
+    do
+    {
+        client = HttpClient_New();
+        if (client == NULL)
+        {
+            break;
+        }
+
+        exchange = HttpExchange_New("127.0.0.1", g_port, "PUT", "/accesskey", 3, NULL, 0);
+        if (exchange == NULL)
+        {
+            break;
+        }
+
+        if (RET_FAILED(HttpClient_Send(client, exchange)))
+        {
+            break;
+        }
+
+        if (exchange->status != 200)
+        {
+            printf("reset access key failed: %d\n", exchange->status);
+            break;
+        }
+
+        printf("reset access key succeed!\n");
+    } while (false);
+
+    if (client != NULL)
+    {
+        HttpClient_Delete(client);
+    }
+
+    if (exchange != NULL)
+    {
+        HttpExchange_Delete(exchange);
+    }
 }
 
 static void cmd_get_access_key(void)
 {
-    // send cmd to stack by http
+    HttpClient *client = NULL;
+    HttpExchange *exchange = NULL;
 
-//    TinyRet ret = Runner_GetAccessKey();
-//    if (RET_FAILED(ret))
-//    {
-//        printf("Runner_GetAccessKey error: %d", ret);
-//    }
+    do
+    {
+        client = HttpClient_New();
+        if (client == NULL)
+        {
+            break;
+        }
+
+        exchange = HttpExchange_New("127.0.0.1", g_port, "GET", "/accesskey", 3, NULL, 0);
+        if (exchange == NULL)
+        {
+            break;
+        }
+
+        if (RET_FAILED(HttpClient_Send(client, exchange)))
+        {
+            break;
+        }
+
+        if (exchange->status != 200)
+        {
+            printf("get access key failed: %d\n", exchange->status);
+            break;
+        }
+
+        if (exchange->content == NULL)
+        {
+            printf("get access key error, content is empty\n");
+            break;
+        }
+
+        printf("get access key: %s\n", exchange->content);
+    } while (false);
+
+    if (client != NULL)
+    {
+        HttpClient_Delete(client);
+    }
+
+    if (exchange != NULL)
+    {
+        HttpExchange_Delete(exchange);
+    }
 }
 
 static void cmd_exit(void)
@@ -87,7 +162,7 @@ void command(const char *buf)
 }
 
 #ifdef _WIN32
-void WaitingForUserCommand(void)
+void WaitingForUserCommand(uint16_t port)
 {
     int ret = 0;
     char buf[1024];
@@ -95,6 +170,7 @@ void WaitingForUserCommand(void)
     g_client = c;
 
     g_loop = 1;
+    g_port = port;
 
     while (g_loop)
     {
@@ -139,7 +215,7 @@ void cmd_pre_select(int *p_max_soc, fd_set *p_read_set, fd_set *p_write_set, fd_
         *p_max_soc = soc;
 }
 
-void WaitingForUserCommand(void)
+void WaitingForUserCommand(uint16_t port)
 {
     fd_set  read_set;
     fd_set  write_set;
@@ -147,6 +223,7 @@ void WaitingForUserCommand(void)
     int     max_soc = 0;
 
     g_loop = 1;
+    g_port = port;
 
     fprintf(stdout, "pid: %d\n", getpid());
 

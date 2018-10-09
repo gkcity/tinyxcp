@@ -39,9 +39,8 @@
 
 #define TAG     "WebcmdServerHandler"
 
-static void onGetAccessKeyResult (XcpMessage *result, void *ctx)
+static void sendNotFound(Channel *channel)
 {
-    Channel *channel = (Channel *)ctx;
     HttpMessage *response = HttpMessage_New();
     if (response != NULL)
     {
@@ -52,61 +51,145 @@ static void onGetAccessKeyResult (XcpMessage *result, void *ctx)
         SocketChannel_StartWrite(channel, DATA_HTTP_MESSAGE, response, 0);
         HttpMessage_Delete(response);
     }
+}
 
-    Channel_Close(channel);
+static void sendJsonObject(Channel *channel, int code, const char *reason, JsonObject *object)
+{
+    do
+    {
+        if (RET_FAILED(JsonObject_Encode(object, true)))
+        {
+            break;
+        }
+
+        HttpMessage *response = HttpMessage_New();
+        if (response == NULL)
+        {
+            break;
+        }
+
+        HttpMessage_SetResponse(response, code, reason);
+        HttpMessage_SetProtocolIdentifier(response, "HTTP");
+        HttpMessage_SetVersion(response, 1, 1);
+        HttpMessage_SetContent(response, "application/json; charset=utf-8", object->size, (const uint8_t *)object->string);
+
+        SocketChannel_StartWrite(channel, DATA_HTTP_MESSAGE, response, 0);
+        HttpMessage_Delete(response);
+    } while (false);
+}
+
+static void sendOK(Channel *channel)
+{
+    do
+    {
+        HttpMessage *response = HttpMessage_New();
+        if (response == NULL)
+        {
+            break;
+        }
+
+        HttpMessage_SetResponse(response, 200, "OK");
+        HttpMessage_SetProtocolIdentifier(response, "HTTP");
+        HttpMessage_SetVersion(response, 1, 1);
+        HttpHeader_SetInteger(&response->header, "Content-Length", 0);
+
+        SocketChannel_StartWrite(channel, DATA_HTTP_MESSAGE, response, 0);
+        HttpMessage_Delete(response);
+    } while (false);
+}
+
+static void sendError(Channel *channel, IQError *error)
+{
+    do
+    {
+        JsonObject *o = JsonObject_New();
+        if (o == NULL)
+        {
+            break;
+        }
+
+        JsonObject_PutInteger(o, "status", error->status);
+        JsonObject_PutString(o, "description", error->description);
+
+        sendJsonObject(channel, 400, "ERROR", o);
+
+        JsonObject_Delete(o);
+    } while (false);
+}
+
+static void onGetAccessKeyResult (XcpMessage *result, void *ctx)
+{
+    Channel *channel = (Channel *)ctx;
+
+    if (result->iq.type == IQ_TYPE_ERROR)
+    {
+        sendError(channel, &result->iq.content.error);
+        return;
+    }
+
+    JsonObject *o = JsonObject_New();
+    if (o != NULL)
+    {
+        JsonObject_PutString(o, "key", result->iq.content.result.content.getAccessKey.key);
+        sendJsonObject(channel, 200, "OK", o);
+        JsonObject_Delete(o);
+    }
 }
 
 static void onResetAccessKeyResult (XcpMessage *result, void *ctx)
 {
     Channel *channel = (Channel *)ctx;
-    HttpMessage *response = HttpMessage_New();
-    if (response != NULL)
-    {
-        HttpMessage_SetResponse(response, 404, "NOT FOUND");
-        HttpMessage_SetProtocolIdentifier(response, "HTTP");
-        HttpMessage_SetVersion(response, 1, 1);
-        HttpHeader_SetInteger(&response->header, "Content-Length", 0);
-        SocketChannel_StartWrite(channel, DATA_HTTP_MESSAGE, response, 0);
-        HttpMessage_Delete(response);
-    }
 
-    Channel_Close(channel);
+    do
+    {
+        if (result->iq.type == IQ_TYPE_ERROR)
+        {
+            sendError(channel, &result->iq.content.error);
+            break;
+        }
+
+        sendOK(channel);
+    } while (false);
 }
 
 static void onGetAccessKey(Channel *channel, IotRuntime *runtime)
 {
-    XcpMessage *query = QueryGetAccessKey_New("");
-    if (query == NULL)
+    do
     {
-        LOG_D(TAG, "QueryVerifyFinish_New FAILED!");
-        return;
-    }
+        XcpMessage *query = QueryGetAccessKey_New("");
+        if (query == NULL)
+        {
+            LOG_D(TAG, "QueryGetAccessKey_New FAILED!");
+            break;
+        }
 
-    if (RET_FAILED(XcpwsClientRuntime_SendQuery(runtime, query, onGetAccessKeyResult, channel)))
-    {
-        LOG_D(TAG, "XcpwsClientRuntime_SendQuery FAILED");
+        if (RET_FAILED(XcpwsClientRuntime_SendQuery(runtime, query, onGetAccessKeyResult, channel)))
+        {
+            LOG_D(TAG, "XcpwsClientRuntime_SendQuery FAILED");
+        }
 
-    }
-
-    XcpMessage_Delete(query);
+        XcpMessage_Delete(query);
+    } while (false);
 }
 
 static void onResetAccessKey(Channel *channel, IotRuntime *runtime)
 {
-    XcpMessage *query = QuerySetAccessKey_New("", "helloworldhelloworld");
-    if (query == NULL)
+    do
     {
-        LOG_D(TAG, "QueryVerifyFinish_New FAILED!");
-        return;
-    }
+        XcpMessage *query = QuerySetAccessKey_New("", "helloworldhelloworld");
+        if (query == NULL)
+        {
+            LOG_D(TAG, "QuerySetAccessKey_New FAILED!");
+            break;
+        }
 
-    if (RET_FAILED(XcpwsClientRuntime_SendQuery(runtime, query, onResetAccessKeyResult, channel)))
-    {
-        LOG_D(TAG, "XcpwsClientRuntime_SendQuery FAILED");
+        if (RET_FAILED(XcpwsClientRuntime_SendQuery(runtime, query, onResetAccessKeyResult, channel)))
+        {
+            LOG_D(TAG, "XcpwsClientRuntime_SendQuery FAILED");
+        }
 
-    }
-
-    XcpMessage_Delete(query);
+        XcpMessage_Delete(query);
+    } while (false);
 }
 
 TINY_LOR
@@ -135,6 +218,7 @@ static bool _ChannelRead(ChannelHandler *thiz, Channel *channel, ChannelDataType
             {
                 onResetAccessKey(channel, runtime);
             }
+
             break;
         }
     } while (false);

@@ -18,7 +18,7 @@
 TINY_BEGIN_DECLS
 
 
-void WaitingForUserCommand(void);
+void WaitingForUserCommand(uint16_t port);
 
 
 TINY_END_DECLS

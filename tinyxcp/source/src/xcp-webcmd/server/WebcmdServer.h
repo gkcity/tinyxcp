@@ -20,10 +20,10 @@ TINY_BEGIN_DECLS
 
 
 #define XCMD_MAX_CONNECTIONS         10
-#define XCMD_CONNECTION_TIMEOUT      60
+#define XCMD_CONNECTION_TIMEOUT      6
 
 TINY_LOR
-Channel * WebcmdServer_New(IotRuntime *runtime);
+Channel * WebcmdServer_New(IotRuntime *runtime, uint16_t *port);
 
 
 
