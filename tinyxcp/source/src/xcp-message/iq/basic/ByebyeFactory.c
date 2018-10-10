@@ -14,28 +14,48 @@
 
 #include "ByebyeFactory.h"
 
-XcpMessage * Byebye_New(const char * id)
+XcpMessage * QueryByebye_New(const char * id)
 {
-    XcpMessage * thiz = XcpMessage_New();
-    if (thiz != NULL)
+    XcpMessage *thiz = NULL;
+
+    do
     {
-        strncpy(thiz->iq.id, id, MESSAGE_ID_LENGTH);
-        thiz->iq.type = IQ_TYPE_QUERY;
-        thiz->iq.content.query.method = IQ_METHOD_BYEBYE;
-    }
+        thiz = XcpMessage_New();
+        if (thiz == NULL)
+        {
+            break;
+        }
+
+        if (RET_FAILED(IQ_InitializeQuery(&thiz->iq, id, IQ_METHOD_BYEBYE)))
+        {
+            XcpMessage_Delete(thiz);
+            thiz = NULL;
+            break;
+        }
+    } while (false);
 
     return thiz;
 }
 
-XcpMessage * Byebye_NewResult(const char * id)
+XcpMessage * ResultByebye_New(const char * id)
 {
-    XcpMessage * thiz = XcpMessage_New();
-    if (thiz != NULL)
+    XcpMessage *thiz = NULL;
+
+    do
     {
-        strncpy(thiz->iq.id, id, MESSAGE_ID_LENGTH);
-        thiz->iq.type = IQ_TYPE_RESULT;
-        thiz->iq.content.query.method = IQ_METHOD_BYEBYE;
-    }
+        thiz = XcpMessage_New();
+        if (thiz == NULL)
+        {
+            break;
+        }
+
+        if (RET_FAILED(IQ_InitializeResult(&thiz->iq, id, IQ_METHOD_BYEBYE)))
+        {
+            XcpMessage_Delete(thiz);
+            thiz = NULL;
+            break;
+        }
+    } while (false);
 
     return thiz;
 }

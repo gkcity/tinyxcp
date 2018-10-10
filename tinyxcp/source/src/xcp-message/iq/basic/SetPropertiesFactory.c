@@ -13,27 +13,36 @@
 
 #include "SetPropertiesFactory.h"
 
+
 TINY_LOR
 XcpMessage * ResultSetProperties_New(const char *id, PropertyOperations *properties)
 {
-    XcpMessage * thiz = NULL;
+    XcpMessage *thiz = NULL;
 
-    RETURN_VAL_IF_FAIL(id, NULL);
     RETURN_VAL_IF_FAIL(properties, NULL);
 
-    thiz = XcpMessage_New();
-    if (thiz != NULL)
+    do
     {
-        strncpy(thiz->iq.id, id, MESSAGE_ID_LENGTH);
-        thiz->iq.type = IQ_TYPE_RESULT;
-        thiz->iq.content.result.method = IQ_METHOD_SET_PROPERTIES;
+        thiz = XcpMessage_New();
+        if (thiz == NULL)
+        {
+            break;
+        }
+
+        if (RET_FAILED(IQ_InitializeResult(&thiz->iq, id, IQ_METHOD_SET_PROPERTIES)))
+        {
+            XcpMessage_Delete(thiz);
+            thiz = NULL;
+            break;
+        }
 
         if (RET_FAILED(PropertyOperations_Copy(&thiz->iq.content.result.content.setProperties.properties, properties)))
         {
             XcpMessage_Delete(thiz);
             thiz = NULL;
+            break;
         }
-    }
+    } while (false);
 
     return thiz;
 }

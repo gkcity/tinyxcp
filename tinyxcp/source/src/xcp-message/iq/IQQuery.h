@@ -55,7 +55,10 @@ typedef struct _IQQuery
     } content;
 } IQQuery;
 
+TINY_LOR
+TinyRet IQQuery_Initialize(IQQuery *thiz);
 
+TINY_LOR
 void IQQuery_Dispose(IQQuery *thiz);
 
 

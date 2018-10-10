@@ -30,6 +30,9 @@ typedef struct _QuerySetAccessKey
     char  key[XCP_ACCESS_KEY_LEN];
 } QuerySetAccessKey;
 
+TinyRet QuerySetAccessKey_Construct(QuerySetAccessKey *thiz);
+void QuerySetAccessKey_Dispose(QuerySetAccessKey *thiz);
+
 /**
  * Result
  */

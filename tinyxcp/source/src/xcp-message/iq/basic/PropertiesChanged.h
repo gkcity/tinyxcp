@@ -30,6 +30,10 @@ typedef struct _QueryPropertiesChanged
     PropertyOperations      operations;
 } QueryPropertiesChanged;
 
+
+TinyRet QueryPropertiesChanged_Construct(QueryPropertiesChanged *thiz);
+void QueryPropertiesChanged_Dispose(QueryPropertiesChanged *thiz);
+
 /**
  * Result
  */
@@ -38,6 +42,8 @@ typedef struct _ResultPropertiesChanged
     PropertyOperations      operations;
 } ResultPropertiesChanged;
 
+TinyRet ResultPropertiesChanged_Construct(ResultPropertiesChanged *thiz);
+void ResultPropertiesChanged_Dispose(ResultPropertiesChanged *thiz);
 
 
 TINY_END_DECLS

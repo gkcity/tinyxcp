@@ -32,6 +32,8 @@ typedef struct _QueryVerifyFinish
     uint8_t             codec;
 } QueryVerifyFinish;
 
+TinyRet QueryVerifyFinish_Construct(QueryVerifyFinish *thiz);
+void QueryVerifyFinish_Dispose(QueryVerifyFinish *thiz);
 
 
 TINY_END_DECLS

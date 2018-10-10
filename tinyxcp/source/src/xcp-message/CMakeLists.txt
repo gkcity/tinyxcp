@@ -53,18 +53,28 @@ SET(XcpMessage_Source
         iq/basic/ByebyeFactory.c
         iq/basic/ChildrenAdded.c
         iq/basic/ChildrenRemoved.c
+        iq/basic/EventOccurred.c
         iq/basic/EventOccurredFactory.c
+        iq/basic/GetAccessKey.c
         iq/basic/GetAccessKeyFactory.c
+        iq/basic/GetProperties.c
         iq/basic/GetPropertiesFactory.c
         iq/basic/GetChildren.c
+        iq/basic/Initialize.c
         iq/basic/InitializeFactory.c
+        iq/basic/InvokeAction.c
         iq/basic/InvokeActionFactory.c
         iq/basic/PingFactory.c
         iq/basic/PongFactory.c
+        iq/basic/PropertiesChanged.c
         iq/basic/PropertiesChangedFactory.c
+        iq/basic/SetAccessKey.c
         iq/basic/SetAccessKeyFactory.c
+        iq/basic/SetProperties.c
         iq/basic/SetPropertiesFactory.c
+        iq/basic/VerifyFinish.c
         iq/basic/VerifyFinishFactory.c
+        iq/basic/VerifyStart.c
         iq/basic/VerifyStartFactory.c
         handler/XcpMessageHandler.c
         )

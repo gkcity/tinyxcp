@@ -30,6 +30,9 @@ typedef struct _QueryEventOccurred
     EventOperation      operation;
 } QueryEventOccurred;
 
+TinyRet QueryEventOccurred_Construct(QueryEventOccurred *thiz);
+void QueryEventOccurred_Dispose(QueryEventOccurred *thiz);
+
 /**
  * Result
  */

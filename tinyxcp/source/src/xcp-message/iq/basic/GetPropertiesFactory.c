@@ -17,23 +17,33 @@
 TINY_LOR
 XcpMessage * ResultGetProperties_New(const char *id, PropertyOperations *operations)
 {
-    XcpMessage * thiz = NULL;
+    XcpMessage *thiz = NULL;
 
     RETURN_VAL_IF_FAIL(operations, NULL);
 
-    thiz = XcpMessage_New();
-    if (thiz != NULL)
+    do
     {
-        strncpy(thiz->iq.id, id, MESSAGE_ID_LENGTH);
-        thiz->iq.type = IQ_TYPE_RESULT;
-        thiz->iq.content.result.method = IQ_METHOD_GET_PROPERTIES;
+        thiz = XcpMessage_New();
+        if (thiz == NULL)
+        {
+            break;
+        }
+
+        if (RET_FAILED(IQ_InitializeResult(&thiz->iq, id, IQ_METHOD_GET_PROPERTIES)))
+        {
+            XcpMessage_Delete(thiz);
+            thiz = NULL;
+            break;
+        }
+
 
         if (RET_FAILED(PropertyOperations_Copy(&thiz->iq.content.result.content.getProperties.operations, operations)))
         {
             XcpMessage_Delete(thiz);
             thiz = NULL;
+            break;
         }
-    }
+    } while (false);
 
     return thiz;
 }

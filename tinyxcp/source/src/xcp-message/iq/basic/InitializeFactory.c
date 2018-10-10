@@ -16,15 +16,29 @@
 
 XcpMessage * QueryInitialize_New(const char *id, const char *version, const char *authentication)
 {
-    XcpMessage * thiz = XcpMessage_New();
-    if (thiz != NULL)
+    XcpMessage *thiz = NULL;
+
+    RETURN_VAL_IF_FAIL(version, NULL);
+    RETURN_VAL_IF_FAIL(authentication, NULL);
+
+    do
     {
-        strncpy(thiz->iq.id, id, MESSAGE_ID_LENGTH);
-        thiz->iq.type = IQ_TYPE_QUERY;
-        thiz->iq.content.query.method = IQ_METHOD_INITIALIZE;
+        thiz = XcpMessage_New();
+        if (thiz == NULL)
+        {
+            break;
+        }
+
+        if (RET_FAILED(IQ_InitializeQuery(&thiz->iq, id, IQ_METHOD_INITIALIZE)))
+        {
+            XcpMessage_Delete(thiz);
+            thiz = NULL;
+            break;
+        }
+
         strncpy(thiz->iq.content.query.content.initialize.version, version, XCP_INITIALIZE_VERSION_LEN);
         strncpy(thiz->iq.content.query.content.initialize.authentication, authentication, XCP_AUTHENTICATION_LEN);
-    }
+    } while (false);
 
     return thiz;
 }

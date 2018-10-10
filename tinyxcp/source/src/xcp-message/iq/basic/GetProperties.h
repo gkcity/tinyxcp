@@ -27,10 +27,16 @@ typedef struct _QueryGetProperties
     PropertyOperations      operations;
 } QueryGetProperties;
 
+TinyRet QueryGetProperties_Construct(QueryGetProperties *thiz);
+void QueryGetProperties_Dispose(QueryGetProperties *thiz);
+
 typedef struct _ResultGetProperties
 {
     PropertyOperations      operations;
 } ResultGetProperties;
+
+TinyRet ResultGetProperties_Construct(ResultGetProperties *thiz);
+void ResultGetProperties_Dispose(ResultGetProperties *thiz);
 
 
 TINY_END_DECLS

@@ -28,6 +28,9 @@ typedef struct _QueryInitialize
     char authentication[XCP_AUTHENTICATION_LEN];
 } QueryInitialize;
 
+TinyRet QueryInitialize_Construct(QueryInitialize *thiz);
+void QueryInitialize_Dispose(QueryInitialize *thiz);
+
 
 TINY_END_DECLS
 

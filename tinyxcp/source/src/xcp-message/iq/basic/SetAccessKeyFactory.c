@@ -17,14 +17,27 @@
 TINY_LOR
 XcpMessage * QuerySetAccessKey_New(const char *id, const char *key)
 {
-    XcpMessage * thiz = XcpMessage_New();
-    if (thiz != NULL)
+    XcpMessage *thiz = NULL;
+
+    RETURN_VAL_IF_FAIL(key, NULL);
+
+    do
     {
-        strncpy(thiz->iq.id, id, MESSAGE_ID_LENGTH);
-        thiz->iq.type = IQ_TYPE_QUERY;
-        thiz->iq.content.query.method = IQ_METHOD_SET_ACCESS_KEY;
+        thiz = XcpMessage_New();
+        if (thiz == NULL)
+        {
+            break;
+        }
+
+        if (RET_FAILED(IQ_InitializeQuery(&thiz->iq, id, IQ_METHOD_SET_ACCESS_KEY)))
+        {
+            XcpMessage_Delete(thiz);
+            thiz = NULL;
+            break;
+        }
+
         strncpy(thiz->iq.content.query.content.setAccessKey.key, key, XCP_ACCESS_KEY_LEN);
-    }
+    } while (false);
 
     return thiz;
 }

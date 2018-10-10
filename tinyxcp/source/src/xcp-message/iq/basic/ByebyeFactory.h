@@ -23,10 +23,10 @@ TINY_BEGIN_DECLS
 
 
 TINY_LOR
-XcpMessage * Byebye_NewQuery(const char *id);
+XcpMessage * QueryByebye_New(const char *id);
 
 TINY_LOR
-XcpMessage * Byebye_NewResult(const char *id);
+XcpMessage * ResultByebye_New(const char *id);
 
 
 

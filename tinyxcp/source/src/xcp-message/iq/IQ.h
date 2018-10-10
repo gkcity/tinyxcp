@@ -48,7 +48,10 @@ typedef struct _IQ
 } IQ;
 
 TINY_LOR
-TinyRet IQ_InitializeQuery(IQ *thiz, IQMethod method);
+TinyRet IQ_InitializeQuery(IQ *thiz, const char *id, IQMethod method);
+
+TINY_LOR
+TinyRet IQ_InitializeResult(IQ *thiz, const char *id, IQMethod method);
 
 TINY_LOR
 void IQ_Dispose(IQ *thiz);

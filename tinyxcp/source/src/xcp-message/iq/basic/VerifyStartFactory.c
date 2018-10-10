@@ -17,18 +17,27 @@
 TINY_LOR
 XcpMessage * QueryVerifyStart_New(const char *id, const char * publicKey)
 {
-    XcpMessage * thiz = NULL;
+    XcpMessage *thiz = NULL;
 
     RETURN_VAL_IF_FAIL(publicKey, NULL);
 
-    thiz = XcpMessage_New();
-    if (thiz != NULL)
+    do
     {
-        strncpy(thiz->iq.id, id, MESSAGE_ID_LENGTH);
-        thiz->iq.type = IQ_TYPE_QUERY;
-        thiz->iq.content.query.method = IQ_METHOD_VERIFY_START;
+        thiz = XcpMessage_New();
+        if (thiz == NULL)
+        {
+            break;
+        }
+
+        if (RET_FAILED(IQ_InitializeQuery(&thiz->iq, id, IQ_METHOD_VERIFY_START)))
+        {
+            XcpMessage_Delete(thiz);
+            thiz = NULL;
+            break;
+        }
+
         strncpy(thiz->iq.content.query.content.verifyStart.publicKey, publicKey, XCP_PUBLIC_KEY_LENGTH);
-    }
+    } while (false);
 
     return thiz;
 }

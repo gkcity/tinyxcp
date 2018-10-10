@@ -27,11 +27,16 @@ typedef struct _QuerySetProperties
     PropertyOperations      properties;
 } QuerySetProperties;
 
+TinyRet QuerySetProperties_Construct(QuerySetProperties *thiz);
+void QuerySetProperties_Dispose(QuerySetProperties *thiz);
+
 typedef struct _ResultSetProperties
 {
     PropertyOperations      properties;
 } ResultSetProperties;
 
+TinyRet ResultSetProperties_Construct(ResultSetProperties *thiz);
+void ResultSetProperties_Dispose(ResultSetProperties *thiz);
 
 
 TINY_END_DECLS

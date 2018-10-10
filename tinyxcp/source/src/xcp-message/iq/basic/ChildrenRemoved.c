@@ -18,12 +18,11 @@
 TINY_LOR
 TinyRet QueryChildrenRemoved_Construct(QueryChildrenRemoved *thiz)
 {
-    return TINY_RET_OK;
-
+    return TinyList_Construct(&thiz->children);
 }
 
 TINY_LOR
 void QueryChildrenRemoved_Dispose(QueryChildrenRemoved *thiz)
 {
-
+    TinyList_Dispose(&thiz->children);
 }

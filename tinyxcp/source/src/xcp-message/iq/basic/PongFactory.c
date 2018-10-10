@@ -16,13 +16,23 @@
 
 XcpMessage * Pong_New(const char *id)
 {
-    XcpMessage * thiz = XcpMessage_New();
-    if (thiz != NULL)
+    XcpMessage *thiz = NULL;
+
+    do
     {
-        strncpy(thiz->iq.id, id, MESSAGE_ID_LENGTH);
-        thiz->iq.type = IQ_TYPE_RESULT;
-        thiz->iq.content.query.method = IQ_METHOD_PING;
-    }
+        thiz = XcpMessage_New();
+        if (thiz == NULL)
+        {
+            break;
+        }
+
+        if (RET_FAILED(IQ_InitializeResult(&thiz->iq, id, IQ_METHOD_PING)))
+        {
+            XcpMessage_Delete(thiz);
+            thiz = NULL;
+            break;
+        }
+    } while (false);
 
     return thiz;
 }

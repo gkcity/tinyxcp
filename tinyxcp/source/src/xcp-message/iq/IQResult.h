@@ -47,7 +47,10 @@ typedef struct _IQResult
     } content;
 } IQResult;
 
+TINY_LOR
+TinyRet IQResult_Initialize(IQResult *thiz);
 
+TINY_LOR
 void IQResult_Dispose(IQResult *thiz);
 
 

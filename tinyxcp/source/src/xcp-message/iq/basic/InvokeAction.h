@@ -27,11 +27,16 @@ typedef struct _QueryInvokeAction
     ActionOperation      operation;
 } QueryInvokeAction;
 
+TinyRet QueryInvokeAction_Construct(QueryInvokeAction *thiz);
+void QueryInvokeAction_Dispose(QueryInvokeAction *thiz);
+
 typedef struct _ResultInvokeAction
 {
     ActionOperation      operation;
 } ResultInvokeAction;
 
+TinyRet ResultInvokeAction_Construct(ResultInvokeAction *thiz);
+void ResultInvokeAction_Dispose(ResultInvokeAction *thiz);
 
 
 TINY_END_DECLS

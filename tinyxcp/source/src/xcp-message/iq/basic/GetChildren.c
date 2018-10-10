@@ -14,16 +14,14 @@
 
 #include "GetChildren.h"
 
-
 TINY_LOR
 TinyRet ResultGetChildren_Construct(ResultGetChildren *thiz)
 {
-    return TINY_RET_OK;
-
+    return TinyList_Construct(&thiz->children);
 }
 
 TINY_LOR
 void ResultGetChildren_Dispose(ResultGetChildren *thiz)
 {
-
+    TinyList_Dispose(&thiz->children);
 }

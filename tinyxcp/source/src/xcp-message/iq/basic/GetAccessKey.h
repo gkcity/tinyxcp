@@ -36,6 +36,9 @@ typedef struct _ResultGetAccessKey
     char  key[XCP_ACCESS_KEY_LEN];
 } ResultGetAccessKey;
 
+TinyRet ResultGetAccessKey_Construct(ResultGetAccessKey *thiz);
+void ResultGetAccessKey_Dispose(ResultGetAccessKey *thiz);
+
 
 TINY_END_DECLS
 
