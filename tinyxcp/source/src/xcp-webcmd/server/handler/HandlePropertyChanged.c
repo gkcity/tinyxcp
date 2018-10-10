@@ -65,9 +65,16 @@ void HandlePropertyChanged(Channel *channel, HttpContent *content, IotRuntime *r
 
     do
     {
+        if (content->data_size == 0)
+        {
+            sendTextResponse(channel, 400, "ARGUMENT INVALID", "Content Size is 0");
+            break;
+        }
+
         object = JsonObject_NewString(content->buf);
         if (object == NULL)
         {
+            sendTextResponse(channel, 400, "ARGUMENT INVALID", "Content invalid");
             break;
         }
 

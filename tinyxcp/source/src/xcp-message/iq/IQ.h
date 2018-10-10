@@ -47,6 +47,11 @@ typedef struct _IQ
     } content;
 } IQ;
 
+TINY_LOR
+TinyRet IQ_InitializeQuery(IQ *thiz, IQMethod method);
+
+TINY_LOR
+void IQ_Dispose(IQ *thiz);
 
 
 TINY_END_DECLS

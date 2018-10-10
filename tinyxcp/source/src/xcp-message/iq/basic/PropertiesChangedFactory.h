@@ -24,7 +24,7 @@ TINY_BEGIN_DECLS
 
 
 TINY_LOR
-XcpMessage * QueryPropertiesChanged_New(const char *id, PropertyOperations *properties);
+XcpMessage * QueryPropertiesChanged_New(const char *id, PropertyOperations *operations);
 
 
 TINY_END_DECLS

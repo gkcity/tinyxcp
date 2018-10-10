@@ -182,7 +182,7 @@ bool WebcmdClient_SendPropertyChanged(uint16_t port, const char *did, uint16_t s
             break;
         }
 
-        exchange = HttpExchange_New("127.0.0.1", port, "PUT", "/property", 3, NULL, 0);
+        exchange = HttpExchange_New("127.0.0.1", port, "PUT", "/property", 3, (const uint8_t *) object->string, object->size);
         if (exchange == NULL)
         {
             LOG_D(TAG, "HttpExchange_New failed!\n");
@@ -263,7 +263,7 @@ bool WebcmdClient_SendEventOccurred(uint16_t port, const char *did, uint16_t sii
             break;
         }
 
-        exchange = HttpExchange_New("127.0.0.1", port, "PUT", "/event", 3, NULL, 0);
+        exchange = HttpExchange_New("127.0.0.1", port, "PUT", "/event", 3, (const uint8_t *) object->string, object->size);
         if (exchange == NULL)
         {
             LOG_D(TAG, "HttpExchange_New failed!\n");

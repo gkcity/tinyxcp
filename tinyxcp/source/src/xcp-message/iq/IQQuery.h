@@ -56,6 +56,8 @@ typedef struct _IQQuery
 } IQQuery;
 
 
+void IQQuery_Dispose(IQQuery *thiz);
+
 
 TINY_END_DECLS
 

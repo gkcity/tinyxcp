@@ -48,6 +48,9 @@ typedef struct _IQResult
 } IQResult;
 
 
+void IQResult_Dispose(IQResult *thiz);
+
+
 TINY_END_DECLS
 
 #endif /* __IQ_RESULT_H__  */

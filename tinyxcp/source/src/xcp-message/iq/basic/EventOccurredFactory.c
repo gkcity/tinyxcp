@@ -17,5 +17,23 @@
 TINY_LOR
 XcpMessage * QueryEventOccurred_New(const char *id, EventOperation *operation)
 {
-    return NULL;
+    XcpMessage * thiz = NULL;
+
+    RETURN_VAL_IF_FAIL(operation, NULL);
+
+    thiz = XcpMessage_New();
+    if (thiz != NULL)
+    {
+        strncpy(thiz->iq.id, id, MESSAGE_ID_LENGTH);
+        thiz->iq.type = IQ_TYPE_RESULT;
+        thiz->iq.content.query.method = IQ_METHOD_EVENT_OCCURRED;
+
+        if (RET_FAILED(EventOperation_Copy(&thiz->iq.content.query.content.eventOccurred.operation, operation)))
+        {
+            XcpMessage_Delete(thiz);
+            thiz = NULL;
+        }
+    }
+
+    return thiz;
 }

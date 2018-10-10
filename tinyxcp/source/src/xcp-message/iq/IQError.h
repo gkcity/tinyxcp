@@ -28,6 +28,8 @@ typedef struct _IQError
     char description[XCP_DESCRIPTION_LENGTH];
 } IQError;
 
+void IQError_Dispose(IQError *thiz);
+
 
 TINY_END_DECLS
 

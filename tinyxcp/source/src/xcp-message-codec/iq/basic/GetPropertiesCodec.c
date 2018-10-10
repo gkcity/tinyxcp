@@ -132,11 +132,13 @@ TinyRet GetPropertiesCodec_EncodeResult(JsonObject *content, ResultGetProperties
 
             if (o->status != 0)
             {
+                JsonObject_Delete(object);
                 continue;
             }
 
             if (o->value == NULL)
             {
+                JsonObject_Delete(object);
                 continue;
             }
 

@@ -19,12 +19,19 @@ TINY_LOR
 static TinyRet XcpMessage_Construct(XcpMessage *thiz)
 {
     memset(thiz, 0, sizeof(XcpMessage));
+
+    thiz->iq.type = IQ_TYPE_QUERY;
+    thiz->iq.content.query.method = IQ_METHOD_UNDEFINED;
+
     return TINY_RET_OK;
 }
 
 static void XcpMessage_Dispose(XcpMessage *thiz)
 {
     RETURN_IF_FAIL(thiz);
+
+    IQ_Dispose(&thiz->iq);
+    tiny_free(thiz);
 }
 
 TINY_LOR

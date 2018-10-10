@@ -44,16 +44,23 @@ static void onGet(ChannelHandler *thiz, Channel *channel, const char *id, Proper
     XcpwsClientHandlerContext *context = (XcpwsClientHandlerContext *) (thiz->context);
     XcpMessage *result = NULL;
 
-    Device_TryReadProperties(context->device, operations);
+    do
+    {
+        Device_TryReadProperties(context->device, operations);
 
-    result = ResultGetProperties_New(id, operations);
+        result = ResultGetProperties_New(id, operations);
+        if (result == NULL)
+        {
+            LOG_E(TAG, "ResultGetProperties_New FAILED");
+            break;
+        }
+
+        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, result, 0);
+    } while (false);
+
     if (result != NULL)
     {
-        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, result, 0);
-    }
-    else
-    {
-        LOG_E(TAG, "ResultGetProperties_New FAILED");
+        XcpMessage_Delete(result);
     }
 }
 
@@ -62,16 +69,23 @@ static void onSet(ChannelHandler *thiz, Channel *channel, const char *id, Proper
     XcpwsClientHandlerContext *context = (XcpwsClientHandlerContext *) (thiz->context);
     XcpMessage *result = NULL;
 
-    Device_TryWriteProperties(context->device, operations);
+    do
+    {
+        Device_TryWriteProperties(context->device, operations);
 
-    result = ResultSetProperties_New(id, operations);
+        result = ResultSetProperties_New(id, operations);
+        if (result == NULL)
+        {
+            LOG_E(TAG, "ResultSetProperties_New FAILED");
+            break;
+        }
+
+        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, result, 0);
+    } while (false);
+
     if (result != NULL)
     {
-        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, result, 0);
-    }
-    else
-    {
-        LOG_E(TAG, "ResultSetProperties_New FAILED");
+        XcpMessage_Delete(result);
     }
 }
 
@@ -82,29 +96,46 @@ static void onAction(ChannelHandler *thiz, Channel *channel, const char *id, Act
 
     LOG_D(TAG, "onAction: %s.%d.%d", operation->aid.did, operation->aid.siid, operation->aid.iid);
 
-    Device_TryInvokeAction(context->device, operation);
+    do
+    {
+        Device_TryInvokeAction(context->device, operation);
 
-    result = ResultInvokeAction_New(id, operation);
+        result = ResultInvokeAction_New(id, operation);
+        if (result == NULL)
+        {
+            LOG_E(TAG, "ResultInvokeAction_New FAILED");
+            break;
+        }
+
+        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, result, 0);
+    } while (false);
+
     if (result != NULL)
     {
-        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, result, 0);
-    }
-    else
-    {
-        LOG_E(TAG, "ResultInvokeAction_New FAILED");
+        XcpMessage_Delete(result);
     }
 }
 
 static void _sendError(ChannelHandler *thiz, Channel *channel, const char *id, int32_t status, const char *description)
 {
-    XcpMessage * message = IQError_New(id, status, description);
-    if (message == NULL)
-    {
-        LOG_D(TAG, "IQError_New FAILED!");
-        return;
-    }
+    XcpMessage * error = NULL;
 
-    SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, message, 0);
+    do
+    {
+        error = IQError_New(id, status, description);
+        if (error == NULL)
+        {
+            LOG_D(TAG, "IQError_New FAILED!");
+            break;
+        }
+
+        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, error, 0);
+    } while (false);
+
+    if (error != NULL)
+    {
+        XcpMessage_Delete(error);
+    }
 }
 
 static void onQuery(ChannelHandler *thiz, Channel *channel, const char *id, IQQuery *query)

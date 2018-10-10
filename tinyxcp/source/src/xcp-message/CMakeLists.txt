@@ -44,6 +44,10 @@ SET(XcpMessage_Header
 
 SET(XcpMessage_Source
         XcpMessage.c
+        iq/IQ.c
+        iq/IQQuery.c
+        iq/IQResult.c
+        iq/IQError.c
         iq/IQErrorFactory.c
         iq/IQMethod.c
         iq/basic/ByebyeFactory.c
