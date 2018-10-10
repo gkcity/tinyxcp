@@ -140,6 +140,6 @@ void HandlePropertyChanged(Channel *channel, HttpContent *content, IotRuntime *r
 
     if (operations != NULL)
     {
-        // PropertyOperations_Delete(operations);
+        PropertyOperations_Delete(operations);
     }
 }
