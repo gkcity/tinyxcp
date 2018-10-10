@@ -278,27 +278,32 @@ static void _handlePong(XcpMessage *message, void *ctx)
 TINY_LOR
 static void _Ping(ChannelHandler *thiz, Channel *channel)
 {
-    XcpwsClientHandlerContext *context = (XcpwsClientHandlerContext *) (thiz->context);
+    XcpMessage * ping = NULL;
 
     LOG_D(TAG, "ping");
 
     do
     {
-        XcpMessage * message = Ping_New("");
-        if (message == NULL)
+        ping = Ping_New("");
+        if (ping == NULL)
         {
             LOG_D(TAG, "XcpMessage_New FAILED!");
             break;
         }
 
-        if (RET_FAILED(XcpwsClientHandlerContext_AddHandler(thiz->context, message->iq.id, _handlePong, thiz)))
+        if (RET_FAILED(XcpwsClientHandlerContext_AddHandler(thiz->context, ping->iq.id, _handlePong, thiz)))
         {
             LOG_D(TAG, "XcpClientHandlerContext_AddHandler FAILED!");
             return;
         }
 
-        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, message, 0);
+        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, ping, 0);
     } while (false);
+
+    if (ping != NULL)
+    {
+        XcpMessage_Delete(ping);
+    }
 }
 
 #endif
