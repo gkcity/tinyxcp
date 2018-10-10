@@ -29,9 +29,7 @@ static TinyRet XcpMessage_Construct(XcpMessage *thiz)
 static void XcpMessage_Dispose(XcpMessage *thiz)
 {
     RETURN_IF_FAIL(thiz);
-
     IQ_Dispose(&thiz->iq);
-    tiny_free(thiz);
 }
 
 TINY_LOR
