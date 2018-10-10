@@ -27,28 +27,17 @@ TINY_BEGIN_DECLS
  */
 typedef struct _QueryPropertiesChanged
 {
-    PropertyOperations      properties;
+    PropertyOperations      operations;
 } QueryPropertiesChanged;
-
-TINY_LOR
-TinyRet QueryPropertiesChanged_Construct(QueryPropertiesChanged *thiz);
-
-TINY_LOR
-void QueryPropertiesChanged_Dispose(QueryPropertiesChanged *thiz);
 
 /**
  * Result
  */
 typedef struct _ResultPropertiesChanged
 {
-    PropertyOperations      properties;
+    PropertyOperations      operations;
 } ResultPropertiesChanged;
 
-TINY_LOR
-TinyRet ResultPropertiesChanged_Construct(ResultPropertiesChanged *thiz);
-
-TINY_LOR
-void ResultPropertiesChanged_Dispose(ResultPropertiesChanged *thiz);
 
 
 TINY_END_DECLS

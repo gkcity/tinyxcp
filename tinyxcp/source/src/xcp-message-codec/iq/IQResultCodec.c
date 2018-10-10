@@ -142,7 +142,6 @@ TinyRet IQResultCodec_Decode(IQResult* result, JsonObject *object)
                 break;
 
             case IQ_METHOD_EVENT_OCCURRED:
-                ret = EventOccurredCodec_DecodeResult(&result->content.eventOccurred, content);
                 break;
 
             case IQ_METHOD_GET_ACCESS_KEY:

@@ -18,7 +18,7 @@
 int main(void)
 {
     Device *device = NULL;
-    uint16_t ipcPort = 60006;
+    uint16_t port = 60006;
 
     tiny_socket_initialize();
 
@@ -34,17 +34,17 @@ int main(void)
     /**
      * 2. 线程1： 启动协议栈，连接到服务器，等待控制指令并执行。
      */
-    StartDeviceStack(device, &ipcPort);
+    StartDeviceStack(device, &port);
 
     /**
      * 3. 线程2： 监控设备数据，如果发生变化，则通过ipc端口通知服务器。
      */
-    StartDeviceMonitor(DID, ipcPort);
+    StartDeviceMonitor(DID, port);
 
     /**
      * 4. 线程3: 主线程，阻塞在这里，等待用户输入命令
      */
-    WaitingForUserCommand(ipcPort);
+    WaitingForUserCommand(port);
 
     /**
      * 5. 停止数据监控

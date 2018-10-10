@@ -17,7 +17,7 @@
 
 #include <tiny_base.h>
 #include <tiny_lor.h>
-#include <operation/PropertyOperations.h>
+#include <operation/EventOperation.h>
 
 TINY_BEGIN_DECLS
 
@@ -27,29 +27,12 @@ TINY_BEGIN_DECLS
  */
 typedef struct _QueryEventOccurred
 {
-    PropertyOperations      arguments;
+    EventOperation      operation;
 } QueryEventOccurred;
-
-TINY_LOR
-TinyRet QueryEventOccurred_Construct(QueryEventOccurred *thiz);
-
-TINY_LOR
-void QueryEventOccurred_Dispose(QueryEventOccurred *thiz);
 
 /**
  * Result
  */
-typedef struct _ResultEventOccurred
-{
-    PropertyOperations      arguments;
-} ResultEventOccurred;
-
-TINY_LOR
-TinyRet ResultEventOccurred_Construct(ResultEventOccurred *thiz);
-
-TINY_LOR
-void ResultEventOccurred_Dispose(ResultEventOccurred *thiz);
-
 
 TINY_END_DECLS
 

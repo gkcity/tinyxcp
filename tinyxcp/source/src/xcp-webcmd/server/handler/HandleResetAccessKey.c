@@ -4,14 +4,37 @@
  * @author jxfengzi@gmail.com
  * @date   2013-11-19
  *
- * @file   ResetAccessKeyHandler.c
+ * @file   HandleResetAccessKey.c
  *
  * @remark
  *
  */
+#include <XcpMessage.h>
+#include <tiny_log.h>
+#include <iq/basic/SetAccessKeyFactory.h>
 #include "HandleResetAccessKey.h"
+#include "XcpwsClientRuntime.h"
+#include "HandleCommon.h"
 
-void onResetAccessKey(Channel *channel, IotRuntime *runtime)
+#define TAG  "HandleResetAccessKey"
+
+static void onResetAccessKeyResult (XcpMessage *result, void *ctx)
+{
+    Channel *channel = (Channel *)ctx;
+
+    do
+    {
+        if (result->iq.type == IQ_TYPE_ERROR)
+        {
+            sendError(channel, &result->iq.content.error);
+            break;
+        }
+
+        sendTextResponse(channel, 200, "OK", NULL);
+    } while (false);
+}
+
+void HandleResetAccessKey(Channel *channel, IotRuntime *runtime)
 {
     do
     {
@@ -28,5 +51,5 @@ void onResetAccessKey(Channel *channel, IotRuntime *runtime)
         }
 
         XcpMessage_Delete(query);
-    } while (false); 
+    } while (false);
 }

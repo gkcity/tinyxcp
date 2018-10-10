@@ -4,7 +4,7 @@
  * @author jxfengzi@gmail.com
  * @date   2017-7-1
  *
- * @file   GetPropertiesFactory.h
+ * @file   PropertiesChangedFactory.h
  *
  * @remark
  *      set tabstop=4
@@ -12,8 +12,8 @@
  *      set expandtab
  */
 
-#ifndef __GetPropertiesFactory_H__
-#define __GetPropertiesFactory_H__
+#ifndef __PropertiesChangedFactory_H__
+#define __PropertiesChangedFactory_H__
 
 #include <tiny_base.h>
 #include <tiny_lor.h>
@@ -24,9 +24,9 @@ TINY_BEGIN_DECLS
 
 
 TINY_LOR
-XcpMessage * ResultGetProperties_New(const char *id, PropertyOperations *properties);
+XcpMessage * QueryPropertiesChanged_New(const char *id, PropertyOperations *properties);
 
 
 TINY_END_DECLS
 
-#endif /* __GetPropertiesFactory_H__  */
+#endif /* __PropertiesChangedFactory_H__  */

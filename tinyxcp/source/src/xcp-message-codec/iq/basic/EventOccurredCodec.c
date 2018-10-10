@@ -12,15 +12,48 @@
  *      set expandtab
  */
 
+#include <tiny_snprintf.h>
 #include "EventOccurredCodec.h"
-
 
 TinyRet EventOccurredCodec_EncodeQuery(JsonObject *root, QueryEventOccurred *eventOccurred)
 {
-    return TINY_RET_E_NOT_IMPLEMENTED;
-}
+    TinyRet ret = TINY_RET_OK;
 
-TinyRet EventOccurredCodec_DecodeResult(ResultEventOccurred *eventOccurred, JsonObject *content)
-{
-    return TINY_RET_E_NOT_IMPLEMENTED;
+    RETURN_VAL_IF_FAIL(root, TINY_RET_E_ARG_NULL);
+    RETURN_VAL_IF_FAIL(eventOccurred, TINY_RET_E_ARG_NULL);
+
+    do
+    {
+        EID *e = &eventOccurred->operation.eid;
+        char eid[256];
+        memset(eid, 0, 256);
+        tiny_snprintf(eid, 256, "%s.%u.%u", e->did, e->siid, e->iid);
+
+        ret = JsonObject_PutString(root, "eid", eid);
+        if (RET_FAILED(ret))
+        {
+            break;
+        }
+
+        if (eventOccurred->operation.arguments == NULL)
+        {
+            break;
+        }
+
+        JsonArray *arguments = JsonArray_NewFrom(eventOccurred->operation.arguments);
+        if (arguments == NULL)
+        {
+            ret = TINY_RET_E_NEW;
+            break;
+        }
+
+        ret = JsonObject_PutArray(root, "arguments", arguments);
+        if (RET_FAILED(ret))
+        {
+            JsonArray_Delete(arguments);
+            break;
+        }
+    } while (false);
+
+    return ret;
 }

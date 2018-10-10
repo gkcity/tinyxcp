@@ -24,12 +24,12 @@ TINY_BEGIN_DECLS
 
 typedef struct _QueryGetProperties
 {
-    PropertyOperations      properties;
+    PropertyOperations      operations;
 } QueryGetProperties;
 
 typedef struct _ResultGetProperties
 {
-    PropertyOperations      properties;
+    PropertyOperations      operations;
 } ResultGetProperties;
 
 

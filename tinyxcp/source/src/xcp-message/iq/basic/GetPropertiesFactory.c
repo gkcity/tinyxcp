@@ -15,11 +15,11 @@
 #include "GetPropertiesFactory.h"
 
 TINY_LOR
-XcpMessage * ResultGetProperties_New(const char *id, PropertyOperations *properties)
+XcpMessage * ResultGetProperties_New(const char *id, PropertyOperations *operations)
 {
     XcpMessage * thiz = NULL;
 
-    RETURN_VAL_IF_FAIL(properties, NULL);
+    RETURN_VAL_IF_FAIL(operations, NULL);
 
     thiz = XcpMessage_New();
     if (thiz != NULL)
@@ -28,7 +28,7 @@ XcpMessage * ResultGetProperties_New(const char *id, PropertyOperations *propert
         thiz->iq.type = IQ_TYPE_RESULT;
         thiz->iq.content.result.method = IQ_METHOD_GET_PROPERTIES;
 
-        if (RET_FAILED(PropertyOperations_Copy(&thiz->iq.content.result.content.getProperties.properties, properties)))
+        if (RET_FAILED(PropertyOperations_Copy(&thiz->iq.content.result.content.getProperties.operations, operations)))
         {
             XcpMessage_Delete(thiz);
             thiz = NULL;

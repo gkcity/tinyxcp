@@ -4,14 +4,14 @@
  * @author jxfengzi@gmail.com
  * @date   2013-11-19
  *
- * @file   GetAccessKeyHandler.h
+ * @file   HandleGetAccessKey.h
  *
  * @remark
  *
  */
 
-#ifndef __GetAccessKeyHandler_H__
-#define __GetAccessKeyHandler_H__
+#ifndef __HandleGetAccessKey_H__
+#define __HandleGetAccessKey_H__
 
 #include <tiny_base.h>
 #include <channel/Channel.h>
@@ -20,9 +20,9 @@
 TINY_BEGIN_DECLS
 
 
-void onGetAccessKey(Channel *channel, IotRuntime *runtime);
+void HandleGetAccessKey(Channel *channel, IotRuntime *runtime);
 
 
 TINY_END_DECLS
 
-#endif /* __GetAccessKeyHandler_H__ */
+#endif /* __HandleGetAccessKey_H__ */

@@ -17,6 +17,7 @@ SET(XcpMessage_Header
         iq/basic/ChildrenAdded.h
         iq/basic/ChildrenRemoved.h
         iq/basic/EventOccurred.h
+        iq/basic/EventOccurredFactory.h
         iq/basic/GetAccessKey.h
         iq/basic/GetAccessKeyFactory.h
         iq/basic/GetChildren.h
@@ -29,6 +30,7 @@ SET(XcpMessage_Header
         iq/basic/PingFactory.h
         iq/basic/PongFactory.h
         iq/basic/PropertiesChanged.h
+        iq/basic/PropertiesChangedFactory.h
         iq/basic/SetAccessKey.h
         iq/basic/SetAccessKeyFactory.h
         iq/basic/SetProperties.h
@@ -47,7 +49,7 @@ SET(XcpMessage_Source
         iq/basic/ByebyeFactory.c
         iq/basic/ChildrenAdded.c
         iq/basic/ChildrenRemoved.c
-        iq/basic/EventOccurred.c
+        iq/basic/EventOccurredFactory.c
         iq/basic/GetAccessKeyFactory.c
         iq/basic/GetPropertiesFactory.c
         iq/basic/GetChildren.c
@@ -55,8 +57,8 @@ SET(XcpMessage_Source
         iq/basic/InvokeActionFactory.c
         iq/basic/PingFactory.c
         iq/basic/PongFactory.c
+        iq/basic/PropertiesChangedFactory.c
         iq/basic/SetAccessKeyFactory.c
-        iq/basic/PropertiesChanged.c
         iq/basic/SetPropertiesFactory.c
         iq/basic/VerifyFinishFactory.c
         iq/basic/VerifyStartFactory.c

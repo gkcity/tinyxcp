@@ -7,12 +7,22 @@
 SET(Webcmd_Header
         server/WebcmdServer.h
         server/handler/WebcmdServerHandler.h
+        server/handler/HandleCommon.h
+        server/handler/HandleGetAccessKey.h
+        server/handler/HandleResetAccessKey.h
+        server/handler/HandlePropertyChanged.h
+        server/handler/HandleEventOccurred.h
         client/WebcmdClient.h
         )
 
 SET(Webcmd_Source
         server/WebcmdServer.c
         server/handler/WebcmdServerHandler.c
+        server/handler/HandleCommon.c
+        server/handler/HandleGetAccessKey.c
+        server/handler/HandleResetAccessKey.c
+        server/handler/HandlePropertyChanged.c
+        server/handler/HandleEventOccurred.c
         client/WebcmdClient.c
         )
 

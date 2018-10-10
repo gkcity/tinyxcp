@@ -17,7 +17,6 @@ SET(TINYCRYPTO_ROOT ${PROJECT_SOURCE_DIR}/../tinycrypto)
 INCLUDE_DIRECTORIES(${SOURCE_ROOT}/xcp-common)
 INCLUDE_DIRECTORIES(${SOURCE_ROOT}/xcp-message)
 INCLUDE_DIRECTORIES(${SOURCE_ROOT}/xcp-message-codec)
-#INCLUDE_DIRECTORIES(${SOURCE_ROOT}/xcp-tcp)
 INCLUDE_DIRECTORIES(${SOURCE_ROOT}/xcp-websocket)
 
 INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/TinyBase)
@@ -77,13 +76,11 @@ SET(XcpCommon_Header
         ${SOURCE_ROOT}/xcp-common/XcpSessionInfo.h
         ${SOURCE_ROOT}/xcp-common/XcpKeyCreator.h
         ${SOURCE_ROOT}/xcp-common/XcpStage.h
-        ${SOURCE_ROOT}/xcp-common/XcpClientVerifier.h
         )
 
 SET(XcpCommon_Source
         ${SOURCE_ROOT}/xcp-common/XcpSessionInfo.c
         ${SOURCE_ROOT}/xcp-common/XcpKeyCreator.c
-        ${SOURCE_ROOT}/xcp-common/XcpClientVerifier.c
         )
 
 SOURCE_GROUP(XcpCommon\\headers FILES ${XcpCommon_Header})
@@ -149,7 +146,9 @@ SET(XcpMessage_Header
         ${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenAdded.h
         ${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenRemoved.h
         ${SOURCE_ROOT}/xcp-message/iq/basic/EventOccurred.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/EventOccurredFactory.h
         ${SOURCE_ROOT}/xcp-message/iq/basic/GetAccessKey.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/GetAccessKeyFactory.h
         ${SOURCE_ROOT}/xcp-message/iq/basic/GetChildren.h
         ${SOURCE_ROOT}/xcp-message/iq/basic/GetProperties.h
         ${SOURCE_ROOT}/xcp-message/iq/basic/GetPropertiesFactory.h
@@ -160,14 +159,16 @@ SET(XcpMessage_Header
         ${SOURCE_ROOT}/xcp-message/iq/basic/PingFactory.h
 		${SOURCE_ROOT}/xcp-message/iq/basic/PongFactory.h
         ${SOURCE_ROOT}/xcp-message/iq/basic/PropertiesChanged.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/PropertiesChangedFactory.h
         ${SOURCE_ROOT}/xcp-message/iq/basic/SetAccessKey.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/SetProperties.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/SetAccessKeyFactory.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/SetProperties.h
         ${SOURCE_ROOT}/xcp-message/iq/basic/SetPropertiesFactory.h
         ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyFinish.h
         ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyFinishFactory.h
         ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyStart.h
         ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyStartFactory.h
-        ${SOURCE_ROOT}/xcp-message/handler/XcpMessageHandlerWrapper.h
+        ${SOURCE_ROOT}/xcp-message/handler/XcpMessageHandler.h
         )
 
 SET(XcpMessage_Source
@@ -177,20 +178,20 @@ SET(XcpMessage_Source
         ${SOURCE_ROOT}/xcp-message/iq/basic/ByebyeFactory.c
         ${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenAdded.c
         ${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenRemoved.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/EventOccurred.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/GetAccessKey.c
+        ${SOURCE_ROOT}/xcp-message/iq/basic/EventOccurredFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/GetAccessKeyFactory.c
         ${SOURCE_ROOT}/xcp-message/iq/basic/GetPropertiesFactory.c
         ${SOURCE_ROOT}/xcp-message/iq/basic/GetChildren.c
         ${SOURCE_ROOT}/xcp-message/iq/basic/InitializeFactory.c
         ${SOURCE_ROOT}/xcp-message/iq/basic/InvokeActionFactory.c
         ${SOURCE_ROOT}/xcp-message/iq/basic/PingFactory.c
 		${SOURCE_ROOT}/xcp-message/iq/basic/PongFactory.c
-		${SOURCE_ROOT}/xcp-message/iq/basic/PropertiesChanged.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/SetAccessKey.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/SetPropertiesFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/PropertiesChangedFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/SetAccessKeyFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/SetPropertiesFactory.c
         ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyFinishFactory.c
         ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyStartFactory.c
-        ${SOURCE_ROOT}/xcp-message/handler/XcpMessageHandlerWrapper.c
+        ${SOURCE_ROOT}/xcp-message/handler/XcpMessageHandler.c
         )
 
 SOURCE_GROUP(XcpMessage\\headers FILES ${XcpMessage_Header})
@@ -239,6 +240,31 @@ SET(Xcpws_Source
 SOURCE_GROUP(Xcpws\\headers FILES ${Xcpws_Header})
 SOURCE_GROUP(Xcpws\\sources FILES ${Xcpws_Source})
 
+SET(XcpWebcmd_Header
+		${SOURCE_ROOT}/xcp-webcmd/server/WebcmdServer.h
+		${SOURCE_ROOT}/xcp-webcmd/server/handler/WebcmdServerHandler.h
+		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleCommon.h
+		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleGetAccessKey.h
+		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleResetAccessKey.h
+		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandlePropertyChanged.h
+		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleEventOccurred.h
+		${SOURCE_ROOT}/xcp-webcmd/client/WebcmdClient.h
+		)
+
+SET(XcpWebcmd_Source
+		${SOURCE_ROOT}/xcp-webcmd/server/WebcmdServer.c
+		${SOURCE_ROOT}/xcp-webcmd/server/handler/WebcmdServerHandler.c
+		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleCommon.c
+		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleGetAccessKey.c
+		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleResetAccessKey.c
+		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandlePropertyChanged.c
+		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleEventOccurred.c
+		${SOURCE_ROOT}/xcp-webcmd/client/WebcmdClient.c
+		)
+
+SOURCE_GROUP(XcpWebcmd\\headers FILES ${XcpWebcmd_Header})
+SOURCE_GROUP(XcpWebcmd\\sources FILES ${XcpWebcmd_Source})
+
 SET(SRC
         ${XcpCommon_Header}
         ${XcpCommon_Source}
@@ -248,6 +274,8 @@ SET(SRC
         ${XcpMessageCodec_Source}
         ${Xcpws_Header}
         ${Xcpws_Source}
+		${XcpWebcmd_Header}
+		${XcpWebcmd_Source}
         )
 
 

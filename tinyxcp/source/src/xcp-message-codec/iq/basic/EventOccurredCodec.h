@@ -25,8 +25,6 @@ TINY_BEGIN_DECLS
 
 TinyRet EventOccurredCodec_EncodeQuery(JsonObject *root, QueryEventOccurred *eventOccurred);
 
-TinyRet EventOccurredCodec_DecodeResult(ResultEventOccurred *eventOccurred, JsonObject *content);
-
 
 TINY_END_DECLS
 

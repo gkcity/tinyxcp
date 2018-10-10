@@ -132,7 +132,7 @@ static void onQuery(ChannelHandler *thiz, Channel *channel, const char *id, IQQu
             break;
 
         case IQ_METHOD_GET_PROPERTIES:
-            onGet(thiz, channel, id, &query->content.getProperties.properties);
+            onGet(thiz, channel, id, &query->content.getProperties.operations);
             break;
 
         case IQ_METHOD_SET_PROPERTIES:

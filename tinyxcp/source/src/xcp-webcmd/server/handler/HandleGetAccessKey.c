@@ -4,7 +4,7 @@
  * @author jxfengzi@gmail.com
  * @date   2013-11-19
  *
- * @file   GetAccessKeyHandler.h
+ * @file   HandleGetAccessKey.h
  *
  * @remark
  *
@@ -14,10 +14,11 @@
 #include <iq/basic/GetAccessKeyFactory.h>
 #include <JsonObject.h>
 #include <tiny_log.h>
-#include "GetAccessKeyHandler.h"
+#include "HandleGetAccessKey.h"
 #include "XcpwsClientRuntime.h"
+#include "HandleCommon.h"
 
-#define TAG  "GetAccessKeyHandler"
+#define TAG  "HandleGetAccessKey"
 
 static void onGetAccessKeyResult (XcpMessage *result, void *ctx)
 {
@@ -33,12 +34,12 @@ static void onGetAccessKeyResult (XcpMessage *result, void *ctx)
     if (o != NULL)
     {
         JsonObject_PutString(o, "key", result->iq.content.result.content.getAccessKey.key);
-        sendJsonObject(channel, 200, "OK", o);
+        sendJsonResponse(channel, 200, "OK", o);
         JsonObject_Delete(o);
     }
 }
 
-void onGetAccessKey(Channel *channel, IotRuntime *runtime)
+void HandleGetAccessKey(Channel *channel, IotRuntime *runtime)
 {
     do
     {

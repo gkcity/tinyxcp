@@ -4,7 +4,7 @@
  * @author jxfengzi@gmail.com
  * @date   2013-11-19
  *
- * @file   CommonHandler.c
+ * @file   HandleCommon.c
  *
  * @remark
  *
@@ -12,23 +12,36 @@
 
 #include <codec-http/HttpMessage.h>
 #include <channel/SocketChannel.h>
-#include "CommonHandler.h"
+#include "HandleCommon.h"
 
-void sendResponse(Channel *channel, int code, const char *status)
+void sendResponse(Channel *channel, int code, const char *reason)
+{
+    sendTextResponse(channel, code, reason, NULL);
+}
+
+void sendTextResponse(Channel *channel, int code, const char *reason, const char *text)
 {
     HttpMessage *response = HttpMessage_New();
     if (response != NULL)
     {
-        HttpMessage_SetResponse(response, 404, "NOT FOUND");
+        HttpMessage_SetResponse(response, code, reason);
         HttpMessage_SetProtocolIdentifier(response, "HTTP");
         HttpMessage_SetVersion(response, 1, 1);
-        HttpHeader_SetInteger(&response->header, "Content-Length", 0);
+        if (text != NULL)
+        {
+            HttpMessage_SetContent(response, "application/text; charset=utf-8", (uint32_t)strlen(text), (const uint8_t *)text);
+        }
+        else
+        {
+            HttpHeader_SetInteger(&response->header, "Content-Length", 0);
+        }
+
         SocketChannel_StartWrite(channel, DATA_HTTP_MESSAGE, response, 0);
         HttpMessage_Delete(response);
     }
 }
 
-void sendJsonObject(Channel *channel, int code, const char *reason, JsonObject *object)
+void sendJsonResponse(Channel *channel, int code, const char *reason, JsonObject *object)
 {
     do
     {
@@ -66,7 +79,7 @@ void sendError(Channel *channel, IQError *error)
         JsonObject_PutInteger(o, "status", error->status);
         JsonObject_PutString(o, "description", error->description);
 
-        sendJsonObject(channel, 400, "ERROR", o);
+        sendJsonResponse(channel, 400, "ERROR", o);
 
         JsonObject_Delete(o);
     } while (false);

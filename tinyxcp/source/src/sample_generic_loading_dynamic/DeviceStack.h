@@ -23,7 +23,6 @@ TinyRet StartDeviceStack(Device *device, uint16_t *port);
 TinyRet StopDeviceStack(void);
 
 
-
 TINY_END_DECLS
 
 #endif /* __DeviceStack_H__ */

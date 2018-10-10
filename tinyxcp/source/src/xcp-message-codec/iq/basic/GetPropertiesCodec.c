@@ -39,7 +39,7 @@ TinyRet GetPropertiesCodec_DecodeQuery(QueryGetProperties *query, JsonObject *co
             break;
         }
 
-        ret = PropertyOperations_Construct(&query->properties);
+        ret = PropertyOperations_Construct(&query->operations);
         if (RET_FAILED(ret))
         {
             break;
@@ -70,7 +70,7 @@ TinyRet GetPropertiesCodec_DecodeQuery(QueryGetProperties *query, JsonObject *co
                 operation->status = -100;
             }
 
-            ret = TinyList_AddTail(&query->properties.properties, operation);
+            ret = TinyList_AddTail(&query->operations.properties, operation);
             if (RET_FAILED(ret))
             {
                 LOG_E(TAG, "TinyList_AddTail failed");
@@ -99,9 +99,9 @@ TinyRet GetPropertiesCodec_EncodeResult(JsonObject *content, ResultGetProperties
             break;
         }
 
-        for (uint32_t i = 0; i < getProperties->properties.properties.size; ++i)
+        for (uint32_t i = 0; i < getProperties->operations.properties.size; ++i)
         {
-            PropertyOperation *o = (PropertyOperation *) TinyList_GetAt(&getProperties->properties.properties, i);
+            PropertyOperation *o = (PropertyOperation *) TinyList_GetAt(&getProperties->operations.properties, i);
             JsonObject *object = NULL;
             JsonValue *value = NULL;
             char pid[256];

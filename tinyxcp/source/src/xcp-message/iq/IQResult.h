@@ -36,7 +36,6 @@ typedef struct _IQResult
 
     union _result
     {
-        ResultEventOccurred             eventOccurred;
         ResultGetChildren               getChildren;
         ResultGetProperties             getProperties;
         ResultSetProperties             setProperties;

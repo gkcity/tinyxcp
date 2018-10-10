@@ -19,7 +19,7 @@
 #include <server/WebcmdServer.h>
 #include "DeviceStack.h"
 
-#define TAG "DeviceOperator"
+#define TAG "DeviceStack"
 
 static TinyThread *_thread = NULL;
 

@@ -4,25 +4,26 @@
  * @author jxfengzi@gmail.com
  * @date   2013-11-19
  *
- * @file   ResetAccessKeyHandler.h
+ * @file   HandlePropertyChanged.h
  *
  * @remark
  *
  */
 
-#ifndef __ResetAccessKeyHandler_H__
-#define __ResetAccessKeyHandler_H__
+#ifndef __HandlePropertyChanged_H__
+#define __HandlePropertyChanged_H__
 
 #include <tiny_base.h>
 #include <channel/Channel.h>
 #include <IotRuntime.h>
+#include <codec-http/HttpContent.h>
 
 TINY_BEGIN_DECLS
 
 
-void onResetAccessKey(Channel *channel, IotRuntime *runtime);
+void HandlePropertyChanged(Channel *channel, HttpContent *content, IotRuntime *runtime);
 
 
 TINY_END_DECLS
 
-#endif /* __ResetAccessKeyHandler_H__ */
+#endif /* __HandlePropertyChanged_H__ */
