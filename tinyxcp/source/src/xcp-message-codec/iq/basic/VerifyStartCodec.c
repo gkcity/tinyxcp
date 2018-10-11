@@ -15,38 +15,12 @@
 #include <value/JsonString.h>
 #include "VerifyStartCodec.h"
 
-TinyRet VerifyStartCodec_EncodeQuery(JsonObject *root, QueryVerifyStart *query)
+TinyRet VerifyStartCodec_EncodeQuery(JsonObject *content, QueryVerifyStart *query)
 {
-    TinyRet ret = TINY_RET_OK;
-
-    RETURN_VAL_IF_FAIL(root, TINY_RET_E_ARG_NULL);
+    RETURN_VAL_IF_FAIL(content, TINY_RET_E_ARG_NULL);
     RETURN_VAL_IF_FAIL(query, TINY_RET_E_ARG_NULL);
 
-    do
-    {
-        JsonObject *content = JsonObject_New();
-        if (content == NULL)
-        {
-            ret = TINY_RET_E_NEW;
-            break;
-        }
-
-        ret = JsonObject_PutString(content, "public-key", query->publicKey);
-        if (RET_FAILED(ret))
-        {
-            JsonObject_Delete(content);
-            break;
-        }
-
-        ret = JsonObject_PutObject(root, "content", content);
-        if (RET_FAILED(ret))
-        {
-            JsonObject_Delete(content);
-            break;
-        }
-    } while (false);
-
-    return ret;
+    return JsonObject_PutString(content, "public-key", query->publicKey);
 }
 
 TinyRet VerifyStartCodec_DecodeResult(ResultVerifyStart *result, JsonObject *content)

@@ -14,37 +14,21 @@
 
 #include "InitializeCodec.h"
 
-TinyRet InitializeCodec_EncodeQuery(JsonObject *root, QueryInitialize *initialize)
+TinyRet InitializeCodec_EncodeQuery(JsonObject *content, QueryInitialize *initialize)
 {
     TinyRet ret = TINY_RET_OK;
 
     do
     {
-        JsonObject *content = JsonObject_New();
-        if (content == NULL)
-        {
-            ret = TINY_RET_E_NEW;
-            break;
-        }
-
         ret = JsonObject_PutString(content, "version", initialize->version);
         if (RET_FAILED(ret))
         {
-            JsonObject_Delete(content);
             break;
         }
 
         ret = JsonObject_PutString(content, "authentication", initialize->authentication);
         if (RET_FAILED(ret))
         {
-            JsonObject_Delete(content);
-            break;
-        }
-
-        ret = JsonObject_PutObject(root, "content", content);
-        if (RET_FAILED(ret))
-        {
-            JsonObject_Delete(content);
             break;
         }
     } while (false);

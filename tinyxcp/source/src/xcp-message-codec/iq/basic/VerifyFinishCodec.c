@@ -14,58 +14,39 @@
 
 #include "VerifyFinishCodec.h"
 
-TinyRet VerifyFinishCodec_EncodeQuery(JsonObject *root, QueryVerifyFinish *verifyFinish)
+TinyRet VerifyFinishCodec_EncodeQuery(JsonObject *content, QueryVerifyFinish *verifyFinish)
 {
     TinyRet ret = TINY_RET_OK;
 
     do
     {
-        JsonObject *content = JsonObject_New();
-        if (content == NULL)
-        {
-            ret = TINY_RET_E_NEW;
-            break;
-        }
-
         ret = JsonObject_PutString(content, "device-id", verifyFinish->did);
         if (RET_FAILED(ret))
         {
-            JsonObject_Delete(content);
             break;
         }
 
         ret = JsonObject_PutInteger(content, "product-id", verifyFinish->productId);
         if (RET_FAILED(ret))
         {
-            JsonObject_Delete(content);
             break;
         }
 
         ret = JsonObject_PutInteger(content, "product-version", verifyFinish->productVersion);
         if (RET_FAILED(ret))
         {
-            JsonObject_Delete(content);
             break;
         }
 
         ret = JsonObject_PutString(content, "signature", verifyFinish->signature);
         if (RET_FAILED(ret))
         {
-            JsonObject_Delete(content);
             break;
         }
 
         ret = JsonObject_PutInteger(content, "codec", verifyFinish->codec);
         if (RET_FAILED(ret))
         {
-            JsonObject_Delete(content);
-            break;
-        }
-
-        ret = JsonObject_PutObject(root, "content", content);
-        if (RET_FAILED(ret))
-        {
-            JsonObject_Delete(content);
             break;
         }
     } while (false);

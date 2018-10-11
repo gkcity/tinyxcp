@@ -21,11 +21,11 @@
 
 #define TAG     "PropertiesChangedCodec"
 
-TinyRet PropertiesChangedCodec_EncodeQuery(JsonObject *root, QueryPropertiesChanged *propertiesChanged)
+TinyRet PropertiesChangedCodec_EncodeQuery(JsonObject *content, QueryPropertiesChanged *propertiesChanged)
 {
     TinyRet ret = TINY_RET_OK;
 
-    RETURN_VAL_IF_FAIL(root, TINY_RET_E_ARG_NULL);
+    RETURN_VAL_IF_FAIL(content, TINY_RET_E_ARG_NULL);
     RETURN_VAL_IF_FAIL(propertiesChanged, TINY_RET_E_ARG_NULL);
 
     do
@@ -94,7 +94,7 @@ TinyRet PropertiesChangedCodec_EncodeQuery(JsonObject *root, QueryPropertiesChan
             break;
         }
 
-        ret = JsonObject_PutArray(root, "properties", array);
+        ret = JsonObject_PutArray(content, "properties", array);
         if (RET_FAILED(ret))
         {
             JsonArray_Delete(array);
@@ -125,26 +125,28 @@ TinyRet PropertiesChangedCodec_DecodeResult(ResultPropertiesChanged *propertiesC
         ret = PropertyOperations_Construct(&propertiesChanged->operations);
         if (RET_FAILED(ret))
         {
+            LOG_E(TAG, "PropertyOperations_Construct FAILED");
             break;
         }
 
         for (uint32_t i = 0; i < array->values.size; ++i)
         {
-            JsonString *piid = NULL;
+            JsonString *pid = NULL;
             JsonNumber *status = NULL;
             PropertyOperation *operation = NULL;
             JsonValue *p = (JsonValue *) TinyList_GetAt(&array->values, i);
-             if (p->type != JSON_OBJECT)
+
+            if (p->type != JSON_OBJECT)
             {
-                LOG_E(TAG, "invalid content");
+                LOG_E(TAG, "invalid content: %d, property not a JsonObject ", i);
                 ret = TINY_RET_E_ARG_INVALID;
                 break;
             }
 
-            piid = JsonObject_GetString(p->data.object, "piid");
-            if (piid == NULL)
+            pid = JsonObject_GetString(p->data.object, "pid");
+            if (pid == NULL)
             {
-                LOG_E(TAG, "invalid content");
+                LOG_E(TAG, "invalid content: %d, pid not found", i);
                 ret = TINY_RET_E_ARG_INVALID;
                 break;
             }
@@ -152,14 +154,14 @@ TinyRet PropertiesChangedCodec_DecodeResult(ResultPropertiesChanged *propertiesC
             status = JsonObject_GetNumber(p->data.object, "status");
             if (status == NULL)
             {
-                LOG_E(TAG, "invalid content");
+                LOG_E(TAG, "invalid content: %d, status not found", i);
                 ret = TINY_RET_E_ARG_INVALID;
                 break;
             }
 
             if (status->type != JSON_NUMBER_INTEGER)
             {
-                LOG_E(TAG, "invalid content");
+                LOG_E(TAG, "invalid content: %d, status not integer", i);
                 ret = TINY_RET_E_ARG_INVALID;
                 break;
             }
@@ -172,10 +174,10 @@ TinyRet PropertiesChangedCodec_DecodeResult(ResultPropertiesChanged *propertiesC
                 break;
             }
 
-            ret = PIDCodec_Decode(&operation->pid, piid->value);
+            ret = PIDCodec_Decode(&operation->pid, pid->value);
             if (RET_FAILED(ret))
             {
-                LOG_E(TAG, "invalid content");
+                LOG_E(TAG, "invalid content: %d, invalid pid", i);
                 ret = TINY_RET_E_ARG_INVALID;
                 break;
             }

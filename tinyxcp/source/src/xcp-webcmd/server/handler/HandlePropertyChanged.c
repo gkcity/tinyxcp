@@ -50,7 +50,7 @@ static void onPropertyChangedResult (XcpMessage *result, void *ctx)
             char message[256];
             memset(message, 0, 256);
             tiny_snprintf(message, 255, "status: %d", operation->status);
-            sendTextResponse(channel, 400, "FAILED: %d", message);
+            sendTextResponse(channel, 400, "FAILED", message);
             break;
         }
 

@@ -15,7 +15,7 @@
 #include "ChildrenAddedCodec.h"
 
 TINY_LOR
-TinyRet ChildrenAddedCodec_EncodeQuery(JsonObject *root, QueryChildrenAdded *childrenAdded)
+TinyRet ChildrenAddedCodec_EncodeQuery(JsonObject *content, QueryChildrenAdded *childrenAdded)
 {
     return TINY_RET_E_NOT_IMPLEMENTED;
 }

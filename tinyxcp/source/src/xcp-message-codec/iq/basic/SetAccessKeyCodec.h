@@ -23,7 +23,7 @@
 TINY_BEGIN_DECLS
 
 
-TinyRet SetAccessKeyCodec_EncodeQuery(JsonObject *root, QuerySetAccessKey *query);
+TinyRet SetAccessKeyCodec_EncodeQuery(JsonObject *content, QuerySetAccessKey *query);
 
 
 

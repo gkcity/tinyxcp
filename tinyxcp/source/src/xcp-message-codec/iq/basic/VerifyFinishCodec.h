@@ -23,7 +23,7 @@
 TINY_BEGIN_DECLS
 
 
-TinyRet VerifyFinishCodec_EncodeQuery(JsonObject *root, QueryVerifyFinish *verifyFinish);
+TinyRet VerifyFinishCodec_EncodeQuery(JsonObject *content, QueryVerifyFinish *verifyFinish);
 
 
 

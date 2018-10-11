@@ -25,7 +25,7 @@ TINY_BEGIN_DECLS
 
 
 TINY_LOR
-TinyRet ChildrenAddedCodec_EncodeQuery(JsonObject *root, QueryChildrenAdded *childrenAdded);
+TinyRet ChildrenAddedCodec_EncodeQuery(JsonObject *content, QueryChildrenAdded *childrenAdded);
 
 
 

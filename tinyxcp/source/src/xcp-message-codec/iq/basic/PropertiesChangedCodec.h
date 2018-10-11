@@ -23,7 +23,7 @@
 TINY_BEGIN_DECLS
 
 
-TinyRet PropertiesChangedCodec_EncodeQuery(JsonObject *root, QueryPropertiesChanged *propertiesChanged);
+TinyRet PropertiesChangedCodec_EncodeQuery(JsonObject *content, QueryPropertiesChanged *propertiesChanged);
 
 
 TinyRet PropertiesChangedCodec_DecodeResult(ResultPropertiesChanged *propertiesChanged, JsonObject *content);

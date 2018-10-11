@@ -47,7 +47,14 @@ TinyRet IQQueryCodec_Encode(JsonObject *root, IQQuery *query)
         ret = JsonObject_PutString(root, "method", IQMethod_ToString(query->method));
         if (RET_FAILED(ret))
         {
-            LOG_E(TAG, "out of memory");
+            LOG_E(TAG, "JsonObject_PutString");
+            break;
+        }
+
+        JsonObject *content = JsonObject_New();
+        if (content == NULL)
+        {
+            LOG_E(TAG, "JsonObject_New");
             break;
         }
 
@@ -57,47 +64,66 @@ TinyRet IQQueryCodec_Encode(JsonObject *root, IQQuery *query)
                 break;
 
             case IQ_METHOD_CHILDREN_ADDED:
-                ret = ChildrenAddedCodec_EncodeQuery(root, &query->content.childrenAdded);
+                ret = ChildrenAddedCodec_EncodeQuery(content, &query->content.childrenAdded);
                 break;
 
             case IQ_METHOD_CHILDREN_REMOVED:
-                ret = ChildrenRemovedCodec_EncodeQuery(root, &query->content.childrenRemoved);
+                ret = ChildrenRemovedCodec_EncodeQuery(content, &query->content.childrenRemoved);
                 break;
 
             case IQ_METHOD_EVENT_OCCURRED:
-                ret = EventOccurredCodec_EncodeQuery(root, &query->content.eventOccurred);
+                ret = EventOccurredCodec_EncodeQuery(content, &query->content.eventOccurred);
                 break;
 
             case IQ_METHOD_GET_ACCESS_KEY:
                 break;
 
             case IQ_METHOD_INITIALIZE:
-                ret = InitializeCodec_EncodeQuery(root, &query->content.initialize);
+                ret = InitializeCodec_EncodeQuery(content, &query->content.initialize);
                 break;
 
             case IQ_METHOD_PING:
                 break;
 
             case IQ_METHOD_PROPERTIES_CHANGED:
-                ret = PropertiesChangedCodec_EncodeQuery(root, &query->content.propertiesChanged);
+                ret = PropertiesChangedCodec_EncodeQuery(content, &query->content.propertiesChanged);
                 break;
 
             case IQ_METHOD_SET_ACCESS_KEY:
-                ret = SetAccessKeyCodec_EncodeQuery(root, &query->content.setAccessKey);
+                ret = SetAccessKeyCodec_EncodeQuery(content, &query->content.setAccessKey);
                 break;
 
             case IQ_METHOD_VERIFY_FINISH:
-                ret = VerifyFinishCodec_EncodeQuery(root, &query->content.verifyFinish);
+                ret = VerifyFinishCodec_EncodeQuery(content, &query->content.verifyFinish);
                 break;
 
             case IQ_METHOD_VERIFY_START:
-                ret = VerifyStartCodec_EncodeQuery(root, &query->content.verifyStart);
+                ret = VerifyStartCodec_EncodeQuery(content, &query->content.verifyStart);
                 break;
 
             default:
                 LOG_D(TAG, "not support method: %s", IQMethod_ToString(query->method));
                 ret = TINY_RET_E_ARG_INVALID;
                 break;
+        }
+
+        if (RET_FAILED(ret))
+        {
+            JsonObject_Delete(content);
+            break;
+        }
+
+        if (content->data.list.size == 0)
+        {
+            JsonObject_Delete(content);
+            break;
+        }
+
+        ret = JsonObject_PutObject(root, "content", content);
+        if (RET_FAILED(ret))
+        {
+            JsonObject_Delete(content);
+            break;
         }
     } while (false);
 

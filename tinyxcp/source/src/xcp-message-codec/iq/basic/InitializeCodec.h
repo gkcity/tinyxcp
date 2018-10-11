@@ -23,7 +23,7 @@
 TINY_BEGIN_DECLS
 
 
-TinyRet InitializeCodec_EncodeQuery(JsonObject *root, QueryInitialize *initialize);
+TinyRet InitializeCodec_EncodeQuery(JsonObject *content, QueryInitialize *initialize);
 
 
 
