@@ -173,7 +173,7 @@ static void onVerifySuccess (HKDF *deviceToServerKey, HKDF *serverToDeviceKey, v
 
 static void onVerifyFailure (void *ctx)
 {
-    XcpwsClientHandlerContext *context = (XcpwsClientHandlerContext *) (ctx);
+    //XcpwsClientHandlerContext *context = (XcpwsClientHandlerContext *) (ctx);
 
     LOG_D(TAG, "onVerifyFailure");
 }
@@ -232,12 +232,14 @@ static bool _HttpRead(ChannelHandler *thiz, Channel *channel, ChannelDataType ty
     return true;
 }
 
+#if 0
 TINY_LOR
 static void _Output (const uint8_t *data, uint64_t size, void *ctx)
 {
     Channel *channel = (Channel *)ctx;
     SocketChannel_StartWrite(channel, DATA_RAW, data, (uint32_t)size);
 }
+#endif
 
 #if 0
 TINY_LOR

@@ -425,6 +425,7 @@ static bool _HttpRead(ChannelHandler *thiz, Channel *channel, ChannelDataType ty
     return true;
 }
 
+#if 0
 TINY_LOR
 static void _Ping(ChannelHandler *thiz, Channel *channel)
 {
@@ -450,11 +451,12 @@ static void _Ping(ChannelHandler *thiz, Channel *channel)
         SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, message, 0);
     } while (false);
 }
+#endif
 
 TINY_LOR
 static void _ChannelEvent(ChannelHandler *thiz, Channel *channel, ChannelTimer *timer)
 {
-    XcpwsServerHandlerContext *context = (XcpwsServerHandlerContext *) (thiz->context);
+    //XcpwsServerHandlerContext *context = (XcpwsServerHandlerContext *) (thiz->context);
 
     LOG_D(TAG, "_ChannelEvent: %s", channel->id);
 
