@@ -36,7 +36,6 @@ INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/TinyThread)
 
 INCLUDE_DIRECTORIES(${TINYFX_ROOT}/source/src/IotLauncher)
 INCLUDE_DIRECTORIES(${TINYFX_ROOT}/source/src/IotTypedef)
-INCLUDE_DIRECTORIES(${TINYFX_ROOT}/source/src/IotOperation)
 INCLUDE_DIRECTORIES(${TINYFX_ROOT}/source/src/IotFactory)
 
 INCLUDE_DIRECTORIES(${TINYCRYPTO_ROOT}/source/src)
@@ -104,6 +103,7 @@ SET(XcpMessageCodec_Header
         ${SOURCE_ROOT}/xcp-message-codec/iq/basic/SetPropertiesCodec.h
         ${SOURCE_ROOT}/xcp-message-codec/iq/basic/InvokeActionCodec.h
         ${SOURCE_ROOT}/xcp-message-codec/iq/basic/GetChildrenCodec.h
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/GetAccessKeyCodec.h
         ${SOURCE_ROOT}/xcp-message-codec/xid/PIDCodec.h
         ${SOURCE_ROOT}/xcp-message-codec/xid/AIDCodec.h
         )
@@ -126,6 +126,7 @@ SET(XcpMessageCodec_Source
         ${SOURCE_ROOT}/xcp-message-codec/iq/basic/SetPropertiesCodec.c
         ${SOURCE_ROOT}/xcp-message-codec/iq/basic/InvokeActionCodec.c
         ${SOURCE_ROOT}/xcp-message-codec/iq/basic/GetChildrenCodec.c
+        ${SOURCE_ROOT}/xcp-message-codec/iq/basic/GetAccessKeyCodec.c
         ${SOURCE_ROOT}/xcp-message-codec/xid/PIDCodec.c
         ${SOURCE_ROOT}/xcp-message-codec/xid/AIDCodec.c
         )
@@ -134,64 +135,78 @@ SOURCE_GROUP(XcpMessageCodec\\headers FILES ${XcpMessageCodec_Header})
 SOURCE_GROUP(XcpMessageCodec\\sources FILES ${XcpMessageCodec_Source})
 
 SET(XcpMessage_Header
-        ${SOURCE_ROOT}/xcp-message/XcpMessage.h
-        ${SOURCE_ROOT}/xcp-message/XcpConstant.h
-        ${SOURCE_ROOT}/xcp-message/iq/IQ.h
-        ${SOURCE_ROOT}/xcp-message/iq/IQError.h
-        ${SOURCE_ROOT}/xcp-message/iq/IQErrorFactory.h
-        ${SOURCE_ROOT}/xcp-message/iq/IQQuery.h
-        ${SOURCE_ROOT}/xcp-message/iq/IQResult.h
-        ${SOURCE_ROOT}/xcp-message/iq/IQMethod.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/ByebyeFactory.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenAdded.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenRemoved.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/EventOccurred.h
+		${SOURCE_ROOT}/xcp-message/XcpMessage.h
+		${SOURCE_ROOT}/xcp-message/XcpConstant.h
+		${SOURCE_ROOT}/xcp-message/iq/IQ.h
+		${SOURCE_ROOT}/xcp-message/iq/IQError.h
+		${SOURCE_ROOT}/xcp-message/iq/IQErrorFactory.h
+		${SOURCE_ROOT}/xcp-message/iq/IQQuery.h
+		${SOURCE_ROOT}/xcp-message/iq/IQResult.h
+		${SOURCE_ROOT}/xcp-message/iq/IQMethod.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/ByebyeFactory.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenAdded.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenRemoved.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/EventOccurred.h
 		${SOURCE_ROOT}/xcp-message/iq/basic/EventOccurredFactory.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/GetAccessKey.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/GetAccessKey.h
 		${SOURCE_ROOT}/xcp-message/iq/basic/GetAccessKeyFactory.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/GetChildren.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/GetProperties.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/GetPropertiesFactory.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/Initialize.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/InitializeFactory.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/InvokeAction.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/InvokeActionFactory.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/PingFactory.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/GetChildren.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/GetProperties.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/GetPropertiesFactory.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/Initialize.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/InitializeFactory.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/InvokeAction.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/InvokeActionFactory.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/PingFactory.h
 		${SOURCE_ROOT}/xcp-message/iq/basic/PongFactory.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/PropertiesChanged.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/PropertiesChanged.h
 		${SOURCE_ROOT}/xcp-message/iq/basic/PropertiesChangedFactory.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/SetAccessKey.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/SetAccessKey.h
 		${SOURCE_ROOT}/xcp-message/iq/basic/SetAccessKeyFactory.h
 		${SOURCE_ROOT}/xcp-message/iq/basic/SetProperties.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/SetPropertiesFactory.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyFinish.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyFinishFactory.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyStart.h
-        ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyStartFactory.h
-        ${SOURCE_ROOT}/xcp-message/handler/XcpMessageHandler.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/SetPropertiesFactory.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/VerifyFinish.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/VerifyFinishFactory.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/VerifyStart.h
+		${SOURCE_ROOT}/xcp-message/iq/basic/VerifyStartFactory.h
+		${SOURCE_ROOT}/xcp-message/handler/XcpMessageHandler.h
         )
 
 SET(XcpMessage_Source
-        ${SOURCE_ROOT}/xcp-message/XcpMessage.c
-        ${SOURCE_ROOT}/xcp-message/iq/IQErrorFactory.c
-        ${SOURCE_ROOT}/xcp-message/iq/IQMethod.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/ByebyeFactory.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenAdded.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenRemoved.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/EventOccurredFactory.c
+		${SOURCE_ROOT}/xcp-message/XcpMessage.c
+		${SOURCE_ROOT}/xcp-message/iq/IQ.c
+		${SOURCE_ROOT}/xcp-message/iq/IQError.c
+		${SOURCE_ROOT}/xcp-message/iq/IQErrorFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/IQQuery.c
+		${SOURCE_ROOT}/xcp-message/iq/IQResult.c
+		${SOURCE_ROOT}/xcp-message/iq/IQMethod.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/ByebyeFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenAdded.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/ChildrenRemoved.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/EventOccurred.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/EventOccurredFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/GetAccessKey.c
 		${SOURCE_ROOT}/xcp-message/iq/basic/GetAccessKeyFactory.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/GetPropertiesFactory.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/GetChildren.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/InitializeFactory.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/InvokeActionFactory.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/PingFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/GetChildren.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/GetProperties.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/GetPropertiesFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/Initialize.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/InitializeFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/InvokeAction.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/InvokeActionFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/PingFactory.c
 		${SOURCE_ROOT}/xcp-message/iq/basic/PongFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/PropertiesChanged.c
 		${SOURCE_ROOT}/xcp-message/iq/basic/PropertiesChangedFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/SetAccessKey.c
 		${SOURCE_ROOT}/xcp-message/iq/basic/SetAccessKeyFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/SetProperties.c
 		${SOURCE_ROOT}/xcp-message/iq/basic/SetPropertiesFactory.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyFinishFactory.c
-        ${SOURCE_ROOT}/xcp-message/iq/basic/VerifyStartFactory.c
-        ${SOURCE_ROOT}/xcp-message/handler/XcpMessageHandler.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/VerifyFinish.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/VerifyFinishFactory.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/VerifyStart.c
+		${SOURCE_ROOT}/xcp-message/iq/basic/VerifyStartFactory.c
+		${SOURCE_ROOT}/xcp-message/handler/XcpMessageHandler.c
         )
 
 SOURCE_GROUP(XcpMessage\\headers FILES ${XcpMessage_Header})
@@ -203,6 +218,7 @@ SET(Xcpws_Header
         ${SOURCE_ROOT}/xcp-websocket/client/XcpwsClient.h
         ${SOURCE_ROOT}/xcp-websocket/client/handler/XcpwsClientHandler.h
         ${SOURCE_ROOT}/xcp-websocket/client/handler/XcpwsClientHandlerContext.h
+        ${SOURCE_ROOT}/xcp-websocket/client/verifier/XcpClientVerifier.h
         ${SOURCE_ROOT}/xcp-websocket/server/XcpwsServer.h
         ${SOURCE_ROOT}/xcp-websocket/server/XcpwsServerContext.h
         ${SOURCE_ROOT}/xcp-websocket/server/XcpwsBonjour.h
@@ -224,6 +240,7 @@ SET(Xcpws_Source
         ${SOURCE_ROOT}/xcp-websocket/client/XcpwsClient.c
         ${SOURCE_ROOT}/xcp-websocket/client/handler/XcpwsClientHandler.c
         ${SOURCE_ROOT}/xcp-websocket/client/handler/XcpwsClientHandlerContext.c
+        ${SOURCE_ROOT}/xcp-websocket/client/verifier/XcpClientVerifier.c
         ${SOURCE_ROOT}/xcp-websocket/server/XcpwsServer.c
         ${SOURCE_ROOT}/xcp-websocket/server/XcpwsServerContext.c
         ${SOURCE_ROOT}/xcp-websocket/server/XcpwsBonjour.c
