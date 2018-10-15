@@ -149,11 +149,13 @@ static void onQuery(ChannelHandler *thiz, Channel *channel, const char *id, IQQu
     }
 }
 
+#if 0
 static void _handlePong(XcpMessage *message, void *ctx)
 {
     // nothing to do!
     LOG_D(TAG, "pong");
 }
+#endif
 
 TINY_LOR
 static bool _MessageRead(ChannelHandler *thiz, Channel *channel, ChannelDataType type, const void *data, uint32_t len)

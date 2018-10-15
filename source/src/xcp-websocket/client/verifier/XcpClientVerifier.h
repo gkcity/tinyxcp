@@ -16,7 +16,7 @@
 #include <tiny_base.h>
 #include <TinyMap.h>
 #include <device/Device.h>
-#include <Ed25519.h>
+#include <ed25519/Ed25519.h>
 #include <hkdf/HKDF.h>
 #include <handler/XcpMessageHandler.h>
 #include "XcpStage.h"
