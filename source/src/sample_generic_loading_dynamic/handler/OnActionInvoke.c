@@ -12,11 +12,11 @@
 
 #include "OnActionInvoke.h"
 #include "../iid/IID.h"
-#include "S_1_DeviceInformation/doInvoke_1_DeviceInformation.h"
-#include "S_2_ModbusController/doInvoke_2_ModbusController.h"
-#include "S_3_ModbusUnitDefinitionManagement/doInvoke_3_ModbusUnitDefinitionManagement.h"
-#include "S_4_ModbusUnitManagement/doInvoke_4_ModbusUnitManagement.h"
-#include "S_5_ModbusCollector/doInvoke_5_ModbusCollector.h"
+#include "S_1_DeviceInformation/S_1_DeviceInformation_doInvoke.h"
+#include "S_2_ModbusController/S_2_ModbusController_doInvoke.h"
+#include "S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doInvoke.h"
+#include "S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doInvoke.h"
+#include "S_5_ModbusCollector/S_5_ModbusCollector_doInvoke.h"
 
 void OnActionInvoke(ActionOperation *o)
 {
@@ -25,23 +25,23 @@ void OnActionInvoke(ActionOperation *o)
     switch (o->aid.siid)
     {
         case IID_1_DeviceInformation:
-            doInvoke_1_DeviceInformation(o);
+            S_1_DeviceInformation_doInvoke(o);
             break;
 
         case IID_2_ModbusController:
-            doInvoke_2_ModbusController(o);
+            S_2_ModbusController_doInvoke(o);
             break;
 
         case IID_3_ModbusUnitDefinitionManagement:
-            doInvoke_3_ModbusUnitDefinitionManagement(o);
+            S_3_ModbusUnitDefinitionManagement_doInvoke(o);
             break;
 
         case IID_4_ModbusUnitManagement:
-            doInvoke_4_ModbusUnitManagement(o);
+            S_4_ModbusUnitManagement_doInvoke(o);
             break;
 
         case IID_5_ModbusCollector:
-            doInvoke_5_ModbusCollector(o);
+            S_5_ModbusCollector_doInvoke(o);
             break;
 
         default:

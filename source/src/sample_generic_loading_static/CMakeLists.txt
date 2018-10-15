@@ -122,16 +122,41 @@ SET(HANDLER_SRC
         handler/OnPropertyGet.c
         handler/OnPropertySet.h
         handler/OnPropertySet.c
+        handler/S_1_DeviceInformation/S_1_DeviceInformation_doGet.h
+        handler/S_1_DeviceInformation/S_1_DeviceInformation_doGet.c
+        handler/S_1_DeviceInformation/S_1_DeviceInformation_doSet.h
+        handler/S_1_DeviceInformation/S_1_DeviceInformation_doSet.c
+        handler/S_1_DeviceInformation/S_1_DeviceInformation_doInvoke.h
+        handler/S_1_DeviceInformation/S_1_DeviceInformation_doInvoke.c
+        handler/S_2_ModbusController/S_2_ModbusController_doGet.h
+        handler/S_2_ModbusController/S_2_ModbusController_doGet.c
+        handler/S_2_ModbusController/S_2_ModbusController_doSet.h
+        handler/S_2_ModbusController/S_2_ModbusController_doSet.c
+        handler/S_2_ModbusController/S_2_ModbusController_doInvoke.h
+        handler/S_2_ModbusController/S_2_ModbusController_doInvoke.c
+        handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doGet.h
+        handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doGet.c
+        handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doSet.h
+        handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doSet.c
+        handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doInvoke.h
+        handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doInvoke.c
+        handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doGet.h
+        handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doGet.c
+        handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doSet.h
+        handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doSet.c
+        handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doInvoke.h
+        handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doInvoke.c
+        handler/S_5_ModbusCollector/S_5_ModbusCollector_doGet.h
+        handler/S_5_ModbusCollector/S_5_ModbusCollector_doGet.c
+        handler/S_5_ModbusCollector/S_5_ModbusCollector_doSet.h
+        handler/S_5_ModbusCollector/S_5_ModbusCollector_doSet.c
+        handler/S_5_ModbusCollector/S_5_ModbusCollector_doInvoke.h
+        handler/S_5_ModbusCollector/S_5_ModbusCollector_doInvoke.c
         )
 
 SET(SRC
         ${DEVICE_SRC}
-        handler/OnActionInvoke.h
-        handler/OnActionInvoke.c
-        handler/OnPropertyGet.h
-        handler/OnPropertyGet.c
-        handler/OnPropertySet.h
-        handler/OnPropertySet.c
+        ${HANDLER_SRC}
         print/PrintValue.h
         print/PrintValue.c
         iid/IID.h

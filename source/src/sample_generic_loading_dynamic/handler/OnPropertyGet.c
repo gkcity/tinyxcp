@@ -12,67 +12,11 @@
 
 #include "OnPropertyGet.h"
 #include "../iid/IID.h"
-#include "S_1_DeviceInformation/doGet_1_DeviceInformation.h"
-
-static void doGet_2_ModbusController(PropertyOperation *o)
-{
-    printf("doGet_2_ModbusController: piid = [%d]\n", o->pid.iid);
-
-    switch (o->pid.iid)
-    {
-        default:
-            o->status = -100;
-            break;
-    }
-}
-
-static void doGet_3_ModbusUnitDefinitionManagement(PropertyOperation *o)
-{
-    printf("doGet_3_ModbusUnitDefinitionManagement: piid = [%d]\n", o->pid.iid);
-
-    switch (o->pid.iid)
-    {
-        case IID_3_5_UnitDefinitionCount:
-            o->value = JsonValue_NewInteger(0);
-            break;
-
-        default:
-            o->status = -100;
-            break;
-    }
-}
-
-static void doGet_4_ModbusUnitManagement(PropertyOperation *o)
-{
-    printf("doGet_4_ModbusUnitManagement: piid = [%d]\n", o->pid.iid);
-
-    switch (o->pid.iid)
-    {
-        case IID_4_5_UnitCount:
-            o->value = JsonValue_NewInteger(0);
-            break;
-
-        default:
-            o->status = -100;
-            break;
-    }
-}
-
-static void doGet_5_ModbusCollector(PropertyOperation *o)
-{
-    printf("doGet_5_ModbusCollector: piid = [%d]\n", o->pid.iid);
-
-    switch (o->pid.iid)
-    {
-        case IID_5_2_CollectingStatus:
-            o->value = JsonValue_NewInteger(0);
-            break;
-
-        default:
-            o->status = -100;
-            break;
-    }
-}
+#include "S_1_DeviceInformation/S_1_DeviceInformation_doGet.h"
+#include "S_2_ModbusController/S_2_ModbusController_doGet.h"
+#include "S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doGet.h"
+#include "S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doGet.h"
+#include "S_5_ModbusCollector/S_5_ModbusCollector_doGet.h"
 
 void OnPropertyGet(PropertyOperation *o)
 {
@@ -81,23 +25,23 @@ void OnPropertyGet(PropertyOperation *o)
     switch (o->pid.siid)
     {
         case IID_1_DeviceInformation:
-            doGet_1_DeviceInformation(o);
+            S_1_DeviceInformation_doGet(o);
             break;
 
         case IID_2_ModbusController:
-            doGet_2_ModbusController(o);
+            S_2_ModbusController_doGet(o);
             break;
 
         case IID_3_ModbusUnitDefinitionManagement:
-            doGet_3_ModbusUnitDefinitionManagement(o);
+            S_3_ModbusUnitDefinitionManagement_doGet(o);
             break;
 
         case IID_4_ModbusUnitManagement:
-            doGet_4_ModbusUnitManagement(o);
+            S_4_ModbusUnitManagement_doGet(o);
             break;
 
         case IID_5_ModbusCollector:
-            doGet_5_ModbusCollector(o);
+            S_5_ModbusCollector_doGet(o);
             break;
 
         default:
