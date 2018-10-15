@@ -11,6 +11,20 @@ SET(SRC
         handler/OnPropertyGet.c
         handler/OnPropertySet.h
         handler/OnPropertySet.c
+        handler/S_1_DeviceInformation/doInvoke_1_DeviceInformation.h
+        handler/S_1_DeviceInformation/doInvoke_1_DeviceInformation.c
+        handler/S_1_DeviceInformation/doGet_1_DeviceInformation.h
+        handler/S_1_DeviceInformation/doGet_1_DeviceInformation.c
+        handler/S_1_DeviceInformation/doSet_1_DeviceInformation.h
+        handler/S_1_DeviceInformation/doSet_1_DeviceInformation.c
+        handler/S_2_ModbusController/doInvoke_2_ModbusController.h
+        handler/S_2_ModbusController/doInvoke_2_ModbusController.c
+        handler/S_3_ModbusUnitDefinitionManagement/doInvoke_3_ModbusUnitDefinitionManagement.h
+        handler/S_3_ModbusUnitDefinitionManagement/doInvoke_3_ModbusUnitDefinitionManagement.c
+        handler/S_4_ModbusUnitManagement/doInvoke_4_ModbusUnitManagement.h
+        handler/S_4_ModbusUnitManagement/doInvoke_4_ModbusUnitManagement.c
+        handler/S_5_ModbusCollector/doInvoke_5_ModbusCollector.h
+        handler/S_5_ModbusCollector/doInvoke_5_ModbusCollector.c
         print/PrintValue.h
         print/PrintValue.c
         iid/IID.h

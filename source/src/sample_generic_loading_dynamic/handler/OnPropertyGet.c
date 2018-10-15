@@ -12,49 +12,64 @@
 
 #include "OnPropertyGet.h"
 #include "../iid/IID.h"
+#include "S_1_DeviceInformation/doGet_1_DeviceInformation.h"
 
-static void OnDeviceInformationGet(PropertyOperation *o)
+static void doGet_2_ModbusController(PropertyOperation *o)
 {
-    printf("OnDeviceInformationGet: piid = [%d]\n", o->pid.iid);
+    printf("doGet_2_ModbusController: piid = [%d]\n", o->pid.iid);
 
     switch (o->pid.iid)
     {
-        case IID_DEVICE_INFORMATION_MANUFACTURER:
-            o->value = JsonValue_NewString("GeekCity");
-            break;
-
-        case IID_DEVICE_INFORMATION_MODEL:
-            o->value = JsonValue_NewString("GeekFan2018");
-            break;
-
-        case IID_DEVICE_INFORMATION_NAME:
-            o->value = JsonValue_NewString("GeekFan");
-            break;
-
-        case IID_DEVICE_INFORMATION_SERIAL_NUMBER:
-            o->value = JsonValue_NewString("1234567");
-            break;
-
-        case IID_DEVICE_INFORMATION_FIRMWARE_REVISION:
-            o->value = JsonValue_NewString("1.0.0");
-            break;
-
         default:
+            o->status = -100;
             break;
     }
 }
 
-static void OnFanGet(PropertyOperation *o)
+static void doGet_3_ModbusUnitDefinitionManagement(PropertyOperation *o)
 {
-    printf("OnFanGet: piid = [%d]\n", o->pid.iid);
+    printf("doGet_3_ModbusUnitDefinitionManagement: piid = [%d]\n", o->pid.iid);
 
     switch (o->pid.iid)
     {
-        case IID_FAN_ON:
-            o->value = JsonValue_NewBoolean(false);
+        case IID_3_5_UnitDefinitionCount:
+            o->value = JsonValue_NewInteger(0);
             break;
 
         default:
+            o->status = -100;
+            break;
+    }
+}
+
+static void doGet_4_ModbusUnitManagement(PropertyOperation *o)
+{
+    printf("doGet_4_ModbusUnitManagement: piid = [%d]\n", o->pid.iid);
+
+    switch (o->pid.iid)
+    {
+        case IID_4_5_UnitCount:
+            o->value = JsonValue_NewInteger(0);
+            break;
+
+        default:
+            o->status = -100;
+            break;
+    }
+}
+
+static void doGet_5_ModbusCollector(PropertyOperation *o)
+{
+    printf("doGet_5_ModbusCollector: piid = [%d]\n", o->pid.iid);
+
+    switch (o->pid.iid)
+    {
+        case IID_5_2_CollectingStatus:
+            o->value = JsonValue_NewInteger(0);
+            break;
+
+        default:
+            o->status = -100;
             break;
     }
 }
@@ -65,12 +80,24 @@ void OnPropertyGet(PropertyOperation *o)
 
     switch (o->pid.siid)
     {
-        case IID_DEVICE_INFORMATION:
-            OnDeviceInformationGet(o);
+        case IID_1_DeviceInformation:
+            doGet_1_DeviceInformation(o);
             break;
 
-        case IID_FAN:
-            OnFanGet(o);
+        case IID_2_ModbusController:
+            doGet_2_ModbusController(o);
+            break;
+
+        case IID_3_ModbusUnitDefinitionManagement:
+            doGet_3_ModbusUnitDefinitionManagement(o);
+            break;
+
+        case IID_4_ModbusUnitManagement:
+            doGet_4_ModbusUnitManagement(o);
+            break;
+
+        case IID_5_ModbusCollector:
+            doGet_5_ModbusCollector(o);
             break;
 
         default:

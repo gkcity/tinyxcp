@@ -14,31 +14,56 @@
 #include "../iid/IID.h"
 #include "../print/PrintValue.h"
 
-static void OnDeviceInformationSet(PropertyOperation *o)
+static void doSet_1_DeviceInformation(PropertyOperation *o)
 {
-    printf("OnDeviceInformationSet: piid = [%d]\n", o->pid.iid);
+    printf("doSet_1_DeviceInformation: piid = [%d]\n", o->pid.iid);
 
     switch (o->pid.iid)
     {
-        case IID_DEVICE_INFORMATION_IDENTIFY:
-            o->status = 0;
-            break;
-
         default:
             break;
     }
 }
 
-static void OnFanSet(PropertyOperation *o)
+static void doSet_2_ModbusController(PropertyOperation *o)
 {
-    printf("OnFanSet: piid = [%d]\n", o->pid.iid);
+    printf("doSet_2_ModbusController: piid = [%d]\n", o->pid.iid);
 
     switch (o->pid.iid)
     {
-        case IID_FAN_ON:
-            o->status = 0;
+        default:
             break;
+    }
+}
 
+static void doSet_3_ModbusUnitDefinitionManagement(PropertyOperation *o)
+{
+    printf("doSet_3_ModbusUnitDefinitionManagement: piid = [%d]\n", o->pid.iid);
+
+    switch (o->pid.iid)
+    {
+        default:
+            break;
+    }
+}
+
+static void doSet_4_ModbusUnitManagement(PropertyOperation *o)
+{
+    printf("doSet_4_ModbusUnitManagement: piid = [%d]\n", o->pid.iid);
+
+    switch (o->pid.iid)
+    {
+        default:
+            break;
+    }
+}
+
+static void doSet_5_ModbusCollector(PropertyOperation *o)
+{
+    printf("doSet_5_ModbusCollector: piid = [%d]\n", o->pid.iid);
+
+    switch (o->pid.iid)
+    {
         default:
             break;
     }
@@ -51,12 +76,24 @@ void OnPropertySet(PropertyOperation *o)
 
     switch (o->pid.siid)
     {
-        case IID_DEVICE_INFORMATION:
-            OnDeviceInformationSet(o);
+        case IID_1_DeviceInformation:
+            doSet_1_DeviceInformation(o);
             break;
 
-        case IID_FAN:
-            OnFanSet(o);
+        case IID_2_ModbusController:
+            doSet_2_ModbusController(o);
+            break;
+
+        case IID_3_ModbusUnitDefinitionManagement:
+            doSet_3_ModbusUnitDefinitionManagement(o);
+            break;
+
+        case IID_4_ModbusUnitManagement:
+            doSet_4_ModbusUnitManagement(o);
+            break;
+
+        case IID_5_ModbusCollector:
+            doSet_5_ModbusCollector(o);
             break;
 
         default:
