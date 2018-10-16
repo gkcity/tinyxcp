@@ -18,13 +18,13 @@
 #include "S_4_ModbusUnitManagement.h"
 #include "S_5_ModbusCollector.h"
 
-Device *ModbusMaster(const char *did,
-                     uint16_t productId,
-                     uint16_t productVersion,
-                     const char *ltsk,
-                     PropertyOnGet onGet,
-                     PropertyOnSet onSet,
-                     ActionOnInvoke onInvoke)
+Device * ModbusMaster(const char *did,
+            uint16_t productId,
+            uint16_t productVersion,
+            const char *ltsk,
+            PropertyOnGet onGet,
+            PropertyOnSet onSet,
+            ActionOnInvoke onInvoke)
 {
     Device *thiz = NULL;
 
@@ -40,8 +40,8 @@ Device *ModbusMaster(const char *did,
         tiny_snprintf(thiz->did, DEVICE_ID_LENGTH, "%s@%d", did, productId);
         thiz->productId = productId;
         thiz->productVersion = productVersion;
-        thiz->onSet = onSet;
         thiz->onGet = onGet;
+        thiz->onSet = onSet;
         thiz->onInvoke = onInvoke;
 
         if (RET_FAILED(TinyList_AddTail(&thiz->services, S_1_DeviceInformation())))

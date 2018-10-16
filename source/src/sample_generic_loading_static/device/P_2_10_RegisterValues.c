@@ -24,8 +24,8 @@ Property * P_2_10_RegisterValues(void)
             break;
         }
 
-        thiz->access = ACCESS_READ;
-        thiz->format = FORMAT_STRING;
+        thiz->access = 0;
+        thiz->format = FORMAT_HEX;
     } while (false);
 
     return thiz;

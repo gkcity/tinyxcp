@@ -25,7 +25,7 @@ Property * P_4_5_UnitCount(void)
         }
 
         thiz->access = ACCESS_READ;
-        thiz->format = FORMAT_STRING;
+        thiz->format = FORMAT_UINT32;
     } while (false);
 
     return thiz;

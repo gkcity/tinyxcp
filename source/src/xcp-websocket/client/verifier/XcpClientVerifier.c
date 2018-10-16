@@ -383,10 +383,10 @@ static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
         thiz->sendQuery = sendQuery;
         thiz->binaryCodec = binaryCodec;
 
-        LOG_E(TAG, "Curve25519_GenerateKeyPair...");
+        LOG_D(TAG, "Curve25519_GenerateKeyPair...");
         Curve25519_GenerateKeyPair(&thiz->publicKey, &thiz->privateKey);
-        LOG_E(TAG, "Curve25519_GenerateKeyPair finished!");
 
+        LOG_D(TAG, "base64_decode(serverLTPK)...");
         memset(buf, 0, 128);
         length = base64_decode(serverLTPK, buf);
         if (length == ED25519_PUBLIC_KEY_LENGTH)
@@ -401,6 +401,7 @@ static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
             break;
         }
 
+        LOG_D(TAG, "base64_decode(deviceLTSK)...");
         memset(buf, 0, 128);
         length = base64_decode(device->ltsk, buf);
         if (length <= ED25519_PRIVATE_KEY_LENGTH)

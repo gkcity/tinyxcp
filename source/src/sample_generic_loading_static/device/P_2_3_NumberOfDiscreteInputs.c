@@ -24,8 +24,8 @@ Property * P_2_3_NumberOfDiscreteInputs(void)
             break;
         }
 
-        thiz->access = ACCESS_READ;
-        thiz->format = FORMAT_STRING;
+        thiz->access = 0;
+        thiz->format = FORMAT_UINT16;
     } while (false);
 
     return thiz;

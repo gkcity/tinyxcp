@@ -18,13 +18,13 @@
 TINY_BEGIN_DECLS
 
 
-Device *ModbusMaster(const char *did,
-                     uint16_t productId,
-                     uint16_t productVersion,
-                     const char *ltsk,
-                     PropertyOnGet onGet,
-                     PropertyOnSet onSet,
-                     ActionOnInvoke onInvoke);
+Device * ModbusMaster(const char *did,
+                uint16_t productId,
+                uint16_t productVersion,
+                const char *ltsk,
+                PropertyOnGet onGet,
+                PropertyOnSet onSet,
+                ActionOnInvoke onInvoke);
 
 
 TINY_END_DECLS

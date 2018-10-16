@@ -79,7 +79,7 @@ Property * P_5_2_CollectingStatus(void)
         }
 
         thiz->access = ACCESS_READ;
-        thiz->format = FORMAT_STRING;
+        thiz->format = FORMAT_UINT32;
 
         if (RET_FAILED(P_5_2_CollectingStatus_SetValueList(thiz)))
         {

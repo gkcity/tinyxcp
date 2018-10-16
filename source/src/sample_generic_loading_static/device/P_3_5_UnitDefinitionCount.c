@@ -25,7 +25,7 @@ Property * P_3_5_UnitDefinitionCount(void)
         }
 
         thiz->access = ACCESS_READ;
-        thiz->format = FORMAT_STRING;
+        thiz->format = FORMAT_UINT32;
     } while (false);
 
     return thiz;

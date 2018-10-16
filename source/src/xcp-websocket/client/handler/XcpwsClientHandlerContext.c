@@ -41,9 +41,11 @@ static TinyRet XcpwsClientHandlerContext_Construct(XcpwsClientHandlerContext *th
         ret = TinyMap_Construct(&thiz->handlers, _OnHandlerRemove, NULL);
         if (RET_FAILED(ret))
         {
-            //LOG_E(TAG, "TinyMap_Construct FAILED: %s", tiny_ret_to_str(ret));
+            LOG_E(TAG, "TinyMap_Construct FAILED: %d", TINY_RET_CODE(ret));
             break;
         }
+
+        LOG_D(TAG, "XcpClientVerifier_New");
 
         thiz->verifier = XcpClientVerifier_New(serverLTPK,
                                                device,
@@ -52,9 +54,11 @@ static TinyRet XcpwsClientHandlerContext_Construct(XcpwsClientHandlerContext *th
         if (thiz->verifier == NULL)
         {
             ret = TINY_RET_E_NEW;
-            //LOG_E(TAG, "XcpwsClientVerifier_New FAILED: %s", tiny_ret_to_str(ret));
+            LOG_E(TAG, "XcpwsClientVerifier_New FAILED: %d", TINY_RET_CODE(ret));
             break;
         }
+
+        LOG_D(TAG, "XcpClientVerifier_New finished!");
     } while (0);
 
     return ret;

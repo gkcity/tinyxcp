@@ -24,8 +24,8 @@ Property * P_2_6_NumberOfBytes(void)
             break;
         }
 
-        thiz->access = ACCESS_READ;
-        thiz->format = FORMAT_STRING;
+        thiz->access = 0;
+        thiz->format = FORMAT_UINT8;
     } while (false);
 
     return thiz;

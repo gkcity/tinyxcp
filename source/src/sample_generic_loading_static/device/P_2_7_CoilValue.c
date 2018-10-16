@@ -78,8 +78,8 @@ Property * P_2_7_CoilValue(void)
             break;
         }
 
-        thiz->access = ACCESS_READ;
-        thiz->format = FORMAT_STRING;
+        thiz->access = 0;
+        thiz->format = FORMAT_HEX;
 
         if (RET_FAILED(P_2_7_CoilValue_SetValueList(thiz)))
         {

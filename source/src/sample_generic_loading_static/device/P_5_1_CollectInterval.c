@@ -24,8 +24,8 @@ Property * P_5_1_CollectInterval(void)
             break;
         }
 
-        thiz->access = ACCESS_READ;
-        thiz->format = FORMAT_STRING;
+        thiz->access = 0;
+        thiz->format = FORMAT_UINT32;
     } while (false);
 
     return thiz;

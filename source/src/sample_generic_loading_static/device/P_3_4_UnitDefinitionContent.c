@@ -24,7 +24,7 @@ Property * P_3_4_UnitDefinitionContent(void)
             break;
         }
 
-        thiz->access = ACCESS_READ;
+        thiz->access = 0;
         thiz->format = FORMAT_STRING;
     } while (false);
 
