@@ -15,7 +15,7 @@
 
 #include <tiny_base.h>
 #include <secret/SecretKey.h>
-#include <curve25519/Curve25519.h>
+#include <x25519/tiny_curve25519.h>
 #include <hkdf/HKDF.h>
 
 TINY_BEGIN_DECLS

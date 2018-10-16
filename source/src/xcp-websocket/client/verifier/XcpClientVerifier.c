@@ -14,7 +14,7 @@
 #include <XcpMessage.h>
 #include <tiny_malloc.h>
 #include <base64/tiny_base64.h>
-#include <curve25519/Curve25519.h>
+#include <x25519/tiny_curve25519.h>
 #include <chacha20poly1305/tiny_chacha20poly1305.h>
 #include <iq/basic/VerifyStartFactory.h>
 #include <iq/basic/VerifyFinishFactory.h>
