@@ -45,8 +45,6 @@ static TinyRet XcpwsClientHandlerContext_Construct(XcpwsClientHandlerContext *th
             break;
         }
 
-        LOG_D(TAG, "XcpClientVerifier_New");
-
         thiz->verifier = XcpClientVerifier_New(serverLTPK,
                                                device,
                                                XcpwsClientHandlerContext_SendQuery,
@@ -57,8 +55,6 @@ static TinyRet XcpwsClientHandlerContext_Construct(XcpwsClientHandlerContext *th
             LOG_E(TAG, "XcpwsClientVerifier_New FAILED: %d", TINY_RET_CODE(ret));
             break;
         }
-
-        LOG_D(TAG, "XcpClientVerifier_New finished!");
     } while (0);
 
     return ret;

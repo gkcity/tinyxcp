@@ -31,7 +31,7 @@
 #include <codec-websocket/WebSocketFrameCodec.h>
 #include <tiny_str_equal.h>
 #include <sha/sha1.h>
-#include <base64/base64.h>
+#include <base64/tiny_base64.h>
 #include "XcpwsServerHandler.h"
 #include "XcpwsServerHandlerContext.h"
 
@@ -214,7 +214,7 @@ static uint32_t getSecWebSocketAccept(const char *key, char accept[256])
     sha1_update(&ctx, value, strlen(value));
     sha1_final(digest, &ctx);
 
-    return (uint32_t) base64_encode(digest, SHA1_DIGEST_SIZE, accept);
+    return (uint32_t) tiny_base64_encode(digest, SHA1_DIGEST_SIZE, accept);
 }
 
 //static void test(void)

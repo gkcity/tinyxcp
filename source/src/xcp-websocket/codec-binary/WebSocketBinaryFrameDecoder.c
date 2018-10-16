@@ -13,7 +13,7 @@
  */
 
 #include <tiny_log.h>
-#include <chacha20poly1305/chacha20poly1305.h>
+#include <chacha20poly1305/tiny_chacha20poly1305.h>
 #include <tiny_print_binary.h>
 #include "WebSocketBinaryFrameDecoder.h"
 
@@ -46,15 +46,15 @@ TinyRet WebSocketBinaryFrameDecoder_Decode(WebSocketFrame *frame, int64_t nonce,
     n[6] = (uint8_t) (n1 >> 16);
     n[7] = (uint8_t) (n1 >> 24);
 
-    ret = chacha20poly1305_decrypt(key->value,
-                                   key->length,
-                                   n,
-                                   frame->data,
-                                   (uint32_t) (frame->length - 16),
-                                   frame->data + frame->length - 16,
-                                   frame->data,
-                                   NULL,
-                                   0);
+    ret = tiny_chacha20poly1305_decrypt(key->value,
+                                        key->length,
+                                        n,
+                                        frame->data,
+                                        (uint32_t) (frame->length - 16),
+                                        frame->data + frame->length - 16,
+                                        frame->data,
+                                        NULL,
+                                        0);
     if (RET_SUCCEEDED(ret))
     {
         frame->length -= 16;
