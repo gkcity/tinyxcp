@@ -15,22 +15,22 @@
 
 static void P_1_1_Manufacturer_doGet(PropertyOperation *o)
 {
-    // o->value = JsonValue_NewString("GeekCity");
+     o->value = JsonValue_NewString("GeekCity");
 }
 
 static void P_1_2_Model_doGet(PropertyOperation *o)
 {
-    // o->value = JsonValue_NewString("GeekCity");
+     o->value = JsonValue_NewString("xxx");
 }
 
 static void P_1_3_SerialNumber_doGet(PropertyOperation *o)
 {
-    // o->value = JsonValue_NewString("GeekCity");
+     o->value = JsonValue_NewString("100-1");
 }
 
 static void P_1_4_FirmwareRevision_doGet(PropertyOperation *o)
 {
-    // o->value = JsonValue_NewString("GeekCity");
+     o->value = JsonValue_NewString("1.0.0");
 }
 
 void S_1_DeviceInformation_doGet(PropertyOperation *o)

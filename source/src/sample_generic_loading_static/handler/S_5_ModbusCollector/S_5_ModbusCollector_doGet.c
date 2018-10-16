@@ -15,7 +15,7 @@
 
 static void P_5_2_CollectingStatus_doGet(PropertyOperation *o)
 {
-    // o->value = JsonValue_NewString("GeekCity");
+     o->value = JsonValue_NewInteger(0);
 }
 
 void S_5_ModbusCollector_doGet(PropertyOperation *o)

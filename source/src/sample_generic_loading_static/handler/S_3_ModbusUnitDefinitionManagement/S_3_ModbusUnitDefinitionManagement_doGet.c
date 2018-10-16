@@ -15,7 +15,7 @@
 
 static void P_3_5_UnitDefinitionCount_doGet(PropertyOperation *o)
 {
-    // o->value = JsonValue_NewString("GeekCity");
+     o->value = JsonValue_NewInteger(0);
 }
 
 void S_3_ModbusUnitDefinitionManagement_doGet(PropertyOperation *o)

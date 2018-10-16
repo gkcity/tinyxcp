@@ -371,6 +371,8 @@ static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
     RETURN_VAL_IF_FAIL(serverLTPK, TINY_RET_E_ARG_NULL);
     RETURN_VAL_IF_FAIL(device, TINY_RET_E_ARG_NULL);
 
+    LOG_D(TAG, "XcpClientVerifier_Construct");
+
     do
     {
         uint32_t length = 0;
@@ -381,7 +383,9 @@ static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
         thiz->sendQuery = sendQuery;
         thiz->binaryCodec = binaryCodec;
 
+        LOG_E(TAG, "Curve25519_GenerateKeyPair...");
         Curve25519_GenerateKeyPair(&thiz->publicKey, &thiz->privateKey);
+        LOG_E(TAG, "Curve25519_GenerateKeyPair finished!");
 
         memset(buf, 0, 128);
         length = base64_decode(serverLTPK, buf);
