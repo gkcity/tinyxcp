@@ -10,9 +10,9 @@
  *
  */
 #include <tiny_sleep.h>
-#include <unistd.h>
+//#include <unistd.h>
 
 void tiny_sleep(int ms)
 {
-    usleep((useconds_t)ms * 1000);
+    //usleep((useconds_t)ms * 1000);
 }

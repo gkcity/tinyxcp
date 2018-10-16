@@ -93,10 +93,8 @@ void WaitingForUserCommand(uint16_t port)
     int ret = 0;
     char buf[1024];
 
-    g_client = c;
-
-    g_loop = 1;
-    g_port = port;
+	g_loop = 1;
+	g_port = port;
 
     while (g_loop)
     {
