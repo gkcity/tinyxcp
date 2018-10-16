@@ -18,7 +18,7 @@
 TINY_LOR
 TinyRet QueryChildrenAdded_Construct(QueryChildrenAdded *thiz)
 {
-    return TinyList_Construct(&thiz->children);
+    return TinyList_Construct(&thiz->children, NULL, NULL);
 }
 
 TINY_LOR

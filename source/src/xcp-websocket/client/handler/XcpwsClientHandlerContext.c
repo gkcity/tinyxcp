@@ -38,13 +38,12 @@ static TinyRet XcpwsClientHandlerContext_Construct(XcpwsClientHandlerContext *th
         thiz->messageIndex = 1;
         thiz->device = device;
 
-        ret = TinyMap_Construct(&thiz->handlers);
+        ret = TinyMap_Construct(&thiz->handlers, _OnHandlerRemove, NULL);
         if (RET_FAILED(ret))
         {
             //LOG_E(TAG, "TinyMap_Construct FAILED: %s", tiny_ret_to_str(ret));
             break;
         }
-        TinyMap_SetDeleteListener(&thiz->handlers, _OnHandlerRemove, NULL);
 
         thiz->verifier = XcpClientVerifier_New(serverLTPK,
                                                device,

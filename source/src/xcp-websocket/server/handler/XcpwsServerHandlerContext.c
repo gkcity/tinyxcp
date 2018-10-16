@@ -35,13 +35,12 @@ static TinyRet XcpwsServerHandlerContext_Construct(XcpwsServerHandlerContext *th
         thiz->messageIndex = 1;
         thiz->data = data;
 
-        ret = TinyMap_Construct(&thiz->handlers);
+        ret = TinyMap_Construct(&thiz->handlers, _OnHandlerRemove, NULL);
         if (RET_FAILED(ret))
         {
             //LOG_E(TAG, "TinyMap_Construct FAILED: %s", tiny_ret_to_str(ret));
             break;
         }
-        TinyMap_SetDeleteListener(&thiz->handlers, _OnHandlerRemove, NULL);
     } while (0);
 
     return ret;

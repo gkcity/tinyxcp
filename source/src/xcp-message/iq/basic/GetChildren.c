@@ -17,7 +17,7 @@
 TINY_LOR
 TinyRet ResultGetChildren_Construct(ResultGetChildren *thiz)
 {
-    return TinyList_Construct(&thiz->children);
+    return TinyList_Construct(&thiz->children, NULL, NULL);
 }
 
 TINY_LOR
