@@ -2,7 +2,6 @@
 #include "DeviceStack.h"
 #include "DeviceMonitor.h"
 #include "CommandReader.h"
-#include "DeviceInitializer.h"
 #include "handler/OnPropertyGet.h"
 #include "handler/OnPropertySet.h"
 #include "handler/OnActionInvoke.h"
@@ -14,7 +13,8 @@
 #define DID                 "10001"
 #define PRODUCT_ID          10006
 #define PRODUCT_VERSION     1
-#define LTSK                "Cy/HZRcyrCK5h6OhBc6hMFXN1q0x+p8tu+bcYODkSJc="
+#define LTSK                "+NC/fa+QFz6hHtcOUKUJK9EQEl/J1nKhh2ixj9hQtGU="
+#define LTPK                "V6q8ABMPIOpEyJK/EsdpmsQFtX2+CbpaPMlYOjWNHLE="
 
 int main(void)
 {
@@ -26,7 +26,7 @@ int main(void)
     /**
      * 1. 初始化设备
      */
-    device = ModbusMaster(DID, PRODUCT_ID, PRODUCT_VERSION, LTSK, OnPropertyGet, OnPropertySet, OnActionInvoke);
+    device = ModbusMaster(DID, PRODUCT_ID, PRODUCT_VERSION, LTSK, LTPK, OnPropertyGet, OnPropertySet, OnActionInvoke);
     if (device == NULL)
     {
         return 0;

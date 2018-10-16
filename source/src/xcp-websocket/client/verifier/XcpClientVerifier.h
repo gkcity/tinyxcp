@@ -39,6 +39,7 @@ typedef struct _XcpClientVerifier
     Curve25519SharedKey           sharedKey;
     HKDF                          verifyKey;
     ED25519PrivateKey             deviceLTSK;
+    ED25519PublicKey              deviceLTPK;
     ED25519PublicKey              serverLTPK;
     XcpSessionInfo                sessionInfo;
     XcpVerifySuccessHandler       onSuccess;

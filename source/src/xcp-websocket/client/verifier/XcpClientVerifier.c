@@ -138,13 +138,15 @@ static TinyRet _verify_signature(XcpClientVerifier *thiz, const char *signatureB
 
         LOG_D(TAG, "tiny_chacha20poly1305_decrypt finished!");
 
+#if 1
         // TODO: crash on esp32 !!!
-//        ret = tiny_ed25519_verify(&thiz->serverLTPK, &signature, thiz->sessionInfo.value, thiz->sessionInfo.length);
-//        if (RET_FAILED(ret))
-//        {
-//            LOG_E(TAG, "tiny_ed25519_verify signature FAILED!");
-//            break;
-//        }
+        ret = tiny_ed25519_verify(&thiz->serverLTPK, &signature, thiz->sessionInfo.value, thiz->sessionInfo.length);
+        if (RET_FAILED(ret))
+        {
+            LOG_E(TAG, "tiny_ed25519_verify signature FAILED!");
+            break;
+        }
+#endif
 
         LOG_I(TAG, "signature verified!");
     } while (false);
@@ -179,12 +181,13 @@ static void _sign(XcpClientVerifier *thiz, char signatureBase64[128])
 
     _printHex("sessionInfo", thiz->sessionInfo.value, thiz->sessionInfo.length);
     _printHex("deviceLTSK", thiz->deviceLTSK.value, thiz->deviceLTSK.length);
+    _printHex("deviceLTPK", thiz->deviceLTPK.value, thiz->deviceLTPK.length);
 
     memset(&signature, 0, sizeof(ED25519Signature));
 
     // TODO: crash on esp32 !!!
-#if 0
-    tiny_ed25519_sign(&thiz->deviceLTSK, &signature, thiz->sessionInfo.value, thiz->sessionInfo.length);
+#if 1
+    tiny_ed25519_sign(&thiz->deviceLTSK, &thiz->deviceLTPK, &signature, thiz->sessionInfo.value, thiz->sessionInfo.length);
 #else
     memcpy(signature.value, "1234567812345678123456781234567812345678123456781234567812345678", ED25519_SIGNATURE_LENGTH);
     signature.length = ED25519_SIGNATURE_LENGTH;
@@ -415,13 +418,28 @@ static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
         length = tiny_base64_decode(device->ltsk, buf);
         if (length <= ED25519_PRIVATE_KEY_LENGTH)
         {
-            LOG_E(TAG, "ltsk.length: %d", length);
+            LOG_E(TAG, "deviceLTSK.length: %d", length);
             memcpy(thiz->deviceLTSK.value, buf, length);
             thiz->deviceLTSK.length = length;
         }
         else
         {
             LOG_E(TAG, "deviceLTSK.length invalid: %d", length);
+            ret = TINY_RET_E_ARG_INVALID;
+            break;
+        }
+
+        memset(buf, 0, 128);
+        length = tiny_base64_decode(device->ltpk, buf);
+        if (length <= ED25519_PUBLIC_KEY_LENGTH)
+        {
+            LOG_E(TAG, "deviceLTPK.length: %d", length);
+            memcpy(thiz->deviceLTPK.value, buf, length);
+            thiz->deviceLTPK.length = length;
+        }
+        else
+        {
+            LOG_E(TAG, "deviceLTPK.length invalid: %d", length);
             ret = TINY_RET_E_ARG_INVALID;
             break;
         }

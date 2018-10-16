@@ -22,6 +22,7 @@ Device * ModbusMaster(const char *did,
                 uint16_t productId,
                 uint16_t productVersion,
                 const char *ltsk,
+                const char *ltpk,
                 PropertyOnGet onGet,
                 PropertyOnSet onSet,
                 ActionOnInvoke onInvoke);

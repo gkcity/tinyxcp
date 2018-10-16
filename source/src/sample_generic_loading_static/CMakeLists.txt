@@ -164,8 +164,6 @@ SET(SRC
         DeviceMonitor.c
         DeviceStack.h
         DeviceStack.c
-        DeviceInitializer.h
-        DeviceInitializer.c
         CommandReader.h
         CommandReader.c
         main.c

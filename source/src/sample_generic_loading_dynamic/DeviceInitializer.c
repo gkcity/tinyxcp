@@ -20,11 +20,12 @@ Device *DeviceInitialize(const char *did,
                          uint16_t productId,
                          uint16_t productVersion,
                          const char *ltsk,
+                         const char *ltpk,
                          PropertyOnGet onGet,
                          PropertyOnSet onSet,
                          ActionOnInvoke onInvoke)
 {
-    Device *device = DeviceFactory_Create(did, productId, productVersion, ltsk, 10);
+    Device *device = DeviceFactory_Create(did, productId, productVersion, ltsk, ltpk, 10);
     if (device == NULL)
     {
         LOG_I(TAG, "DeviceFactory_Create FAILED!\n");
