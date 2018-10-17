@@ -138,15 +138,12 @@ static TinyRet _verify_signature(XcpClientVerifier *thiz, const char *signatureB
 
         LOG_D(TAG, "tiny_chacha20poly1305_decrypt finished!");
 
-#if 1
-        // TODO: crash on esp32 !!!
         ret = tiny_ed25519_verify(&thiz->serverLTPK, &signature, thiz->sessionInfo.value, thiz->sessionInfo.length);
         if (RET_FAILED(ret))
         {
             LOG_E(TAG, "tiny_ed25519_verify signature FAILED!");
             break;
         }
-#endif
 
         LOG_I(TAG, "signature verified!");
     } while (false);
@@ -185,13 +182,7 @@ static void _sign(XcpClientVerifier *thiz, char signatureBase64[128])
 
     memset(&signature, 0, sizeof(ED25519Signature));
 
-    // TODO: crash on esp32 !!!
-#if 1
     tiny_ed25519_sign(&thiz->deviceLTSK, &thiz->deviceLTPK, &signature, thiz->sessionInfo.value, thiz->sessionInfo.length);
-#else
-    memcpy(signature.value, "1234567812345678123456781234567812345678123456781234567812345678", ED25519_SIGNATURE_LENGTH);
-    signature.length = ED25519_SIGNATURE_LENGTH;
-#endif
 
     _printHex("signature", signature.value, signature.length);
     _printHex("verifyKey", thiz->verifyKey.value, thiz->verifyKey.length);
