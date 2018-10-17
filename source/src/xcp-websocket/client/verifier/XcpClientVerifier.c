@@ -79,7 +79,7 @@ static TinyRet _compute_shared_key(XcpClientVerifier *thiz, const char *publicKe
     memcpy(serverPubicKey.value, buf, CURVE25519_PUBLIC_KEY_LENGTH);
 
     LOG_D(TAG, "generate shared key");
-    Curve25519_GenerateSharedKey(&thiz->privateKey, &serverPubicKey, &thiz->sharedKey);
+    tiny_curve25519_generateSharedKey(&thiz->privateKey, &serverPubicKey, &thiz->sharedKey);
 
     LOG_D(TAG, "generate verify key");
     XcpKeyCreator_Create(&thiz->verifyKey, &thiz->sharedKey, SESSION_VERIFY_ENCRYPT_KEY);
@@ -398,7 +398,7 @@ static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
         thiz->sendQuery = sendQuery;
         thiz->binaryCodec = binaryCodec;
 
-        Curve25519_GenerateKeyPair(&thiz->publicKey, &thiz->privateKey);
+        tiny_curve25519_generateKeyPair(&thiz->publicKey, &thiz->privateKey);
 
         memset(buf, 0, 128);
         length = tiny_base64_decode(serverLTPK, buf);
