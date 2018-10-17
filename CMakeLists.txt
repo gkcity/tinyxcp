@@ -31,7 +31,6 @@ INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/TcpClient)
 INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/Json)
 INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/StringArray)
 INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/ByteBuffer)
-INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/Bson)
 INCLUDE_DIRECTORIES(${TINY_ROOT}/source/src/TinyThread)
 
 INCLUDE_DIRECTORIES(${TINYFX_ROOT}/source/src/IotLauncher)

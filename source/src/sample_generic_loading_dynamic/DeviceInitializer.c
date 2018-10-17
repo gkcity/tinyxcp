@@ -32,15 +32,16 @@ Device *DeviceInitialize(const char *did,
         return NULL;
     }
 
-    strncpy(device->ip, "10.0.1.29", TINY_IP_LEN);
-    device->port = 9898;
+    strncpy(device->config.ip, "10.0.1.29", TINY_IP_LEN);
+    device->config.port = 9898;
+    device->onGet = onGet;
+    device->onSet = onSet;
+    device->onInvoke = onInvoke;
 
     LOG_I(TAG, "DeviceFactory_Create succeed!");
-    LOG_I(TAG, "did: %s", device->did);
-    LOG_I(TAG, "product-id: %d", device->productId);
-    LOG_I(TAG, "product-version: %d", device->productVersion);
-
-    Device_SetHandler(device, onGet, onSet, onInvoke);
+    LOG_I(TAG, "did: %s", device->config.did);
+    LOG_I(TAG, "product-id: %d", device->config.productId);
+    LOG_I(TAG, "product-version: %d", device->config.productVersion);
 
     return device;
 }

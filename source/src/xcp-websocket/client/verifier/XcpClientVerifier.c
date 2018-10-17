@@ -213,12 +213,12 @@ static void _encode_did(XcpClientVerifier *thiz, char didEncryptAndBase64[256])
 
     LOG_D(TAG, "_encode_did");
 
-    length = (uint32_t) strlen(thiz->device->did);
+    length = (uint32_t) strlen(thiz->device->config.did);
 
     tiny_chacha20poly1305_encrypt(thiz->verifyKey.value,
                                   thiz->verifyKey.length,
                                   (const uint8_t *)"SV-Msg03",
-                                  (uint8_t *)(thiz->device->did),
+                                  (uint8_t *)(thiz->device->config.did),
                                   length,
                                   did,
                                   did + length,
@@ -406,7 +406,7 @@ static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
         }
 
         memset(buf, 0, 128);
-        length = tiny_base64_decode(device->ltsk, buf);
+        length = tiny_base64_decode(device->config.ltsk, buf);
         if (length <= ED25519_PRIVATE_KEY_LENGTH)
         {
             LOG_E(TAG, "deviceLTSK.length: %d", length);
@@ -421,7 +421,7 @@ static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
         }
 
         memset(buf, 0, 128);
-        length = tiny_base64_decode(device->ltpk, buf);
+        length = tiny_base64_decode(device->config.ltpk, buf);
         if (length <= ED25519_PUBLIC_KEY_LENGTH)
         {
             LOG_E(TAG, "deviceLTPK.length: %d", length);
@@ -571,8 +571,8 @@ void XcpClientVerifier_VerifyFinish(XcpClientVerifier *thiz)
 
     message = QueryVerifyFinish_New("",
                                     did,
-                                    thiz->device->productId,
-                                    thiz->device->productVersion,
+                                    thiz->device->config.productId,
+                                    thiz->device->config.productVersion,
                                     signature,
                                     thiz->binaryCodec);
     if (message == NULL)

@@ -37,12 +37,12 @@ Device * ModbusMaster(const char *did,
             break;
         }
 
-        strncpy(thiz->ltsk, ltsk, DEVICE_LTSK_BASE64_LENGTH);
-        strncpy(thiz->ltpk, ltpk, DEVICE_LTPK_BASE64_LENGTH);
+        strncpy(thiz->config.ltsk, ltsk, DEVICE_LTSK_BASE64_LENGTH);
+        strncpy(thiz->config.ltpk, ltpk, DEVICE_LTPK_BASE64_LENGTH);
 
-        tiny_snprintf(thiz->did, DEVICE_ID_LENGTH, "%s@%d", did, productId);
-        thiz->productId = productId;
-        thiz->productVersion = productVersion;
+        tiny_snprintf(thiz->config.did, DEVICE_ID_LENGTH, "%s@%d", did, productId);
+        thiz->config.productId = productId;
+        thiz->config.productVersion = productVersion;
         thiz->onGet = onGet;
         thiz->onSet = onSet;
         thiz->onInvoke = onInvoke;
