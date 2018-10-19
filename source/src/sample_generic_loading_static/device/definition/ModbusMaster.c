@@ -12,20 +12,17 @@
 
 #include <tiny_snprintf.h>
 #include "ModbusMaster.h"
+#include "../handler/OnPropertySet.h"
+#include "../handler/OnActionInvoke.h"
+#include "../handler/OnPropertyGet.h"
+#include "../initializer/InitializeConfiguration.h"
 #include "S_1_DeviceInformation.h"
 #include "S_2_ModbusController.h"
 #include "S_3_ModbusUnitDefinitionManagement.h"
 #include "S_4_ModbusUnitManagement.h"
 #include "S_5_ModbusCollector.h"
 
-Device * ModbusMaster(const char *did,
-            uint16_t productId,
-            uint16_t productVersion,
-            const char *ltsk,
-            const char *ltpk,
-            PropertyOnGet onGet,
-            PropertyOnSet onSet,
-            ActionOnInvoke onInvoke)
+Device * ModbusMaster(const char *did, const char *ip)
 {
     Device *thiz = NULL;
 
@@ -37,15 +34,9 @@ Device * ModbusMaster(const char *did,
             break;
         }
 
-        strncpy(thiz->config.ltsk, ltsk, DEVICE_LTSK_BASE64_LENGTH);
-        strncpy(thiz->config.ltpk, ltpk, DEVICE_LTPK_BASE64_LENGTH);
-
-        tiny_snprintf(thiz->config.did, DEVICE_ID_LENGTH, "%s@%d", did, productId);
-        thiz->config.productId = productId;
-        thiz->config.productVersion = productVersion;
-        thiz->onGet = onGet;
-        thiz->onSet = onSet;
-        thiz->onInvoke = onInvoke;
+        thiz->onGet = OnPropertyGet;
+        thiz->onSet = OnPropertySet;
+        thiz->onInvoke = OnActionInvoke;
 
         if (RET_FAILED(TinyList_AddTail(&thiz->services, S_1_DeviceInformation())))
         {
@@ -81,6 +72,8 @@ Device * ModbusMaster(const char *did,
             thiz = NULL;
             break;
         }
+
+        InitializeConfiguration(&thiz->config, did, ip);
     } while (false);
 
     return thiz;

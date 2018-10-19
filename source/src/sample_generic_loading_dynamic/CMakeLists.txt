@@ -4,63 +4,63 @@
 #
 #-----------------------------------------------------------------------------
 
-
-
-SET(HANDLER_SRC
-        handler/OnActionInvoke.h
-        handler/OnActionInvoke.c
-        handler/OnPropertyGet.h
-        handler/OnPropertyGet.c
-        handler/OnPropertySet.h
-        handler/OnPropertySet.c
-        handler/S_1_DeviceInformation/S_1_DeviceInformation_doGet.h
-        handler/S_1_DeviceInformation/S_1_DeviceInformation_doGet.c
-        handler/S_1_DeviceInformation/S_1_DeviceInformation_doSet.h
-        handler/S_1_DeviceInformation/S_1_DeviceInformation_doSet.c
-        handler/S_1_DeviceInformation/S_1_DeviceInformation_doInvoke.h
-        handler/S_1_DeviceInformation/S_1_DeviceInformation_doInvoke.c
-        handler/S_2_ModbusController/S_2_ModbusController_doGet.h
-        handler/S_2_ModbusController/S_2_ModbusController_doGet.c
-        handler/S_2_ModbusController/S_2_ModbusController_doSet.h
-        handler/S_2_ModbusController/S_2_ModbusController_doSet.c
-        handler/S_2_ModbusController/S_2_ModbusController_doInvoke.h
-        handler/S_2_ModbusController/S_2_ModbusController_doInvoke.c
-        handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doGet.h
-        handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doGet.c
-        handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doSet.h
-        handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doSet.c
-        handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doInvoke.h
-        handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doInvoke.c
-        handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doGet.h
-        handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doGet.c
-        handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doSet.h
-        handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doSet.c
-        handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doInvoke.h
-        handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doInvoke.c
-        handler/S_5_ModbusCollector/S_5_ModbusCollector_doGet.h
-        handler/S_5_ModbusCollector/S_5_ModbusCollector_doGet.c
-        handler/S_5_ModbusCollector/S_5_ModbusCollector_doSet.h
-        handler/S_5_ModbusCollector/S_5_ModbusCollector_doSet.c
-        handler/S_5_ModbusCollector/S_5_ModbusCollector_doInvoke.h
-        handler/S_5_ModbusCollector/S_5_ModbusCollector_doInvoke.c
+SET(DEVICE_SRC
+        device/iid/IID.h
+        device/definition/DeviceInitializer.h
+        device/definition/DeviceInitializer.c
+        device/handler/OnActionInvoke.h
+        device/handler/OnActionInvoke.c
+        device/handler/OnPropertyGet.h
+        device/handler/OnPropertyGet.c
+        device/handler/OnPropertySet.h
+        device/handler/OnPropertySet.c
+        device/handler/S_1_DeviceInformation/S_1_DeviceInformation_doGet.h
+        device/handler/S_1_DeviceInformation/S_1_DeviceInformation_doGet.c
+        device/handler/S_1_DeviceInformation/S_1_DeviceInformation_doSet.h
+        device/handler/S_1_DeviceInformation/S_1_DeviceInformation_doSet.c
+        device/handler/S_1_DeviceInformation/S_1_DeviceInformation_doInvoke.h
+        device/handler/S_1_DeviceInformation/S_1_DeviceInformation_doInvoke.c
+        device/handler/S_2_ModbusController/S_2_ModbusController_doGet.h
+        device/handler/S_2_ModbusController/S_2_ModbusController_doGet.c
+        device/handler/S_2_ModbusController/S_2_ModbusController_doSet.h
+        device/handler/S_2_ModbusController/S_2_ModbusController_doSet.c
+        device/handler/S_2_ModbusController/S_2_ModbusController_doInvoke.h
+        device/handler/S_2_ModbusController/S_2_ModbusController_doInvoke.c
+        device/handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doGet.h
+        device/handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doGet.c
+        device/handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doSet.h
+        device/handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doSet.c
+        device/handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doInvoke.h
+        device/handler/S_3_ModbusUnitDefinitionManagement/S_3_ModbusUnitDefinitionManagement_doInvoke.c
+        device/handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doGet.h
+        device/handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doGet.c
+        device/handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doSet.h
+        device/handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doSet.c
+        device/handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doInvoke.h
+        device/handler/S_4_ModbusUnitManagement/S_4_ModbusUnitManagement_doInvoke.c
+        device/handler/S_5_ModbusCollector/S_5_ModbusCollector_doGet.h
+        device/handler/S_5_ModbusCollector/S_5_ModbusCollector_doGet.c
+        device/handler/S_5_ModbusCollector/S_5_ModbusCollector_doSet.h
+        device/handler/S_5_ModbusCollector/S_5_ModbusCollector_doSet.c
+        device/handler/S_5_ModbusCollector/S_5_ModbusCollector_doInvoke.h
+        device/handler/S_5_ModbusCollector/S_5_ModbusCollector_doInvoke.c
+        device/initializer/InitializeConfiguration.h
+        device/initializer/InitializeConfiguration.c
+        device/print/PrintValue.h
+        device/print/PrintValue.c
         )
 
 SET(SRC
-        ${HANDLER_SRC}
-        print/PrintValue.h
-        print/PrintValue.c
-        iid/IID.h
+        ${DEVICE_SRC}
         DeviceMonitor.h
         DeviceMonitor.c
         DeviceStack.h
         DeviceStack.c
-        DeviceInitializer.h
-        DeviceInitializer.c
         CommandReader.h
         CommandReader.c
-        main.c
         tiny_print_mem.c
         tiny_sleep.c
+        main.c
         )
 
 ADD_EXECUTABLE(sample_generic_loading_dynamic ${SRC})

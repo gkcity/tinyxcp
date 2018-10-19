@@ -1,20 +1,14 @@
 #include <tiny_socket.h>
+#include "device/definition/ModbusMaster.h"
 #include "DeviceStack.h"
 #include "DeviceMonitor.h"
 #include "CommandReader.h"
-#include "handler/OnPropertyGet.h"
-#include "handler/OnPropertySet.h"
-#include "handler/OnActionInvoke.h"
-#include "device/ModbusMaster.h"
 
 /**
  * 设备基本信息
  */
-#define DID                 "10001"
-#define PRODUCT_ID          10006
-#define PRODUCT_VERSION     1
-#define LTSK                "+NC/fa+QFz6hHtcOUKUJK9EQEl/J1nKhh2ixj9hQtGU="
-#define LTPK                "V6q8ABMPIOpEyJK/EsdpmsQFtX2+CbpaPMlYOjWNHLE="
+#define DID                 "10001@10006"
+#define IP                  "10.0.1.29"
 
 int main(void)
 {
@@ -26,7 +20,7 @@ int main(void)
     /**
      * 1. 初始化设备
      */
-    device = ModbusMaster(DID, PRODUCT_ID, PRODUCT_VERSION, LTSK, LTPK, OnPropertyGet, OnPropertySet, OnActionInvoke);
+    device = ModbusMaster(DID, IP);
     if (device == NULL)
     {
         return 0;
