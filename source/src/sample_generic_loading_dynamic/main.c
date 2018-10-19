@@ -13,7 +13,7 @@
 #include "device/handler/OnPropertySet.h"
 #include "device/handler/OnActionInvoke.h"
 
-#define DID                 "10001"
+#define DID                 "10001@10006"
 #define IP                  "10.0.1.29"
 
 int main(void)

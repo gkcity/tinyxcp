@@ -4,9 +4,6 @@
 #include "DeviceMonitor.h"
 #include "CommandReader.h"
 
-/**
- * 设备基本信息
- */
 #define DID                 "10001@10006"
 #define IP                  "10.0.1.29"
 
