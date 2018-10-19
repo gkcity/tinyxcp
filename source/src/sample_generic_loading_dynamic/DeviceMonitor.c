@@ -12,7 +12,6 @@
 
 #include "DeviceMonitor.h"
 #include <TinyThread.h>
-#include <tiny_sleep.h>
 #include <HttpClient.h>
 #include <JsonObject.h>
 #include <client/WebcmdClient.h>
@@ -41,7 +40,7 @@ static void _loop(void *param)
 
     while (_running)
     {
-        tiny_sleep(1000 * 10);
+        sleep(1000 * 3);
         Fan_On_Changed(did);
     }
 }

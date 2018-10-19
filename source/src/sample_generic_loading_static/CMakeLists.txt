@@ -165,8 +165,6 @@ SET(SRC
         CommandReader.h
         CommandReader.c
         main.c
-        tiny_print_mem.c
-        tiny_sleep.c
         )
 
 ADD_EXECUTABLE(sample_generic_loading_static ${SRC})

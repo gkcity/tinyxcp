@@ -58,8 +58,6 @@ SET(SRC
         DeviceStack.c
         CommandReader.h
         CommandReader.c
-        tiny_print_mem.c
-        tiny_sleep.c
         main.c
         )
 
