@@ -40,7 +40,7 @@ static void _loop(void *param)
 
     while (_running)
     {
-        sleep(1000 * 10);
+        sleep(10);
         Fan_On_Changed(did);
     }
 }
