@@ -293,13 +293,11 @@ static void _Ping(ChannelHandler *thiz, Channel *channel)
             break;
         }
 
-        if (RET_FAILED(XcpwsClientHandlerContext_AddHandler(thiz->context, ping->iq.id, _handlePong, thiz)))
+        if (RET_FAILED(XcpwsClientHandlerContext_SendQuery(thiz->context, ping, _handlePong, thiz)))
         {
-            LOG_D(TAG, "XcpClientHandlerContext_AddHandler FAILED!");
-            return;
+            LOG_D(TAG, "XcpwsClientHandlerContext_SendQuery FAILED!");
+            break;
         }
-
-        SocketChannel_StartWrite(channel, DATA_XCP_MESSAGE, ping, 0);
     } while (false);
 
     if (ping != NULL)
