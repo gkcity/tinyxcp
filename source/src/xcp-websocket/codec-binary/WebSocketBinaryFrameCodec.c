@@ -169,22 +169,22 @@ static void _ChannelDecode(ChannelHandler *thiz, Channel *channel, WebSocketFram
     RETURN_IF_FAIL(channel);
     RETURN_IF_FAIL(frame);
 
-    ctx->started = true;
-
     LOG_D(TAG, "_ChannelDecode: %d bytes", (uint32_t)frame->length);
 
-    if (RET_FAILED(WebSocketBinaryFrameDecoder_Decode(frame, ctx->inboundBinaryMessageCount, &ctx->inKey)))
+    do
     {
-        LOG_D(TAG, "WebSocketBinaryFrameDecoder_Decode FAILED");
-        return;
-    }
+        ctx->started = true;
 
-    SocketChannel_NextRead(channel, DATA_WEBSOCKET_FRAME, frame, 0);
+        if (RET_FAILED(WebSocketBinaryFrameDecoder_Decode(frame, ctx->inboundBinaryMessageCount, &ctx->inKey)))
+        {
+            LOG_D(TAG, "WebSocketBinaryFrameDecoder_Decode FAILED");
+            break;
+        }
 
-    if (frame->opcode == OPCODE_TEXT_FRAME)
-    {
+        SocketChannel_NextRead(channel, DATA_WEBSOCKET_FRAME, frame, 0);
+
         ctx->inboundBinaryMessageCount++;
-    }
+    } while (false);
 }
 
 /**
@@ -205,15 +205,15 @@ static void _ChannelEncode(ChannelHandler *thiz, Channel *channel, const uint8_t
 
     LOG_D(TAG, "_ChannelEncode: %d bytes", (uint32_t) frame->length);
 
-    if (RET_FAILED(WebSocketBinaryFrameEncoder_Encode(frame, ctx->outboundBinaryMessageCount, &ctx->outKey)))
+    do
     {
-        return;
-    }
+        if (RET_FAILED(WebSocketBinaryFrameEncoder_Encode(frame, ctx->outboundBinaryMessageCount, &ctx->outKey)))
+        {
+            break;
+        }
 
-    SocketChannel_NextWrite(channel, DATA_WEBSOCKET_FRAME, frame, 0);
+        SocketChannel_NextWrite(channel, DATA_WEBSOCKET_FRAME, frame, 0);
 
-    if (frame->opcode == OPCODE_BINARY_FRAME)
-    {
         ctx->outboundBinaryMessageCount++;
-    }
+    } while (false);
 }

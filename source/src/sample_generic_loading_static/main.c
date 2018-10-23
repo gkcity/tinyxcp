@@ -31,7 +31,7 @@ int main(void)
     /**
      * 3. 线程2： 监控设备数据，如果发生变化，则通过ipc端口通知服务器。
      */
-    StartDeviceMonitor(device->config.did, port);
+    //StartDeviceMonitor(device->config.did, port);
 
     /**
      * 4. 线程3: 主线程，阻塞在这里，等待用户输入命令
