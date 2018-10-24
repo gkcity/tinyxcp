@@ -287,7 +287,13 @@ static void _Ping(ChannelHandler *thiz, Channel *channel)
     {
         if (context->verifier->stage != XCP_STAGE_VERIFY_FINISHED)
         {
-            LOG_D(TAG, "not verified, do not send ping");
+            LOG_E(TAG, "not verified, do not send ping");
+            break;
+        }
+
+        if (context->handlers.list.size > 6)
+        {
+            LOG_E(TAG, "responses for 10 queries no received, do not send ping");
             break;
         }
 
