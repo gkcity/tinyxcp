@@ -280,12 +280,19 @@ static void _handlePong(XcpMessage *message, void *ctx)
 TINY_LOR
 static void _Ping(ChannelHandler *thiz, Channel *channel)
 {
+    XcpwsClientHandlerContext *context = (XcpwsClientHandlerContext *) (thiz->context);
     XcpMessage * ping = NULL;
-
-    LOG_D(TAG, "ping");
 
     do
     {
+        if (context->verifier->stage != XCP_STAGE_VERIFY_FINISHED)
+        {
+            LOG_D(TAG, "not verified, do not send ping");
+            break;
+        }
+
+        LOG_D(TAG, "ping");
+
         ping = Ping_New("");
         if (ping == NULL)
         {
