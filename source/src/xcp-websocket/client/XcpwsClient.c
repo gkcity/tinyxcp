@@ -26,7 +26,7 @@ TINY_LOR
 static void XcpwsClientInitializer(Channel *channel, void *ctx)
 {
     LOG_D(TAG, "XcpwsClientInitializer: %s", channel->id);
-    SocketChannel_AddLast(channel, ChannelIdleStateHandler(0, 0, 40));
+    SocketChannel_AddLast(channel, ChannelIdleStateHandler(20, 50, 0));
     SocketChannel_AddLast(channel, HttpMessageCodec());
     SocketChannel_AddLast(channel, XcpwsClientHandler((Device *)ctx));
 }
