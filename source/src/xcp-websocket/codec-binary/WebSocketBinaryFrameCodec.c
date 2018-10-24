@@ -175,6 +175,8 @@ static void _ChannelDecode(ChannelHandler *thiz, Channel *channel, WebSocketFram
     {
         ctx->started = true;
 
+        LOG_D(TAG, "inboundBinaryMessageCount: %d", (int)(ctx->inboundBinaryMessageCount));
+
         if (RET_FAILED(WebSocketBinaryFrameDecoder_Decode(frame, ctx->inboundBinaryMessageCount, &ctx->inKey)))
         {
             LOG_D(TAG, "WebSocketBinaryFrameDecoder_Decode FAILED");
