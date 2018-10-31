@@ -25,12 +25,7 @@ TINY_BEGIN_DECLS
 
 
 TINY_LOR
-XcpMessage * QueryVerifyFinish_New(const char *id,
-                                   const char *did,
-                                   uint16_t productId,
-                                   uint16_t productVersion,
-                                   const char *signature,
-                                   uint8_t codec);
+XcpMessage *QueryVerifyFinish_New(const char *id, const char *udid, const char *signature, uint8_t codec);
 
 
 TINY_END_DECLS

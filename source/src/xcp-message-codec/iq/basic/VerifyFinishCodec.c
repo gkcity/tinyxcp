@@ -20,19 +20,7 @@ TinyRet VerifyFinishCodec_EncodeQuery(JsonObject *content, QueryVerifyFinish *ve
 
     do
     {
-        ret = JsonObject_PutString(content, "device-id", verifyFinish->did);
-        if (RET_FAILED(ret))
-        {
-            break;
-        }
-
-        ret = JsonObject_PutInteger(content, "product-id", verifyFinish->productId);
-        if (RET_FAILED(ret))
-        {
-            break;
-        }
-
-        ret = JsonObject_PutInteger(content, "product-version", verifyFinish->productVersion);
+        ret = JsonObject_PutString(content, "udid", verifyFinish->udid);
         if (RET_FAILED(ret))
         {
             break;

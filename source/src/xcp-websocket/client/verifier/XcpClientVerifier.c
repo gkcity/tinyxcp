@@ -19,6 +19,7 @@
 #include <iq/basic/VerifyStartFactory.h>
 #include <iq/basic/VerifyFinishFactory.h>
 #include <iq/basic/InitializeFactory.h>
+#include <tiny_snprintf.h>
 #include "XcpClientVerifier.h"
 #include "XcpKeyCreator.h"
 
@@ -206,29 +207,36 @@ static void _sign(XcpClientVerifier *thiz, char signatureBase64[128])
 }
 
 TINY_LOR
-static void _encode_did(XcpClientVerifier *thiz, char didEncryptAndBase64[256])
+static void _encode_udid(XcpClientVerifier *thiz, char udidEncryptAndBase64[256])
 {
-    uint8_t did[200];
+    char udid[UDID_LENGTH + 1];
+    uint8_t udidEncrypt[256];
     uint32_t length = 0;
 
-    LOG_D(TAG, "_encode_did");
+    memset(udid, 0, UDID_LENGTH + 1);
+    tiny_snprintf(udid, UDID_LENGTH, "%s@%d/%d",
+            thiz->device->config.serialNumber,
+            thiz->device->config.productId,
+            thiz->device->config.productVersion);
 
-    length = (uint32_t) strlen(thiz->device->config.did);
+    LOG_D(TAG, "_encode_udid: %s", udid);
+
+    length = (uint32_t) strlen(udid);
 
     tiny_chacha20poly1305_encrypt(thiz->verifyKey.value,
                                   thiz->verifyKey.length,
                                   (const uint8_t *)"SV-Msg03",
-                                  (uint8_t *)(thiz->device->config.did),
+                                  (uint8_t *)udid,
                                   length,
-                                  did,
-                                  did + length,
+                                  udidEncrypt,
+                                  udidEncrypt + length,
                                   NULL,
                                   0);
 
     LOG_D(TAG, "base64");
 
-    memset(didEncryptAndBase64, 0, 256);
-    tiny_base64_encode(did, length + 16, didEncryptAndBase64);
+    memset(udidEncryptAndBase64, 0, 256);
+    tiny_base64_encode(udidEncrypt, length + 16, udidEncryptAndBase64);
 }
 
 //TINY_LOR
@@ -557,7 +565,7 @@ void XcpClientVerifier_VerifyFinish(XcpClientVerifier *thiz)
 {
     TinyRet ret = TINY_RET_OK;
     XcpMessage * message = NULL;
-    char did[256];
+    char udid[256];
     char signature[128];
 
     RETURN_IF_FAIL(thiz);
@@ -565,16 +573,12 @@ void XcpClientVerifier_VerifyFinish(XcpClientVerifier *thiz)
     LOG_D(TAG, "VerifyFinish");
 
     _sign(thiz, signature);
-    _encode_did(thiz, did);
+
+    _encode_udid(thiz, udid);
 
     LOG_E(TAG, "signature: %s", signature);
 
-    message = QueryVerifyFinish_New("",
-                                    did,
-                                    thiz->device->config.productId,
-                                    thiz->device->config.productVersion,
-                                    signature,
-                                    thiz->binaryCodec);
+    message = QueryVerifyFinish_New("", udid, signature, thiz->binaryCodec);
     if (message == NULL)
     {
         LOG_D(TAG, "QueryVerifyFinish_New FAILED!");

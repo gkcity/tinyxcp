@@ -22,7 +22,7 @@
 #include "S_4_ModbusUnitManagement.h"
 #include "S_5_ModbusCollector.h"
 
-Device * ModbusMaster(const char *did, const char *ip)
+Device * ModbusMaster(const char *serialNumber, const char *ip)
 {
     Device *thiz = NULL;
 
@@ -73,7 +73,7 @@ Device * ModbusMaster(const char *did, const char *ip)
             break;
         }
 
-        InitializeConfiguration(&thiz->config, did, ip);
+        InitializeConfiguration(&thiz->config, serialNumber, ip);
     } while (false);
 
     return thiz;

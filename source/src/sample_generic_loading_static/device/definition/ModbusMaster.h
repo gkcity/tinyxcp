@@ -18,7 +18,7 @@
 TINY_BEGIN_DECLS
 
 
-Device * ModbusMaster(const char *did, const char *ip);
+Device * ModbusMaster(const char *serialNumber, const char *ip);
 
 
 TINY_END_DECLS

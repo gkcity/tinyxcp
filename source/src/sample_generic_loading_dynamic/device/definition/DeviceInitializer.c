@@ -20,7 +20,7 @@
 
 #define TAG "DeviceInitializer"
 
-Device *DeviceInitialize(const char *did, const char *ip)
+Device *DeviceInitialize(const char *serialNumber, const char *ip)
 {
     Device *thiz = NULL;
 
@@ -37,7 +37,7 @@ Device *DeviceInitialize(const char *did, const char *ip)
         thiz->onSet = OnPropertySet;
         thiz->onInvoke = OnActionInvoke;
 
-        InitializeConfiguration(&thiz->config, did, ip);
+        InitializeConfiguration(&thiz->config, serialNumber, ip);
     } while (false);
 
     return thiz;

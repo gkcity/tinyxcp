@@ -25,9 +25,7 @@ TINY_BEGIN_DECLS
 
 typedef struct _QueryVerifyFinish
 {
-    char                did[DEVICE_ID_LENGTH];
-    uint16_t            productId;
-    uint16_t            productVersion;
+    char                udid[UDID_LENGTH];
     char                signature[XCP_SIGNATURE_LENGTH];
     uint8_t             codec;
 } QueryVerifyFinish;

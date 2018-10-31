@@ -4,7 +4,7 @@
 #include "DeviceMonitor.h"
 #include "CommandReader.h"
 
-#define DID                 "10001@10006"
+#define SERIAL_NUMBER       "10001"
 #define IP                  "10.0.1.29"
 
 int main(void)
@@ -17,7 +17,7 @@ int main(void)
     /**
      * 1. 初始化设备
      */
-    device = ModbusMaster(DID, IP);
+    device = ModbusMaster(SERIAL_NUMBER, IP);
     if (device == NULL)
     {
         return 0;
