@@ -239,32 +239,6 @@ static void _encode_udid(XcpClientVerifier *thiz, char udidEncryptAndBase64[256]
     tiny_base64_encode(udidEncrypt, length + 16, udidEncryptAndBase64);
 }
 
-//TINY_LOR
-//static void _encode_type(XcpClientVerifier *thiz, char typeEncryptAndBase64[256])
-//{
-//    uint8_t type[200];
-//    uint32_t length = 0;
-//
-//    LOG_D(TAG, "_encode_type");
-//
-//    length = (uint32_t) strlen(thiz->device->type);
-//
-//    tiny_chacha20poly1305_encrypt(thiz->verifyKey.value,
-//                                  thiz->verifyKey.length,
-//                                  "SV-Msg03",
-//                                  (uint8_t *)(thiz->device->type),
-//                                  length,
-//                                  type,
-//                                  type + length,
-//                                  NULL,
-//                                  0);
-//
-//    LOG_D(TAG, "base64");
-//
-//    memset(typeEncryptAndBase64, 0, 256);
-//    tiny_base64_encode(type, length + 16, typeEncryptAndBase64);
-//}
-
 TINY_LOR
 static void _OnVerifyStartResult(XcpMessage * message, void *ctx)
 {
@@ -364,9 +338,6 @@ static void _OnVerifyFinishResult(XcpMessage * message, void *ctx)
         thiz->onFailure(thiz->ctx);
         return;
     }
-
-//    _printHex("deviceToServerKey", deviceToServerKey.value, deviceToServerKey.length);
-//    _printHex("serverToDeviceKey", serverToDeviceKey.value, serverToDeviceKey.length);
 
     thiz->stage = XCP_STAGE_VERIFY_FINISHED;
     thiz->onSuccess(&deviceToServerKey, &serverToDeviceKey, thiz->ctx);
