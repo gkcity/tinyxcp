@@ -31,6 +31,7 @@
 #include <client/verifier/XcpClientVerifier.h>
 #include <XcpKeyCreator.h>
 #include <codec-message/MessageCodecSide.h>
+#include <operator/DeviceOperator.h>
 #include "codec-message/CustomDataType.h"
 #include "codec-message/MessageCodec.h"
 #include "codec-binary/WebSocketBinaryFrameCodec.h"

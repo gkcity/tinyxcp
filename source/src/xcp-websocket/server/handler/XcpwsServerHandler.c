@@ -14,6 +14,7 @@
 #include <tiny_log.h>
 #include <tiny_snprintf.h>
 #include <operation/PropertyOperation.h>
+#include <operator/DeviceOperator.h>
 #include <channel/SocketChannel.h>
 #include <XcpMessage.h>
 #include <iq/basic/PingFactory.h>
