@@ -46,7 +46,7 @@ INCLUDE_DIRECTORIES(${TINYCRYPTO_ROOT}/source/src/hkdf)
 INCLUDE_DIRECTORIES(${TINYCRYPTO_ROOT}/source/src/chacha20poly1305)
 
 INCLUDE_DIRECTORIES(${TINYMDNS_ROOT}/source/src/dns-common)
-INCLUDE_DIRECTORIES(${TINYMDNS_ROOT}/source/src/multicast-dns)
+INCLUDE_DIRECTORIES(${TINYMDNS_ROOT}/source/src/mdns)
 
 #---------------------------------------------------------------------------------------
 #
