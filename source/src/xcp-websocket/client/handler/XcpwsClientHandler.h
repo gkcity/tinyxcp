@@ -16,7 +16,7 @@
 
 #include <tiny_base.h>
 #include <channel/ChannelHandler.h>
-#include <device/Thing.h>
+#include <thing/Thing.h>
 
 TINY_BEGIN_DECLS
 

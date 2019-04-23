@@ -14,7 +14,7 @@
 #define __XCP_WS_BONJOUR_H__
 
 #include <channel/Channel.h>
-#include <device/Thing.h>
+#include <thing/Thing.h>
 
 TINY_BEGIN_DECLS
 

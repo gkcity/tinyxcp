@@ -17,7 +17,7 @@
 
 #include <tiny_base.h>
 #include <channel/ChannelHandler.h>
-#include <device/Thing.h>
+#include <thing/Thing.h>
 #include <ByteBuffer.h>
 #include "MessageCodecSide.h"
 

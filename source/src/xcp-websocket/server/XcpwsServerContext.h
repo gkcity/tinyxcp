@@ -13,7 +13,7 @@
 #ifndef __XCP_WS_SERVER_CONTEXT_H__
 #define __XCP_WS_SERVER_CONTEXT_H__
 
-#include <device/Thing.h>
+#include <thing/Thing.h>
 #include <handler/HttpRequestHandlers.h>
 
 TINY_BEGIN_DECLS

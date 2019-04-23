@@ -13,7 +13,7 @@
 #ifndef __XCP_WS_CLIENT_H__
 #define __XCP_WS_CLIENT_H__
 
-#include <device/Thing.h>
+#include <thing/Thing.h>
 #include <channel/Channel.h>
 #include <XcpMessage.h>
 #include <handler/XcpMessageHandler.h>
