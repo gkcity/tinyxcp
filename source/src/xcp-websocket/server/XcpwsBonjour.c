@@ -33,7 +33,7 @@ static void XcpwsBonjourInitializer(Channel *channel, void *ctx)
 }
 
 TINY_LOR
-Channel * XcpwsBonjour_New(Thing *thing)
+Channel * XcpwsBonjour_New(Product *product)
 {
     Channel *thiz = NULL;
 
@@ -61,16 +61,16 @@ Channel * XcpwsBonjour_New(Thing *thing)
             break;
         }
 
-        ServiceInfo_Initialize(&info, "test", "._xcp._tcp.local", thing->config.ip, thing->config.port);
-        ServiceInfo_SetTXTByString(&info, "did", thing->config.did);
-        ServiceInfo_SetTXTByInteger(&info, "pid", thing->config.productId);
-        ServiceInfo_SetTXTByInteger(&info, "ver", thing->config.productVersion);
+        ServiceInfo_Initialize(&info, "test", "._xcp._tcp.local", product->config.ip, product->config.port);
+        ServiceInfo_SetTXTByString(&info, "did", product->config.did);
+        ServiceInfo_SetTXTByInteger(&info, "pid", product->config.productId);
+        ServiceInfo_SetTXTByInteger(&info, "ver", product->config.productVersion);
         ServiceInfo_SetTXTByInteger(&info, "fw", 2);
 
         MulticastChannel_Initialize(thiz, XcpwsBonjourInitializer, &info);
         ServiceInfo_Dispose(&info);
 
-        if (RET_FAILED(MulticastChannel_Join(thiz, thing->config.ip, MDNS_GROUP, MDNS_PORT, reuse)))
+        if (RET_FAILED(MulticastChannel_Join(thiz, product->config.ip, MDNS_GROUP, MDNS_PORT, reuse)))
         {
             LOG_D(TAG, "MulticastChannel_Join failed");
             thiz->_onRemove(thiz);

@@ -36,7 +36,7 @@ static TinyRet XcpwsServerRuntime_Destroy(IotRuntime *thiz)
 }
 
 TINY_LOR
-static TinyRet XcpwsServerRuntime_Run(IotRuntime *thiz, Bootstrap *bootstrap, Thing *thing)
+static TinyRet XcpwsServerRuntime_Run(IotRuntime *thiz, Bootstrap *bootstrap, Product *thing)
 {
     TinyRet ret = TINY_RET_OK;
     Channel *server = NULL;
@@ -47,7 +47,7 @@ static TinyRet XcpwsServerRuntime_Run(IotRuntime *thiz, Bootstrap *bootstrap, Th
     do
     {
         XcpwsServerContext *context = (XcpwsServerContext *)thiz->context;
-        context->thing = thing;
+        context->product = thing;
 
         server = XcpwsServer_New(context);
         if (server == NULL)

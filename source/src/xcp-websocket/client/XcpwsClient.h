@@ -13,7 +13,7 @@
 #ifndef __XCP_WS_CLIENT_H__
 #define __XCP_WS_CLIENT_H__
 
-#include <thing/Thing.h>
+#include <product/Product.h>
 #include <channel/Channel.h>
 #include <XcpMessage.h>
 #include <handler/XcpMessageHandler.h>
@@ -22,7 +22,7 @@ TINY_BEGIN_DECLS
 
 
 TINY_LOR
-Channel * XcpwsClient_New(Thing *thing, const char *ip, uint16_t port);
+Channel * XcpwsClient_New(Product *product, const char *ip, uint16_t port);
 
 TINY_LOR
 TinyRet XcpwsClient_SendQuery(Channel *thiz, XcpMessage *query, XcpMessageHandler handler, void *ctx);

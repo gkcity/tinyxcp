@@ -15,7 +15,7 @@
 
 #include <tiny_base.h>
 #include <TinyMap.h>
-#include <thing/Thing.h>
+#include <product/Product.h>
 #include <ed25519/tiny_ed25519.h>
 #include <hkdf/HKDF.h>
 #include <handler/XcpMessageHandler.h>
@@ -32,7 +32,7 @@ typedef TinyRet (*XcpSendQuery) (void *context, XcpMessage *query, XcpMessageHan
 
 typedef struct _XcpClientVerifier
 {
-    Thing                       * thing;
+    Product                     * product;
     XcpStage                      stage;
     Curve25519PublicKey           publicKey;
     Curve25519PrivateKey          privateKey;
@@ -51,7 +51,7 @@ typedef struct _XcpClientVerifier
 
 TINY_LOR
 XcpClientVerifier *XcpClientVerifier_New(const char *serverLTPK,
-                                         Thing *thing,
+                                         Product *thing,
                                          XcpSendQuery sendQuery,
                                          uint8_t binaryCodec);
 

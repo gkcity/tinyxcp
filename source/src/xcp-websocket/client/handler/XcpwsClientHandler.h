@@ -16,7 +16,7 @@
 
 #include <tiny_base.h>
 #include <channel/ChannelHandler.h>
-#include <thing/Thing.h>
+#include <product/Product.h>
 
 TINY_BEGIN_DECLS
 
@@ -24,7 +24,7 @@ TINY_BEGIN_DECLS
 #define XcpwsClientHandler_Name  "XcpwsClientHandler"
 
 TINY_LOR
-ChannelHandler * XcpwsClientHandler(Thing *thing);
+ChannelHandler * XcpwsClientHandler(Product *product);
 
 
 TINY_END_DECLS

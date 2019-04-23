@@ -17,7 +17,7 @@
 
 #include <tiny_base.h>
 #include <channel/ChannelHandler.h>
-#include <thing/Thing.h>
+#include <product/Product.h>
 #include <ByteBuffer.h>
 #include "MessageCodecSide.h"
 
@@ -29,12 +29,12 @@ TINY_BEGIN_DECLS
 typedef struct _MessageCodecContext
 {
     ByteBuffer                    buffer;
-    Thing                       * thing;
+    Product                     * product;
     MessageCodecSide              side;
 } MessageCodecContext;
 
 TINY_LOR
-MessageCodecContext * MessageCodecContext_New(Thing *thing, MessageCodecSide side);
+MessageCodecContext * MessageCodecContext_New(Product *product, MessageCodecSide side);
 
 TINY_LOR
 void MessageCodecContext_Delete(MessageCodecContext *thiz);

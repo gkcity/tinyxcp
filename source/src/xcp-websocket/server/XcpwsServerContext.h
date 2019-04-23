@@ -13,7 +13,7 @@
 #ifndef __XCP_WS_SERVER_CONTEXT_H__
 #define __XCP_WS_SERVER_CONTEXT_H__
 
-#include <thing/Thing.h>
+#include <product/Product.h>
 #include <handler/HttpRequestHandlers.h>
 
 TINY_BEGIN_DECLS
@@ -21,13 +21,13 @@ TINY_BEGIN_DECLS
 
 typedef struct _XcpwsServerContext
 {
-    Thing *thing;
+    Product *product;
     HttpRequestHandlers *handlers;
 } XcpwsServerContext;
 
 
 TINY_LOR
-XcpwsServerContext * XcpwsServerContext_New(Thing *thing, HttpRequestHandlers *handlers);
+XcpwsServerContext * XcpwsServerContext_New(Product *product, HttpRequestHandlers *handlers);
 
 TINY_LOR
 void XcpwsServerContext_Delete(XcpwsServerContext *thiz);

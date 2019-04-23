@@ -215,9 +215,9 @@ static void _encode_udid(XcpClientVerifier *thiz, char udidEncryptAndBase64[256]
 
     memset(udid, 0, UDID_LENGTH + 1);
     tiny_snprintf(udid, UDID_LENGTH, "%s@%d/%d",
-            thiz->thing->config.serialNumber,
-            thiz->thing->config.productId,
-            thiz->thing->config.productVersion);
+            thiz->product->config.serialNumber,
+            thiz->product->config.productId,
+            thiz->product->config.productVersion);
 
     LOG_D(TAG, "_encode_udid: %s", udid);
 
@@ -346,7 +346,7 @@ static void _OnVerifyFinishResult(XcpMessage * message, void *ctx)
 TINY_LOR
 static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
                                            const char *serverLTPK,
-                                           Thing *thing,
+                                           Product *product,
                                            XcpSendQuery sendQuery,
                                            uint8_t binaryCodec)
 {
@@ -354,7 +354,7 @@ static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
 
     RETURN_VAL_IF_FAIL(thiz, TINY_RET_E_ARG_NULL);
     RETURN_VAL_IF_FAIL(serverLTPK, TINY_RET_E_ARG_NULL);
-    RETURN_VAL_IF_FAIL(thing, TINY_RET_E_ARG_NULL);
+    RETURN_VAL_IF_FAIL(product, TINY_RET_E_ARG_NULL);
 
     LOG_D(TAG, "XcpClientVerifier_Construct");
 
@@ -364,7 +364,7 @@ static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
         uint8_t buf[128];
 
         memset(thiz, 0, sizeof(XcpClientVerifier));
-        thiz->thing = thing;
+        thiz->product = product;
         thiz->sendQuery = sendQuery;
         thiz->binaryCodec = binaryCodec;
 
@@ -385,7 +385,7 @@ static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
         }
 
         memset(buf, 0, 128);
-        length = tiny_base64_decode(thing->config.ltsk, buf);
+        length = tiny_base64_decode(product->config.ltsk, buf);
         if (length <= ED25519_PRIVATE_KEY_LENGTH)
         {
             LOG_E(TAG, "deviceLTSK.length: %d", length);
@@ -400,7 +400,7 @@ static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
         }
 
         memset(buf, 0, 128);
-        length = tiny_base64_decode(thing->config.ltpk, buf);
+        length = tiny_base64_decode(product->config.ltpk, buf);
         if (length <= ED25519_PUBLIC_KEY_LENGTH)
         {
             LOG_E(TAG, "deviceLTPK.length: %d", length);
@@ -426,7 +426,7 @@ static void XcpClientVerifier_Dispose(XcpClientVerifier *thiz)
 
 TINY_LOR
 XcpClientVerifier * XcpClientVerifier_New(const char *serverLTPK,
-                                          Thing *thing,
+                                          Product *product,
                                           XcpSendQuery sendQuery,
                                           uint8_t binaryCodec)
 {
@@ -441,7 +441,7 @@ XcpClientVerifier * XcpClientVerifier_New(const char *serverLTPK,
             break;
         }
 
-        if (RET_FAILED(XcpClientVerifier_Construct(thiz, serverLTPK, thing, sendQuery, binaryCodec)))
+        if (RET_FAILED(XcpClientVerifier_Construct(thiz, serverLTPK, product, sendQuery, binaryCodec)))
         {
             LOG_E(TAG, "XcpClientVerifier_Construct FAILED");
             XcpClientVerifier_Delete(thiz);

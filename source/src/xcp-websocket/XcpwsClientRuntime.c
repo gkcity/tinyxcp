@@ -37,7 +37,7 @@ static TinyRet XcpwsClientRuntime_Destroy(IotRuntime *thiz)
 }
 
 TINY_LOR
-static TinyRet XcpwsClientRuntime_Run(IotRuntime *thiz, Bootstrap *bootstrap, Thing *thing)
+static TinyRet XcpwsClientRuntime_Run(IotRuntime *thiz, Bootstrap *bootstrap, Product *thing)
 {
     TinyRet ret = TINY_RET_OK;
     Channel *channel = NULL;
