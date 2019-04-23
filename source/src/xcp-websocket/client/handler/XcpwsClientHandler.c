@@ -31,7 +31,7 @@
 #include <client/verifier/XcpClientVerifier.h>
 #include <XcpKeyCreator.h>
 #include <codec-message/MessageCodecSide.h>
-#include <operator/DeviceOperator.h>
+#include <product/operator/ProductOperator.h>
 #include "codec-message/CustomDataType.h"
 #include "codec-message/MessageCodec.h"
 #include "codec-binary/WebSocketBinaryFrameCodec.h"
@@ -47,7 +47,7 @@ static void onGet(ChannelHandler *thiz, Channel *channel, const char *id, Proper
 
     do
     {
-        Device_TryReadProperties(context->product, operations);
+        Product_TryReadProperties(context->product, operations);
 
         result = ResultGetProperties_New(id, operations);
         if (result == NULL)
@@ -72,7 +72,7 @@ static void onSet(ChannelHandler *thiz, Channel *channel, const char *id, Proper
 
     do
     {
-        Device_TryWriteProperties(context->product, operations);
+        Product_TryWriteProperties(context->product, operations);
 
         result = ResultSetProperties_New(id, operations);
         if (result == NULL)
@@ -99,7 +99,7 @@ static void onAction(ChannelHandler *thiz, Channel *channel, const char *id, Act
 
     do
     {
-        Device_TryInvokeAction(context->product, operation);
+        Product_TryInvokeAction(context->product, operation);
 
         result = ResultInvokeAction_New(id, operation);
         if (result == NULL)

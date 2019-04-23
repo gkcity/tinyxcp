@@ -14,7 +14,7 @@
 #include <tiny_log.h>
 #include <tiny_snprintf.h>
 #include <operation/PropertyOperation.h>
-#include <operator/DeviceOperator.h>
+#include <product/operator/ProductOperator.h>
 #include <channel/SocketChannel.h>
 #include <XcpMessage.h>
 #include <iq/basic/PingFactory.h>
@@ -43,7 +43,7 @@ static void onGet(ChannelHandler *thiz, Channel *channel, const char *id, Proper
     XcpwsServerHandlerContext *context = (XcpwsServerHandlerContext *) (thiz->context);
     XcpMessage *result = NULL;
 
-    Device_TryReadProperties(context->data->product, operations);
+    Product_TryReadProperties(context->data->product, operations);
 
     result = ResultGetProperties_New(id, operations);
     if (result != NULL)
@@ -61,7 +61,7 @@ static void onSet(ChannelHandler *thiz, Channel *channel, const char *id, Proper
     XcpwsServerHandlerContext *context = (XcpwsServerHandlerContext *) (thiz->context);
     XcpMessage *result = NULL;
 
-    Device_TryWriteProperties(context->data->product, operations);
+    Product_TryWriteProperties(context->data->product, operations);
 
     result = ResultSetProperties_New(id, operations);
     if (result != NULL)
@@ -81,7 +81,7 @@ static void onAction(ChannelHandler *thiz, Channel *channel, const char *id, Act
 
     LOG_D(TAG, "onAction: %s.%d.%d", operation->aid.did, operation->aid.siid, operation->aid.iid);
 
-    Device_TryInvokeAction(context->data->product, operation);
+    Product_TryInvokeAction(context->data->product, operation);
 
     result = ResultInvokeAction_New(id, operation);
     if (result != NULL)
