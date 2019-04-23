@@ -16,7 +16,7 @@
 
 #include <tiny_base.h>
 #include <channel/ChannelHandler.h>
-#include <device/Device.h>
+#include <device/Thing.h>
 #include <server/XcpwsServerContext.h>
 
 TINY_BEGIN_DECLS

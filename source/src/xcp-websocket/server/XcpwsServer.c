@@ -53,7 +53,7 @@ Channel * XcpwsServer_New(XcpwsServerContext *context)
             break;
         }
 
-        if (RET_FAILED(SocketChannel_Bind(thiz, context->device->config.port, false)))
+        if (RET_FAILED(SocketChannel_Bind(thiz, context->thing->config.port, false)))
         {
             LOG_D(TAG, "SocketChannel_Bind failed");
             thiz->_onRemove(thiz);
@@ -77,9 +77,9 @@ Channel * XcpwsServer_New(XcpwsServerContext *context)
             break;
         }
 
-        if (context->device->config.port == 0)
+        if (context->thing->config.port == 0)
         {
-            context->device->config.port = thiz->local.socket.port;
+            context->thing->config.port = thiz->local.socket.port;
         }
     } while (false);
 

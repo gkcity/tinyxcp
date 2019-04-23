@@ -37,7 +37,7 @@ static TinyRet XcpwsClientRuntime_Destroy(IotRuntime *thiz)
 }
 
 TINY_LOR
-static TinyRet XcpwsClientRuntime_Run(IotRuntime *thiz, Bootstrap *bootstrap, Device *device)
+static TinyRet XcpwsClientRuntime_Run(IotRuntime *thiz, Bootstrap *bootstrap, Thing *thing)
 {
     TinyRet ret = TINY_RET_OK;
     Channel *channel = NULL;
@@ -46,9 +46,9 @@ static TinyRet XcpwsClientRuntime_Run(IotRuntime *thiz, Bootstrap *bootstrap, De
 
     do
     {
-        device->context = thiz->context;
+        thing->context = thiz->context;
 
-        channel = XcpwsClient_New(device, "39.106.31.22", 80);
+        channel = XcpwsClient_New(thing, "39.106.31.22", 80);
         if (channel == NULL)
         {
             LOG_D(TAG, "XcpwsClient_New failed");

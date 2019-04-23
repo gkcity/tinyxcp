@@ -213,10 +213,10 @@ static void XcpMessageCodec_Delete(ChannelHandler *thiz)
 }
 
 TINY_LOR
-static TinyRet XcpMessageCodec_Construct(ChannelHandler *thiz, Device *device, MessageCodecSide side)
+static TinyRet XcpMessageCodec_Construct(ChannelHandler *thiz, Thing *thing, MessageCodecSide side)
 {
     RETURN_VAL_IF_FAIL(thiz, TINY_RET_E_ARG_NULL);
-    RETURN_VAL_IF_FAIL(device, TINY_RET_E_ARG_NULL);
+    RETURN_VAL_IF_FAIL(thing, TINY_RET_E_ARG_NULL);
 
     memset(thiz, 0, sizeof(ChannelHandler));
 
@@ -228,13 +228,13 @@ static TinyRet XcpMessageCodec_Construct(ChannelHandler *thiz, Device *device, M
     thiz->outType = DATA_XCP_MESSAGE;
     thiz->channelRead = _ChannelRead;
     thiz->channelWrite = _ChannelWrite;
-    thiz->context = MessageCodecContext_New(device, side);
+    thiz->context = MessageCodecContext_New(thing, side);
 
     return TINY_RET_OK;
 }
 
 TINY_LOR
-ChannelHandler * MessageCodec(Device *device, MessageCodecSide side)
+ChannelHandler * MessageCodec(Thing *thing, MessageCodecSide side)
 {
     ChannelHandler *thiz = NULL;
 
@@ -246,7 +246,7 @@ ChannelHandler * MessageCodec(Device *device, MessageCodecSide side)
             break;
         }
 
-        if (RET_FAILED(XcpMessageCodec_Construct(thiz, device, side)))
+        if (RET_FAILED(XcpMessageCodec_Construct(thiz, thing, side)))
         {
             XcpMessageCodec_Delete(thiz);
             thiz = NULL;

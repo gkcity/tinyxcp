@@ -16,7 +16,7 @@
 #include <tiny_base.h>
 #include <TinyMap.h>
 #include <channel/ChannelHandler.h>
-#include <device/Device.h>
+#include <device/Thing.h>
 #include <XcpMessage.h>
 #include "XcpStage.h"
 #include "client/verifier/XcpClientVerifier.h"
@@ -29,13 +29,13 @@ typedef struct _XcpwsClientHandlerContext
 {
     uint32_t                  messageIndex;
     TinyMap                   handlers;
-    Device                  * device;
+    Thing                   * thing;
     XcpClientVerifier       * verifier;
     Channel                 * channel;
 } XcpwsClientHandlerContext;
 
 TINY_LOR
-XcpwsClientHandlerContext * XcpwsClientHandlerContext_New(Device *device);
+XcpwsClientHandlerContext * XcpwsClientHandlerContext_New(Thing *thing);
 
 TINY_LOR
 void XcpwsClientHandlerContext_Delete(XcpwsClientHandlerContext *thiz);

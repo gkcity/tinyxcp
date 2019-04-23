@@ -47,7 +47,7 @@ static void onGet(ChannelHandler *thiz, Channel *channel, const char *id, Proper
 
     do
     {
-        Device_TryReadProperties(context->device, operations);
+        Device_TryReadProperties(context->thing, operations);
 
         result = ResultGetProperties_New(id, operations);
         if (result == NULL)
@@ -72,7 +72,7 @@ static void onSet(ChannelHandler *thiz, Channel *channel, const char *id, Proper
 
     do
     {
-        Device_TryWriteProperties(context->device, operations);
+        Device_TryWriteProperties(context->thing, operations);
 
         result = ResultSetProperties_New(id, operations);
         if (result == NULL)
@@ -99,7 +99,7 @@ static void onAction(ChannelHandler *thiz, Channel *channel, const char *id, Act
 
     do
     {
-        Device_TryInvokeAction(context->device, operation);
+        Device_TryInvokeAction(context->thing, operation);
 
         result = ResultInvokeAction_New(id, operation);
         if (result == NULL)
@@ -222,7 +222,7 @@ static bool _HttpRead(ChannelHandler *thiz, Channel *channel, ChannelDataType ty
         thiz->outType = DATA_XCP_MESSAGE;
         SocketChannel_RemoveHandler(channel, HttpMessageCodec_Name);
         SocketChannel_AddBefore(channel, XcpwsClientHandler_Name, WebSocketFrameCodec());
-        SocketChannel_AddBefore(channel, XcpwsClientHandler_Name, MessageCodec(context->device, MESSAGE_CODEC_CLIENT));
+        SocketChannel_AddBefore(channel, XcpwsClientHandler_Name, MessageCodec(context->thing, MESSAGE_CODEC_CLIENT));
         XcpClientVerifier_Start(context->verifier, onVerifySuccess, onVerifyFailure, thiz->context);
     }
     else
@@ -420,7 +420,7 @@ static void XcpwsClientHandler_Delete(ChannelHandler *thiz)
 }
 
 TINY_LOR
-static TinyRet XcpwsClientHandler_Construct(ChannelHandler *thiz, Device *device)
+static TinyRet XcpwsClientHandler_Construct(ChannelHandler *thiz, Thing *thing)
 {
     TinyRet ret = TINY_RET_OK;
 
@@ -440,7 +440,7 @@ static TinyRet XcpwsClientHandler_Construct(ChannelHandler *thiz, Device *device
         thiz->channelWrite = NULL;
         thiz->channelEvent = _ChannelEvent;
 
-        thiz->context = XcpwsClientHandlerContext_New(device);
+        thiz->context = XcpwsClientHandlerContext_New(thing);
         if (thiz->context == NULL)
         {
             LOG_E(TAG, "XcpwsClientHandlerContext_New FAILED");
@@ -453,7 +453,7 @@ static TinyRet XcpwsClientHandler_Construct(ChannelHandler *thiz, Device *device
 }
 
 TINY_LOR
-ChannelHandler * XcpwsClientHandler(Device *device)
+ChannelHandler * XcpwsClientHandler(Thing *thing)
 {
     ChannelHandler *thiz = NULL;
 
@@ -465,7 +465,7 @@ ChannelHandler * XcpwsClientHandler(Device *device)
             break;
         }
 
-        if (RET_FAILED(XcpwsClientHandler_Construct(thiz, device)))
+        if (RET_FAILED(XcpwsClientHandler_Construct(thiz, thing)))
         {
             XcpwsClientHandler_Delete(thiz);
             thiz = NULL;

@@ -14,13 +14,13 @@
 #include "XcpwsServerContext.h"
 
 TINY_LOR
-XcpwsServerContext * XcpwsServerContext_New(Device *device, HttpRequestHandlers *handlers)
+XcpwsServerContext * XcpwsServerContext_New(Thing *thing, HttpRequestHandlers *handlers)
 {
     XcpwsServerContext *thiz = tiny_malloc(sizeof(XcpwsServerContext));
     if (thiz != NULL)
     {
         memset(thiz, 0, sizeof(XcpwsServerContext));
-        thiz->device = device;
+        thiz->thing = thing;
         thiz->handlers = handlers;
     }
 

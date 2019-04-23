@@ -14,13 +14,13 @@
 #define __XCP_WS_BONJOUR_H__
 
 #include <channel/Channel.h>
-#include <device/Device.h>
+#include <device/Thing.h>
 
 TINY_BEGIN_DECLS
 
 
 TINY_LOR
-Channel * XcpwsBonjour_New(Device *device);
+Channel * XcpwsBonjour_New(Thing *thing);
 
 
 TINY_END_DECLS

@@ -17,7 +17,7 @@
 
 #include <tiny_base.h>
 #include <channel/ChannelHandler.h>
-#include <device/Device.h>
+#include <device/Thing.h>
 #include "MessageCodecSide.h"
 
 TINY_BEGIN_DECLS
@@ -27,7 +27,7 @@ TINY_BEGIN_DECLS
 
 
 TINY_LOR
-ChannelHandler * MessageCodec(Device *device, MessageCodecSide side);
+ChannelHandler * MessageCodec(Thing *thing, MessageCodecSide side);
 
 
 TINY_END_DECLS

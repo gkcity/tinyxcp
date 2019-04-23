@@ -16,13 +16,13 @@
 #include "MessageCodecContext.h"
 
 TINY_LOR
-static TinyRet MessageCodecContext_Construct(MessageCodecContext *thiz, Device *device, MessageCodecSide side)
+static TinyRet MessageCodecContext_Construct(MessageCodecContext *thiz, Thing *thing, MessageCodecSide side)
 {
     RETURN_VAL_IF_FAIL(thiz, TINY_RET_E_ARG_NULL);
-    RETURN_VAL_IF_FAIL(device, TINY_RET_E_ARG_NULL);
+    RETURN_VAL_IF_FAIL(thing, TINY_RET_E_ARG_NULL);
 
     memset(thiz, 0, sizeof(MessageCodecContext));
-    thiz->device = device;
+    thiz->thing = thing;
     thiz->side = side;
 
     ByteBuffer_Construct(&thiz->buffer, MESSAGE_BUFFER_SIZE);
@@ -43,7 +43,7 @@ static TinyRet MessageCodecContext_Dispose(MessageCodecContext *thiz)
 }
 
 TINY_LOR
-MessageCodecContext * MessageCodecContext_New(Device *host, MessageCodecSide side)
+MessageCodecContext * MessageCodecContext_New(Thing *thing, MessageCodecSide side)
 {
     MessageCodecContext *thiz = NULL;
 
@@ -55,7 +55,7 @@ MessageCodecContext * MessageCodecContext_New(Device *host, MessageCodecSide sid
             break;
         }
 
-        if (RET_FAILED(MessageCodecContext_Construct(thiz, host, side)))
+        if (RET_FAILED(MessageCodecContext_Construct(thiz, thing, side)))
         {
             MessageCodecContext_Delete(thiz);
             thiz = NULL;

@@ -28,7 +28,7 @@ static void _OnHandlerRemove (void * data, void *ctx)
 }
 
 TINY_LOR
-static TinyRet XcpwsClientHandlerContext_Construct(XcpwsClientHandlerContext *thiz, Device *device, const char *serverLTPK)
+static TinyRet XcpwsClientHandlerContext_Construct(XcpwsClientHandlerContext *thiz, Thing *thing, const char *serverLTPK)
 {
     TinyRet ret = TINY_RET_OK;
 
@@ -36,7 +36,7 @@ static TinyRet XcpwsClientHandlerContext_Construct(XcpwsClientHandlerContext *th
     {
         memset(thiz, 0, sizeof(XcpwsClientHandlerContext));
         thiz->messageIndex = 1;
-        thiz->device = device;
+        thiz->thing = thing;
 
         ret = TinyMap_Construct(&thiz->handlers, _OnHandlerRemove, NULL);
         if (RET_FAILED(ret))
@@ -46,7 +46,7 @@ static TinyRet XcpwsClientHandlerContext_Construct(XcpwsClientHandlerContext *th
         }
 
         thiz->verifier = XcpClientVerifier_New(serverLTPK,
-                                               device,
+                                               thing,
                                                XcpwsClientHandlerContext_SendQuery,
                                                WEB_SOCKET_BINARY_FRAME_CODEC_CHACHA20_POLY1305);
         if (thiz->verifier == NULL)
@@ -77,7 +77,7 @@ static void XcpwsClientHandlerContext_Dispose(XcpwsClientHandlerContext *thiz)
 #define SERVER_LTPK     "/8meBcfecxNl7pMIO0Zxbhx70A4DSGio7C2H7VzZLB8="
 
 TINY_LOR
-XcpwsClientHandlerContext * XcpwsClientHandlerContext_New(Device *device)
+XcpwsClientHandlerContext * XcpwsClientHandlerContext_New(Thing *thing)
 {
     XcpwsClientHandlerContext *thiz = NULL;
 
@@ -90,7 +90,7 @@ XcpwsClientHandlerContext * XcpwsClientHandlerContext_New(Device *device)
             break;
         }
 
-        if (RET_FAILED(XcpwsClientHandlerContext_Construct(thiz, device, SERVER_LTPK)))
+        if (RET_FAILED(XcpwsClientHandlerContext_Construct(thiz, thing, SERVER_LTPK)))
         {
             LOG_E(TAG, "XcpwsClientHandlerContext_Construct failed");
             XcpwsClientHandlerContext_Delete(thiz);

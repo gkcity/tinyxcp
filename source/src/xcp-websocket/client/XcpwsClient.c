@@ -28,11 +28,11 @@ static void XcpwsClientInitializer(Channel *channel, void *ctx)
     LOG_D(TAG, "XcpwsClientInitializer: %s", channel->id);
     SocketChannel_AddLast(channel, ChannelIdleStateHandler(20, 50, 0));
     SocketChannel_AddLast(channel, HttpMessageCodec());
-    SocketChannel_AddLast(channel, XcpwsClientHandler((Device *)ctx));
+    SocketChannel_AddLast(channel, XcpwsClientHandler((Thing *)ctx));
 }
 
 TINY_LOR
-Channel * XcpwsClient_New(Device *device, const char *ip, uint16_t port)
+Channel * XcpwsClient_New(Thing *thing, const char *ip, uint16_t port)
 {
     Channel *thiz = NULL;
 
@@ -44,7 +44,7 @@ Channel * XcpwsClient_New(Device *device, const char *ip, uint16_t port)
             break;
         }
 
-        if (RET_FAILED(StreamClientChannel_Initialize(thiz, XcpwsClientInitializer, device)))
+        if (RET_FAILED(StreamClientChannel_Initialize(thiz, XcpwsClientInitializer, thing)))
         {
             thiz->_onRemove(thiz);
             break;

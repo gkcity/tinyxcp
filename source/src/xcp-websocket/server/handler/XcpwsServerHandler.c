@@ -43,7 +43,7 @@ static void onGet(ChannelHandler *thiz, Channel *channel, const char *id, Proper
     XcpwsServerHandlerContext *context = (XcpwsServerHandlerContext *) (thiz->context);
     XcpMessage *result = NULL;
 
-    Device_TryReadProperties(context->data->device, operations);
+    Device_TryReadProperties(context->data->thing, operations);
 
     result = ResultGetProperties_New(id, operations);
     if (result != NULL)
@@ -61,7 +61,7 @@ static void onSet(ChannelHandler *thiz, Channel *channel, const char *id, Proper
     XcpwsServerHandlerContext *context = (XcpwsServerHandlerContext *) (thiz->context);
     XcpMessage *result = NULL;
 
-    Device_TryWriteProperties(context->data->device, operations);
+    Device_TryWriteProperties(context->data->thing, operations);
 
     result = ResultSetProperties_New(id, operations);
     if (result != NULL)
@@ -81,7 +81,7 @@ static void onAction(ChannelHandler *thiz, Channel *channel, const char *id, Act
 
     LOG_D(TAG, "onAction: %s.%d.%d", operation->aid.did, operation->aid.siid, operation->aid.iid);
 
-    Device_TryInvokeAction(context->data->device, operation);
+    Device_TryInvokeAction(context->data->thing, operation);
 
     result = ResultInvokeAction_New(id, operation);
     if (result != NULL)
@@ -344,7 +344,7 @@ static bool _HandleWebsocketHandshake(ChannelHandler *thiz, Channel *channel, Xc
         thiz->outType = DATA_XCP_MESSAGE;
         SocketChannel_RemoveHandler(channel, HttpMessageCodec_Name);
         SocketChannel_AddBefore(channel, XcpwsServerHandler_Name, WebSocketFrameCodec());
-        SocketChannel_AddBefore(channel, XcpwsServerHandler_Name, MessageCodec(context->data->device, MESSAGE_CODEC_SERVER));
+        SocketChannel_AddBefore(channel, XcpwsServerHandler_Name, MessageCodec(context->data->thing, MESSAGE_CODEC_SERVER));
     } while (false);
 
     return ret;

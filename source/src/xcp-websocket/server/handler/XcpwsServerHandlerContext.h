@@ -16,7 +16,7 @@
 #include <tiny_base.h>
 #include <TinyMap.h>
 #include <channel/ChannelHandler.h>
-#include <device/Device.h>
+#include <device/Thing.h>
 #include <XcpMessage.h>
 #include <handler/XcpMessageHandler.h>
 #include <server/XcpwsServerContext.h>
