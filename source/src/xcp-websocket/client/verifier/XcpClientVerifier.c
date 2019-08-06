@@ -324,7 +324,7 @@ static void _OnVerifyFinishResult(XcpMessage * message, void *ctx)
         return;
     }
 
-    if (thiz->binaryCodec == WEB_SOCKET_BINARY_FRAME_CODEC_UNDEFINED)
+    if (thiz->binaryCodec == WEB_SOCKET_BINARY_FRAME_CODEC_NOT_CRYPT)
     {
         thiz->stage = XCP_STAGE_VERIFY_FINISHED;
         thiz->onSuccess(NULL, NULL, thiz->ctx);
