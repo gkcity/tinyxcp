@@ -16,7 +16,7 @@
 #define LTSK                "+NC/fa+QFz6hHtcOUKUJK9EQEl/J1nKhh2ixj9hQtGU="
 #define LTPK                "V6q8ABMPIOpEyJK/EsdpmsQFtX2+CbpaPMlYOjWNHLE="
 
-void InitializeConfiguration(DeviceConfig *thiz, const char *serialNumber, const char *ip)
+void InitializeConfiguration(ProductConfig *thiz, const char *serialNumber, const char *ip)
 {
     strncpy(thiz->serialNumber, serialNumber, DEVICE_ID_LENGTH);
     strncpy(thiz->ip, ip, TINY_IP_LEN);

@@ -13,12 +13,12 @@
 #ifndef __ModbusMaster_H__
 #define __ModbusMaster_H__
 
-#include <device/Device.h>
+#include <product/Product.h>
 
 TINY_BEGIN_DECLS
 
 
-Device * ModbusMaster(const char *serialNumber, const char *ip);
+Product * ModbusMaster(const char *serialNumber, const char *ip);
 
 
 TINY_END_DECLS

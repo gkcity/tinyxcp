@@ -11,7 +11,7 @@
  */
 
 #include "DeviceInitializer.h"
-#include <DeviceFactory.h>
+#include <ProductFactory.h>
 #include <tiny_log.h>
 #include "../handler/OnPropertyGet.h"
 #include "../handler/OnPropertySet.h"
@@ -20,13 +20,13 @@
 
 #define TAG "DeviceInitializer"
 
-Device *DeviceInitialize(const char *serialNumber, const char *ip)
+Product *DeviceInitialize(const char *serialNumber, const char *ip)
 {
-    Device *thiz = NULL;
+    Product *thiz = NULL;
 
     do
     {
-        thiz = DeviceFactory_Create(PRODUCT_ID, PRODUCT_VERSION, 10);
+        thiz = ProductFactory_Create(PRODUCT_ID, PRODUCT_VERSION, 10);
         if (thiz == NULL)
         {
             LOG_I(TAG, "DeviceFactory_Create FAILED!\n");

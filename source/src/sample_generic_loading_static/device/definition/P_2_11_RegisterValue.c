@@ -29,14 +29,14 @@ static TinyRet P_2_11_RegisterValue_SetValueRange(Property *thiz)
         }
 
         max = JsonValue_NewString("FFFF");
-        if (min == NULL)
+        if (max == NULL)
         {
             ret = TINY_RET_E_NEW;
             break;
         }
 
         step = JsonValue_NewString("01");
-        if (min == NULL)
+        if (step == NULL)
         {
             ret = TINY_RET_E_NEW;
             break;
@@ -74,14 +74,11 @@ Property * P_2_11_RegisterValue(void)
 
     do
     {
-        thiz = Property_NewInstance(11, "xiot-spec", "register-value", 0x00000000, NULL);
+        thiz = Property_NewInstance(11, "xiot-spec", "register-value", 0x00000000, NULL, FORMAT_HEX, 0, NONE);
         if (thiz == NULL)
         {
             break;
         }
-
-        thiz->access = 0;
-        thiz->format = FORMAT_HEX;
 
         if (RET_FAILED(P_2_11_RegisterValue_SetValueRange(thiz)))
         {

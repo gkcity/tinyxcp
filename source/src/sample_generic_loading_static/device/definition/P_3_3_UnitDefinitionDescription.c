@@ -14,19 +14,5 @@
 
 Property * P_3_3_UnitDefinitionDescription(void)
 {
-    Property *thiz = NULL;
-
-    do
-    {
-        thiz = Property_NewInstance(3, "xiot-spec", "unit-definition-description", 0x00000000, NULL);
-        if (thiz == NULL)
-        {
-            break;
-        }
-
-        thiz->access = 0;
-        thiz->format = FORMAT_STRING;
-    } while (false);
-
-    return thiz;
+    return Property_NewInstance(3, "xiot-spec", "unit-definition-description", 0x00000000, NULL, FORMAT_STRING, 0, NONE);
 }

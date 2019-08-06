@@ -14,19 +14,5 @@
 
 Property * P_3_6_UnitDefinitionIndex(void)
 {
-    Property *thiz = NULL;
-
-    do
-    {
-        thiz = Property_NewInstance(6, "xiot-spec", "unit-definition-index", 0x00000000, NULL);
-        if (thiz == NULL)
-        {
-            break;
-        }
-
-        thiz->access = 0;
-        thiz->format = FORMAT_UINT32;
-    } while (false);
-
-    return thiz;
+    return Property_NewInstance(6, "xiot-spec", "unit-definition-index", 0x00000000, NULL, FORMAT_UINT32, 0, NONE);
 }

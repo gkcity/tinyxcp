@@ -13,12 +13,12 @@
 #ifndef __DEVICE_INITIALIZER_H__
 #define __DEVICE_INITIALIZER_H__
 
-#include <device/Device.h>
+#include <product/Product.h>
 
 TINY_BEGIN_DECLS
 
 
-Device *DeviceInitialize(const char *did, const char *ip);
+Product *DeviceInitialize(const char *did, const char *ip);
 
 
 TINY_END_DECLS

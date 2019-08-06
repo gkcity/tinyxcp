@@ -14,19 +14,5 @@
 
 Property * P_2_4_NumberOfCoils(void)
 {
-    Property *thiz = NULL;
-
-    do
-    {
-        thiz = Property_NewInstance(4, "xiot-spec", "number-of-coils", 0x00000000, NULL);
-        if (thiz == NULL)
-        {
-            break;
-        }
-
-        thiz->access = 0;
-        thiz->format = FORMAT_UINT16;
-    } while (false);
-
-    return thiz;
+    return Property_NewInstance(4, "xiot-spec", "number-of-coils", 0x00000000, NULL, FORMAT_UINT16, 0, NONE);
 }

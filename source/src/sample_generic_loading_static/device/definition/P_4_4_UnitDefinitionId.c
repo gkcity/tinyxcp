@@ -14,19 +14,5 @@
 
 Property * P_4_4_UnitDefinitionId(void)
 {
-    Property *thiz = NULL;
-
-    do
-    {
-        thiz = Property_NewInstance(4, "xiot-spec", "unit-definition-id", 0x00000000, NULL);
-        if (thiz == NULL)
-        {
-            break;
-        }
-
-        thiz->access = 0;
-        thiz->format = FORMAT_STRING;
-    } while (false);
-
-    return thiz;
+    return Property_NewInstance(4, "xiot-spec", "unit-definition-id", 0x00000000, NULL, FORMAT_STRING, 0, NONE);
 }

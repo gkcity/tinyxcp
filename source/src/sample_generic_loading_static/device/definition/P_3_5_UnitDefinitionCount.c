@@ -14,19 +14,5 @@
 
 Property * P_3_5_UnitDefinitionCount(void)
 {
-    Property *thiz = NULL;
-
-    do
-    {
-        thiz = Property_NewInstance(5, "xiot-spec", "unit-definition-count", 0x00000000, NULL);
-        if (thiz == NULL)
-        {
-            break;
-        }
-
-        thiz->access = ACCESS_READ;
-        thiz->format = FORMAT_UINT32;
-    } while (false);
-
-    return thiz;
+    return Property_NewInstance(5, "xiot-spec", "unit-definition-count", 0x00000000, NULL, FORMAT_UINT32, ACCESS_READ, NONE);
 }

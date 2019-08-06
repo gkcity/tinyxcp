@@ -14,19 +14,5 @@
 
 Property * P_2_9_DiscreteInputValues(void)
 {
-    Property *thiz = NULL;
-
-    do
-    {
-        thiz = Property_NewInstance(9, "xiot-spec", "discrete-input-values", 0x00000000, NULL);
-        if (thiz == NULL)
-        {
-            break;
-        }
-
-        thiz->access = 0;
-        thiz->format = FORMAT_HEX;
-    } while (false);
-
-    return thiz;
+    return Property_NewInstance(9, "xiot-spec", "discrete-input-values", 0x00000000, NULL, FORMAT_HEX, 0, NONE);
 }

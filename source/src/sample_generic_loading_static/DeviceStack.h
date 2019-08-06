@@ -13,12 +13,12 @@
 #ifndef __DeviceStack_H__
 #define __DeviceStack_H__
 
-#include <device/Device.h>
+#include <product/Product.h>
 
 TINY_BEGIN_DECLS
 
 
-TinyRet StartDeviceStack(Device *device, uint16_t *port);
+TinyRet StartDeviceStack(Product *product, uint16_t *port);
 
 TinyRet StopDeviceStack(void);
 

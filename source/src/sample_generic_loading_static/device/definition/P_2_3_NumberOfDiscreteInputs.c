@@ -14,19 +14,5 @@
 
 Property * P_2_3_NumberOfDiscreteInputs(void)
 {
-    Property *thiz = NULL;
-
-    do
-    {
-        thiz = Property_NewInstance(3, "xiot-spec", "number-of-discrete-inputs", 0x00000000, NULL);
-        if (thiz == NULL)
-        {
-            break;
-        }
-
-        thiz->access = 0;
-        thiz->format = FORMAT_UINT16;
-    } while (false);
-
-    return thiz;
+    return Property_NewInstance(3, "xiot-spec", "number-of-discrete-inputs", 0x00000000, NULL, FORMAT_UINT16, 0, NONE);
 }

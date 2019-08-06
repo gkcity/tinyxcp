@@ -72,14 +72,11 @@ Property * P_5_2_CollectingStatus(void)
 
     do
     {
-        thiz = Property_NewInstance(2, "xiot-spec", "collecting-status", 0x00000000, NULL);
+        thiz = Property_NewInstance(2, "xiot-spec", "collecting-status", 0x00000000, NULL, FORMAT_UINT32, ACCESS_READ, NONE);
         if (thiz == NULL)
         {
             break;
         }
-
-        thiz->access = ACCESS_READ;
-        thiz->format = FORMAT_UINT32;
 
         if (RET_FAILED(P_5_2_CollectingStatus_SetValueList(thiz)))
         {

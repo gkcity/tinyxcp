@@ -72,14 +72,11 @@ Property * P_2_7_CoilValue(void)
 
     do
     {
-        thiz = Property_NewInstance(7, "xiot-spec", "coil-value", 0x00000000, NULL);
+        thiz = Property_NewInstance(7, "xiot-spec", "coil-value", 0x00000000, NULL, FORMAT_HEX, 0, NONE);
         if (thiz == NULL)
         {
             break;
         }
-
-        thiz->access = 0;
-        thiz->format = FORMAT_HEX;
 
         if (RET_FAILED(P_2_7_CoilValue_SetValueList(thiz)))
         {

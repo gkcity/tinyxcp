@@ -14,19 +14,5 @@
 
 Property * P_1_3_SerialNumber(void)
 {
-    Property *thiz = NULL;
-
-    do
-    {
-        thiz = Property_NewInstance(3, "xiot-spec", "serial-number", 0x00000003, NULL);
-        if (thiz == NULL)
-        {
-            break;
-        }
-
-        thiz->access = ACCESS_READ;
-        thiz->format = FORMAT_STRING;
-    } while (false);
-
-    return thiz;
+    return Property_NewInstance(6, "xiot-spec", "serial-number", 0x00000003, NULL, FORMAT_STRING, ACCESS_READ, NONE);
 }

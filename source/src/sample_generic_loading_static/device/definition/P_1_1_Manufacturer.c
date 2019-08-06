@@ -14,19 +14,5 @@
 
 Property * P_1_1_Manufacturer(void)
 {
-    Property *thiz = NULL;
-
-    do
-    {
-        thiz = Property_NewInstance(1, "xiot-spec", "manufacturer", 0x00000001, NULL);
-        if (thiz == NULL)
-        {
-            break;
-        }
-
-        thiz->access = ACCESS_READ;
-        thiz->format = FORMAT_STRING;
-    } while (false);
-
-    return thiz;
+    return Property_NewInstance(3, "xiot-spec", "manufacturer", 0x00000001, NULL, FORMAT_STRING, ACCESS_READ, NONE);
 }

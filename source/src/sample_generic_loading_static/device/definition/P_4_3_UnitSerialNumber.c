@@ -14,19 +14,5 @@
 
 Property * P_4_3_UnitSerialNumber(void)
 {
-    Property *thiz = NULL;
-
-    do
-    {
-        thiz = Property_NewInstance(3, "xiot-spec", "unit-serial-number", 0x00000000, NULL);
-        if (thiz == NULL)
-        {
-            break;
-        }
-
-        thiz->access = 0;
-        thiz->format = FORMAT_UINT32;
-    } while (false);
-
-    return thiz;
+    return Property_NewInstance(3, "xiot-spec", "unit-serial-number", 0x00000000, NULL, FORMAT_UINT32, 0, NONE);
 }

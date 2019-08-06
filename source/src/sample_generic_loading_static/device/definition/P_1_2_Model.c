@@ -14,19 +14,5 @@
 
 Property * P_1_2_Model(void)
 {
-    Property *thiz = NULL;
-
-    do
-    {
-        thiz = Property_NewInstance(2, "xiot-spec", "model", 0x00000002, NULL);
-        if (thiz == NULL)
-        {
-            break;
-        }
-
-        thiz->access = ACCESS_READ;
-        thiz->format = FORMAT_STRING;
-    } while (false);
-
-    return thiz;
+    return Property_NewInstance(4, "xiot-spec", "model", 0x00000002, NULL, FORMAT_STRING, ACCESS_READ, NONE);
 }

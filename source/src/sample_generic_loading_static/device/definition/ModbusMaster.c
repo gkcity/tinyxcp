@@ -22,13 +22,13 @@
 #include "S_4_ModbusUnitManagement.h"
 #include "S_5_ModbusCollector.h"
 
-Device * ModbusMaster(const char *serialNumber, const char *ip)
+Product * ModbusMaster(const char *serialNumber, const char *ip)
 {
-    Device *thiz = NULL;
+    Product *thiz = NULL;
 
     do
     {
-        thiz = Device_New();
+        thiz = Product_New();
         if (thiz == NULL)
         {
             break;
@@ -38,37 +38,37 @@ Device * ModbusMaster(const char *serialNumber, const char *ip)
         thiz->onSet = OnPropertySet;
         thiz->onInvoke = OnActionInvoke;
 
-        if (RET_FAILED(TinyList_AddTail(&thiz->services, S_1_DeviceInformation())))
+        if (RET_FAILED(TinyList_AddTail(&thiz->device.services, S_1_DeviceInformation())))
         {
-            Device_Delete(thiz);
+            Product_Delete(thiz);
             thiz = NULL;
             break;
         }
 
-        if (RET_FAILED(TinyList_AddTail(&thiz->services, S_2_ModbusController())))
+        if (RET_FAILED(TinyList_AddTail(&thiz->device.services, S_2_ModbusController())))
         {
-            Device_Delete(thiz);
+            Product_Delete(thiz);
             thiz = NULL;
             break;
         }
 
-        if (RET_FAILED(TinyList_AddTail(&thiz->services, S_3_ModbusUnitDefinitionManagement())))
+        if (RET_FAILED(TinyList_AddTail(&thiz->device.services, S_3_ModbusUnitDefinitionManagement())))
         {
-            Device_Delete(thiz);
+            Product_Delete(thiz);
             thiz = NULL;
             break;
         }
 
-        if (RET_FAILED(TinyList_AddTail(&thiz->services, S_4_ModbusUnitManagement())))
+        if (RET_FAILED(TinyList_AddTail(&thiz->device.services, S_4_ModbusUnitManagement())))
         {
-            Device_Delete(thiz);
+            Product_Delete(thiz);
             thiz = NULL;
             break;
         }
 
-        if (RET_FAILED(TinyList_AddTail(&thiz->services, S_5_ModbusCollector())))
+        if (RET_FAILED(TinyList_AddTail(&thiz->device.services, S_5_ModbusCollector())))
         {
-            Device_Delete(thiz);
+            Product_Delete(thiz);
             thiz = NULL;
             break;
         }

@@ -14,19 +14,5 @@
 
 Property * P_2_6_NumberOfBytes(void)
 {
-    Property *thiz = NULL;
-
-    do
-    {
-        thiz = Property_NewInstance(6, "xiot-spec", "number-of-bytes", 0x00000000, NULL);
-        if (thiz == NULL)
-        {
-            break;
-        }
-
-        thiz->access = 0;
-        thiz->format = FORMAT_UINT8;
-    } while (false);
-
-    return thiz;
+    return Property_NewInstance(6, "xiot-spec", "number-of-bytes", 0x00000000, NULL, FORMAT_UINT8, 0, NONE);
 }

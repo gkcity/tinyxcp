@@ -13,7 +13,7 @@
 #ifndef __InitializeConfiguration_H__
 #define __InitializeConfiguration_H__
 
-#include <device/config/DeviceConfig.h>
+#include <product/config/ProductConfig.h>
 
 TINY_BEGIN_DECLS
 
@@ -21,7 +21,7 @@ TINY_BEGIN_DECLS
 #define PRODUCT_ID          10006
 #define PRODUCT_VERSION     1
 
-void InitializeConfiguration(DeviceConfig *thiz, const char *serialNumber, const char *ip);
+void InitializeConfiguration(ProductConfig *thiz, const char *serialNumber, const char *ip);
 
 
 TINY_END_DECLS

@@ -14,19 +14,5 @@
 
 Property * P_4_2_UnitName(void)
 {
-    Property *thiz = NULL;
-
-    do
-    {
-        thiz = Property_NewInstance(2, "xiot-spec", "unit-name", 0x00000000, NULL);
-        if (thiz == NULL)
-        {
-            break;
-        }
-
-        thiz->access = 0;
-        thiz->format = FORMAT_STRING;
-    } while (false);
-
-    return thiz;
+    return Property_NewInstance(2, "xiot-spec", "unit-name", 0x00000000, NULL, FORMAT_STRING, 0, NONE);
 }
