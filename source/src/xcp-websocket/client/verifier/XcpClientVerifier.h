@@ -46,14 +46,14 @@ typedef struct _XcpClientVerifier
     XcpVerifyFailureHandler       onFailure;
     void                        * ctx;
     XcpSendQuery                  sendQuery;
-    uint8_t                       binaryCodec;
+    int8_t                        binaryCodec;
 } XcpClientVerifier;
 
 TINY_LOR
 XcpClientVerifier *XcpClientVerifier_New(const char *serverLTPK,
                                          Product *thing,
                                          XcpSendQuery sendQuery,
-                                         uint8_t binaryCodec);
+                                         int8_t binaryCodec);
 
 TINY_LOR
 void XcpClientVerifier_Delete(XcpClientVerifier *thiz);

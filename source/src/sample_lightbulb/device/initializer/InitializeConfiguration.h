@@ -18,7 +18,7 @@
 TINY_BEGIN_DECLS
 
 
-#define PRODUCT_ID          10006
+#define PRODUCT_ID          27
 #define PRODUCT_VERSION     1
 
 void InitializeConfiguration(ProductConfig *thiz, const char *serialNumber, const char *ip);

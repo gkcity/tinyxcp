@@ -48,7 +48,7 @@ static TinyRet XcpwsClientHandlerContext_Construct(XcpwsClientHandlerContext *th
         thiz->verifier = XcpClientVerifier_New(serverLTPK,
                                                product,
                                                XcpwsClientHandlerContext_SendQuery,
-                                               WEB_SOCKET_BINARY_FRAME_CODEC_CHACHA20_POLY1305);
+                                               WEB_SOCKET_BINARY_FRAME_CODEC_NOT_CRYPT);
         if (thiz->verifier == NULL)
         {
             ret = TINY_RET_E_NEW;
@@ -117,7 +117,7 @@ TinyRet XcpwsClientHandlerContext_AddHandler(XcpwsClientHandlerContext *thiz, co
     wrapper = XcpMessageHandlerWrapper_New(handler, ctx);
     if (wrapper == NULL)
     {
-	LOG_E(TAG, "XcpMessageHandlerWrapper_New FAILED");
+        LOG_E(TAG, "XcpMessageHandlerWrapper_New FAILED");
         return TINY_RET_E_OUT_OF_MEMORY;
     }
 

@@ -20,6 +20,7 @@
 #include <iq/basic/VerifyFinishFactory.h>
 #include <iq/basic/InitializeFactory.h>
 #include <tiny_snprintf.h>
+#include <codec-binary/WebSocketBinaryFrameCodecType.h>
 #include "XcpClientVerifier.h"
 #include "XcpKeyCreator.h"
 
@@ -323,24 +324,38 @@ static void _OnVerifyFinishResult(XcpMessage * message, void *ctx)
         return;
     }
 
-    ret = XcpKeyCreator_Create(&deviceToServerKey, &thiz->sharedKey, DEVICE_TO_SERVER_KEY);
-    if (RET_FAILED(ret))
+    if (thiz->binaryCodec == WEB_SOCKET_BINARY_FRAME_CODEC_UNDEFINED)
     {
-        LOG_E(TAG, "XcpKeyCreator_Create FAILED!");
-        thiz->onFailure(thiz->ctx);
+        thiz->stage = XCP_STAGE_VERIFY_FINISHED;
+        thiz->onSuccess(NULL, NULL, thiz->ctx);
         return;
     }
 
-    ret = XcpKeyCreator_Create(&serverToDeviceKey, &thiz->sharedKey, SERVER_TO_DEVICE_KEY);
-    if (RET_FAILED(ret))
+    if (thiz->binaryCodec == WEB_SOCKET_BINARY_FRAME_CODEC_CHACHA20_POLY1305)
     {
-        LOG_E(TAG, "XcpKeyCreator_Create FAILED!");
-        thiz->onFailure(thiz->ctx);
+        ret = XcpKeyCreator_Create(&deviceToServerKey, &thiz->sharedKey, DEVICE_TO_SERVER_KEY);
+        if (RET_FAILED(ret))
+        {
+            LOG_E(TAG, "XcpKeyCreator_Create FAILED!");
+            thiz->onFailure(thiz->ctx);
+            return;
+        }
+
+        ret = XcpKeyCreator_Create(&serverToDeviceKey, &thiz->sharedKey, SERVER_TO_DEVICE_KEY);
+        if (RET_FAILED(ret))
+        {
+            LOG_E(TAG, "XcpKeyCreator_Create FAILED!");
+            thiz->onFailure(thiz->ctx);
+            return;
+        }
+
+        thiz->stage = XCP_STAGE_VERIFY_FINISHED;
+        thiz->onSuccess(&deviceToServerKey, &serverToDeviceKey, thiz->ctx);
         return;
     }
 
-    thiz->stage = XCP_STAGE_VERIFY_FINISHED;
-    thiz->onSuccess(&deviceToServerKey, &serverToDeviceKey, thiz->ctx);
+    LOG_E(TAG, "_OnVerifyFinishResult ERROR: binaryCodec not supported: %d", thiz->binaryCodec);
+    thiz->onFailure(thiz->ctx);
 }
 
 TINY_LOR
@@ -348,7 +363,7 @@ static TinyRet XcpClientVerifier_Construct(XcpClientVerifier *thiz,
                                            const char *serverLTPK,
                                            Product *product,
                                            XcpSendQuery sendQuery,
-                                           uint8_t binaryCodec)
+                                           int8_t binaryCodec)
 {
     TinyRet ret = TINY_RET_OK;
 
@@ -428,7 +443,7 @@ TINY_LOR
 XcpClientVerifier * XcpClientVerifier_New(const char *serverLTPK,
                                           Product *product,
                                           XcpSendQuery sendQuery,
-                                          uint8_t binaryCodec)
+                                          int8_t binaryCodec)
 {
     XcpClientVerifier *thiz = NULL;
 

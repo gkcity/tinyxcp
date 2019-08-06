@@ -169,7 +169,10 @@ static void onVerifySuccess (HKDF *deviceToServerKey, HKDF *serverToDeviceKey, v
 
     LOG_D(TAG, "onVerifySuccess");
 
-    SocketChannel_AddBefore(context->channel, MessageCodec_Name, WebSocketBinaryFrameCodec(serverToDeviceKey, deviceToServerKey));
+    if (deviceToServerKey != NULL)
+    {
+        SocketChannel_AddBefore(context->channel, MessageCodec_Name, WebSocketBinaryFrameCodec(serverToDeviceKey, deviceToServerKey));
+    }
 }
 
 static void onVerifyFailure (void *ctx)
