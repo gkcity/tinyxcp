@@ -31,7 +31,7 @@ static void cmd_help(void)
     fprintf(stdout, "x       -- exit\n");
     fprintf(stdout, "reset   -- reset access key\n");
     fprintf(stdout, "getkey  -- get access key\n");
-    fprintf(stdout, "c       -- change brightness\n");
+    fprintf(stdout, "s       -- switch on/off\n");
 }
 
 static void onResetAccessKeyResult(XcpMessage *result, void *ctx)
@@ -66,17 +66,17 @@ static void cmd_get_access_key(void)
     IotService_GetAccessKey(onGetAccessKeyResult, NULL);
 }
 
-static void cmd_change_brightness(void)
+static void cmd_switch_onoff(void)
 {
     do
     {
-        JsonValue *value = JsonValue_NewInteger(88);
+        JsonValue *value = JsonValue_NewBoolean(true);
         if (value == NULL)
         {
             break;
         }
 
-        PropertyOperation *o = PropertyOperation_NewValue("xxx", 2, 3, value);
+        PropertyOperation *o = PropertyOperation_NewValue(NULL, 8, 10, value);
         if (o == NULL)
         {
             JsonValue_Delete(value);
@@ -112,7 +112,7 @@ struct _cmd_exec cmd_exec[] =
                 {"x",       cmd_exit},
                 {"reset",   cmd_reset_access_key},
                 {"getkey",  cmd_get_access_key},
-                {"c",       cmd_change_brightness},
+                {"s",       cmd_switch_onoff},
         };
 
 static
