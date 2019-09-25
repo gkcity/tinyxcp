@@ -14,11 +14,12 @@
 #define __COMMAND_READER_H__
 
 #include <tiny_base.h>
+#include <product/Product.h>
 
 TINY_BEGIN_DECLS
 
 
-void WaitingForUserCommand(void);
+void WaitingForUserCommand(Product *product);
 
 
 TINY_END_DECLS

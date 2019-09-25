@@ -55,6 +55,8 @@ SET(SRC
         CommandReader.h
         CommandReader.c
         main.c
+        locker.h
+        locker.c
         task_iot.h
         task_iot.c
         task_light.h

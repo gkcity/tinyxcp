@@ -14,11 +14,9 @@
 #include "client/XcpwsClient.h"
 #include <tiny_log.h>
 #include <tiny_malloc.h>
-#include <channel/SocketChannel.h>
 #include <codec-message/CustomDataType.h>
 
 #define TAG     "XcpwsClientRuntime"
-
 
 TINY_LOR
 static TinyRet XcpwsClientRuntime_Initialize(IotRuntime *thiz)
@@ -37,7 +35,7 @@ static TinyRet XcpwsClientRuntime_Destroy(IotRuntime *thiz)
 }
 
 TINY_LOR
-static TinyRet XcpwsClientRuntime_Run(IotRuntime *thiz, Bootstrap *bootstrap, Product *thing)
+static TinyRet XcpwsClientRuntime_Run(IotRuntime *thiz, Bootstrap *bootstrap, Product *product)
 {
     TinyRet ret = TINY_RET_OK;
     Channel *channel = NULL;
@@ -46,9 +44,9 @@ static TinyRet XcpwsClientRuntime_Run(IotRuntime *thiz, Bootstrap *bootstrap, Pr
 
     do
     {
-        thing->context = thiz->context;
+        product->context = thiz->context;
 
-        channel = XcpwsClient_New(thing, "39.106.31.22", 80);
+        channel = XcpwsClient_New(product, "39.106.31.22", 80);
         if (channel == NULL)
         {
             LOG_D(TAG, "XcpwsClient_New failed");

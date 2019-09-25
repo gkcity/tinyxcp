@@ -17,10 +17,12 @@
 #else
 #include <tiny_socket.h>
 #include <XcpMessage.h>
+#include <product/operator/ProductOperator.h>
+
 #endif
 
 static int g_loop = 0;
-static uint16_t g_port = 0;
+static Product *g_product = NULL;
 
 static void cmd_help(void)
 {
@@ -29,6 +31,7 @@ static void cmd_help(void)
     fprintf(stdout, "x       -- exit\n");
     fprintf(stdout, "reset   -- reset access key\n");
     fprintf(stdout, "getkey  -- get access key\n");
+    fprintf(stdout, "c       -- change brightness\n");
 }
 
 static void onResetAccessKeyResult(XcpMessage *result, void *ctx)
@@ -63,6 +66,33 @@ static void cmd_get_access_key(void)
     IotService_GetAccessKey(onGetAccessKeyResult, NULL);
 }
 
+static void cmd_change_brightness(void)
+{
+    do
+    {
+        JsonValue *value = JsonValue_NewInteger(88);
+        if (value == NULL)
+        {
+            break;
+        }
+
+        PropertyOperation *o = PropertyOperation_NewValue("xxx", 2, 3, value);
+        if (o == NULL)
+        {
+            JsonValue_Delete(value);
+            break;
+        }
+
+        TinyRet ret = Product_DoChangePropertyValue(g_product, o);
+        if (RET_FAILED(ret))
+        {
+            printf("error: %s\n", tiny_ret_to_str(ret));
+            PropertyOperation_Delete(o);
+            break;
+        }
+    } while (false);
+}
+
 static void cmd_exit(void)
 {
     g_loop = 0;
@@ -82,6 +112,7 @@ struct _cmd_exec cmd_exec[] =
                 {"x",       cmd_exit},
                 {"reset",   cmd_reset_access_key},
                 {"getkey",  cmd_get_access_key},
+                {"c",       cmd_change_brightness},
         };
 
 static
@@ -155,7 +186,7 @@ void cmd_pre_select(int *p_max_soc, fd_set *p_read_set, fd_set *p_write_set, fd_
     }
 }
 
-void WaitingForUserCommand(void)
+void WaitingForUserCommand(Product *product)
 {
     fd_set  read_set;
     fd_set  write_set;
@@ -163,6 +194,7 @@ void WaitingForUserCommand(void)
     int     max_soc = 0;
 
     g_loop = 1;
+    g_product = product;
 
     fprintf(stdout, "pid: %d\n", getpid());
 

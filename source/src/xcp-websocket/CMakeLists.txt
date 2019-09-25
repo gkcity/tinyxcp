@@ -8,12 +8,14 @@ SET(Xcpws_Header
         XcpwsClientRuntime.h
         XcpwsServerRuntime.h
         client/XcpwsClient.h
+        client/hook/XcpwsClientLoopHook.h
         client/handler/XcpwsClientHandler.h
         client/handler/XcpwsClientHandlerContext.h
         client/verifier/XcpClientVerifier.h
         server/XcpwsServer.h
         server/XcpwsServerContext.h
         server/XcpwsBonjour.h
+        server/hook/XcpwsServerLoopHook.h
         server/handler/XcpwsServerHandler.h
         server/handler/XcpwsServerHandlerContext.h
         codec-message/CustomDataType.h
@@ -30,12 +32,14 @@ SET(Xcpws_Source
         XcpwsClientRuntime.c
         XcpwsServerRuntime.c
         client/XcpwsClient.c
+        client/hook/XcpwsClientLoopHook.c
         client/handler/XcpwsClientHandler.c
         client/handler/XcpwsClientHandlerContext.c
         client/verifier/XcpClientVerifier.c
         server/XcpwsServer.c
         server/XcpwsServerContext.c
         server/XcpwsBonjour.c
+        server/hook/XcpwsServerLoopHook.c
         server/handler/XcpwsServerHandler.c
         server/handler/XcpwsServerHandlerContext.c
         codec-message/MessageCodec.c

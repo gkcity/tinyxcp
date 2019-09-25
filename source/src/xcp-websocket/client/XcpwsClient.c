@@ -17,7 +17,7 @@
 #include <codec-http/HttpMessageCodec.h>
 #include <client/handler/XcpwsClientHandlerContext.h>
 #include "handler/XcpwsClientHandler.h"
-#include "codec-message/MessageCodec.h"
+#include "hook/XcpwsClientLoopHook.h"
 #include "XcpwsClient.h"
 
 #define TAG     "XcpwsClient"
@@ -38,7 +38,7 @@ Channel * XcpwsClient_New(Product *product, const char *ip, uint16_t port)
 
     do
     {
-        thiz = StreamClientChannel_New();
+        thiz = StreamClientChannel_New(XcpwsClientLoopHook, product);
         if (thiz == NULL)
         {
             break;
@@ -55,6 +55,8 @@ Channel * XcpwsClient_New(Product *product, const char *ip, uint16_t port)
             thiz->_onRemove(thiz);
             break;
         }
+
+        thiz->_loopHook = NULL;
     } while (false);
 
     return thiz;

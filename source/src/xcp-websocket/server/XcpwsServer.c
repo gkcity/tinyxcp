@@ -16,6 +16,7 @@
 #include <channel/stream/StreamServerChannelContext.h>
 #include <codec-http/HttpMessageCodec.h>
 #include <server/handler/XcpwsServerHandler.h>
+#include <server/hook/XcpwsServerLoopHook.h>
 #include <tiny_log.h>
 #include "XcpwsServer.h"
 
@@ -37,7 +38,7 @@ Channel * XcpwsServer_New(XcpwsServerContext *context)
 
     do
     {
-        thiz = StreamServerChannel_New(XCP_MAX_CONNECTIONS);
+        thiz = StreamServerChannel_New(XCP_MAX_CONNECTIONS, XcpwsServerLoopHook, context);
         if (thiz == NULL)
         {
             break;

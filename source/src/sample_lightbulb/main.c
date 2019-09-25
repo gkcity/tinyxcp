@@ -3,6 +3,7 @@
 #include "CommandReader.h"
 #include "task_iot.h"
 #include "task_light.h"
+#include "locker.h"
 
 #define SERIAL_NUMBER       "10001"
 #define IP                  "10.0.1.29"
@@ -40,9 +41,9 @@ int main(void)
     tiny_socket_initialize();
 
     /**
-     * 1. 初始化产品
+     * 1. 初始化产品和通知
      */
-    product = Lightbulb(SERIAL_NUMBER, IP);
+    product = Lightbulb(SERIAL_NUMBER, IP, lock, unlock);
     if (product == NULL)
     {
         return 0;
@@ -56,7 +57,7 @@ int main(void)
     /**
      * 3. 等待用户输入命令
      */
-    WaitingForUserCommand();
+    WaitingForUserCommand(product);
 
     /**
      * 4. 停止所有任务
@@ -64,7 +65,7 @@ int main(void)
     stop_tasks();
 
     /**
-     * 5. 删除产品定义，准备退出
+     * 5. 删除产品和通知，准备退出
      */
     Product_Delete(product);
 

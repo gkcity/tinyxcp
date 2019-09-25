@@ -18,7 +18,7 @@
 TINY_BEGIN_DECLS
 
 
-Product * Lightbulb(const char *serialNumber, const char *ip);
+Product * Lightbulb(const char *serialNumber, const char *ip, PropertyLock lock, PropertyUnlock unlock);
 
 
 TINY_END_DECLS

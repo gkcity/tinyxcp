@@ -47,7 +47,7 @@ Channel * XcpwsBonjour_New(Product *product)
 
         ServiceInfo info;
 
-        thiz = MulticastChannel_New();
+        thiz = MulticastChannel_New(NULL, NULL);
         if (thiz == NULL)
         {
             LOG_D(TAG, "MulticastChannel_New failed");

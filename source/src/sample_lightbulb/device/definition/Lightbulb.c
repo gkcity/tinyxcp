@@ -19,13 +19,13 @@
 #include "S_1_AccessoryInformation.h"
 #include "S_8_Lightbulb.h"
 
-Product * Lightbulb(const char *serialNumber, const char *ip)
+Product * Lightbulb(const char *serialNumber, const char *ip, PropertyLock lock, PropertyUnlock unlock)
 {
     Product *thiz = NULL;
 
     do
     {
-        thiz = Product_New();
+        thiz = Product_New(lock, unlock);
         if (thiz == NULL)
         {
             break;
