@@ -66,7 +66,6 @@ SET(SRC
 ADD_EXECUTABLE(sample_lightbulb ${SRC})
 TARGET_LINK_LIBRARIES(sample_lightbulb
         xcpws_static
-        xcp_webcmd_static
         xcp_message_codec_static
         xcp_message_static
         xcp_common_static
