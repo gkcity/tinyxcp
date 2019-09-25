@@ -4,55 +4,30 @@
 * @author jxfengzi@gmail.com
 * @date   2013-11-19
 *
-* @file   DeviceMonitor.c
+* @file   task_iot.c
 *
 * @remark
 *
 */
 
-#include "DeviceMonitor.h"
+#include "task_iot.h"
+#include "device/IotService.h"
 #include <TinyThread.h>
-#include <HttpClient.h>
-#include <JsonObject.h>
-#include <client/WebcmdClient.h>
+#include <tiny_log.h>
 
 static TinyThread *_thread = NULL;
-static bool _running = true;
-static bool _fan_on = true;
-static uint16_t g_port = 0;
-
-static void Fan_On_Changed(const char *did)
-{
-    _fan_on = ! _fan_on;
-    JsonValue *v = JsonValue_NewBoolean(_fan_on);
-    if (v != NULL)
-    {
-        WebcmdClient_SendPropertyChanged(g_port, did, 2, 1, v);
-        JsonValue_Delete(v);
-    }
-}
 
 static void _loop(void *param)
 {
-    const char *did = (const char *) param;
-
-    _running = true;
-
-    while (_running)
-    {
-        sleep(10);
-        Fan_On_Changed(did);
-    }
+    IotService_Run((Product *)param);
 }
 
-TinyRet StartDeviceMonitor(const char *did, uint16_t port)
+TinyRet task_iot_start(Product *product)
 {
     TinyRet ret = TINY_RET_OK;
 
     do
     {
-        g_port = port;
-
         if (_thread != NULL)
         {
             ret = TINY_RET_E_STARTED;
@@ -66,9 +41,10 @@ TinyRet StartDeviceMonitor(const char *did, uint16_t port)
             break;
         }
 
-        ret = TinyThread_Initialize(_thread, _loop, (void *)did, "monitor");
+        ret = TinyThread_Initialize(_thread, _loop, product, "task_iot");
         if (RET_FAILED(ret))
         {
+            TinyThread_Delete(_thread);
             break;
         }
 
@@ -82,7 +58,7 @@ TinyRet StartDeviceMonitor(const char *did, uint16_t port)
     return ret;
 }
 
-TinyRet StopDeviceMonitor(void)
+TinyRet task_iot_stop(void)
 {
     TinyRet ret = TINY_RET_OK;
 
@@ -100,7 +76,7 @@ TinyRet StopDeviceMonitor(void)
             break;
         }
 
-        _running = false;
+        IotService_Stop();
 
         if (!TinyThread_Join(_thread))
         {

@@ -46,17 +46,19 @@ SET(DEVICE_SRC
         device/iid/IID.h
         device/initializer/InitializeConfiguration.h
         device/initializer/InitializeConfiguration.c
+        device/IotService.h
+        device/IotService.c
         )
 
 SET(SRC
         ${DEVICE_SRC}
-        DeviceMonitor.h
-        DeviceMonitor.c
-        DeviceStack.h
-        DeviceStack.c
         CommandReader.h
         CommandReader.c
         main.c
+        task_iot.h
+        task_iot.c
+        task_light.h
+        task_light.c
         )
 
 ADD_EXECUTABLE(sample_lightbulb ${SRC})

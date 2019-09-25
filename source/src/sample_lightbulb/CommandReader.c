@@ -11,11 +11,12 @@
  */
 
 #include "CommandReader.h"
-#include <client/WebcmdClient.h>
+#include "device/IotService.h"
 
 #ifdef _WIN32
 #else
 #include <tiny_socket.h>
+#include <XcpMessage.h>
 #endif
 
 static int g_loop = 0;
@@ -30,24 +31,36 @@ static void cmd_help(void)
     fprintf(stdout, "getkey  -- get access key\n");
 }
 
+static void onResetAccessKeyResult(XcpMessage *result, void *ctx)
+{
+    if (result->iq.type == IQ_TYPE_ERROR)
+    {
+        printf("onResetAccessKeyResult: ERROR!\n");
+        return;
+    }
+
+    printf("onResetAccessKeyResult: OK!\n");
+}
+
 static void cmd_reset_access_key(void)
 {
-    if (WebcmdClient_ResetAccessKey(g_port))
+    IotService_ResetAccessKey("helloworld", onResetAccessKeyResult, NULL);
+}
+
+static void onGetAccessKeyResult(XcpMessage *result, void *ctx)
+{
+    if (result->iq.type == IQ_TYPE_ERROR)
     {
-        printf("reset access key finished!\n");
+        printf("onGetAccessKeyResult: ERROR!\n");
+        return;
     }
+
+    printf("key: %s\n", result->iq.content.result.content.getAccessKey.key);
 }
 
 static void cmd_get_access_key(void)
 {
-    char key[XCP_ACCESS_KEY_LEN];
-
-    memset(key, 0, XCP_ACCESS_KEY_LEN);
-
-    if (WebcmdClient_GetAccessKey(g_port, key))
-    {
-        printf("get access key finished: %s\n", key);
-    }
+    IotService_GetAccessKey(onGetAccessKeyResult, NULL);
 }
 
 static void cmd_exit(void)
@@ -88,13 +101,12 @@ void command(const char *buf)
 }
 
 #ifdef _WIN32
-void WaitingForUserCommand(uint16_t port)
+void WaitingForUserCommand(void)
 {
     int ret = 0;
     char buf[1024];
 
     g_loop = 1;
-    g_port = port;
 
     while (g_loop)
     {
@@ -122,7 +134,9 @@ void cmd_post_select(fd_set *p_read_set, fd_set *p_write_set, fd_set *p_error_se
         bytes_read = read(fd, (void*)buf, nbytes);
         /* remove '\n' */
         if (strlen(buf) > 0)
+        {
             buf[strlen(buf) - 1] = 0;
+        }
 
         command(buf);
     }
@@ -136,10 +150,12 @@ void cmd_pre_select(int *p_max_soc, fd_set *p_read_set, fd_set *p_write_set, fd_
     FD_SET(soc, p_read_set);
 
     if (*p_max_soc < soc)
+    {
         *p_max_soc = soc;
+    }
 }
 
-void WaitingForUserCommand(uint16_t port)
+void WaitingForUserCommand(void)
 {
     fd_set  read_set;
     fd_set  write_set;
@@ -147,7 +163,6 @@ void WaitingForUserCommand(uint16_t port)
     int     max_soc = 0;
 
     g_loop = 1;
-    g_port = port;
 
     fprintf(stdout, "pid: %d\n", getpid());
 
