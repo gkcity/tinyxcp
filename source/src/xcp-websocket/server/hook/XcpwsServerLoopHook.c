@@ -18,7 +18,7 @@
 
 void XcpwsServerLoopHook(Channel *thiz, void *ctx)
 {
-    Product *product = (Product *)thiz;
+    Product *product = (Product *)ctx;
     LOG_D(TAG, "XcpwsServerLoopHook: %s, TODO: check product properties changed", thiz->id);
 
     Product_Lock(product);

@@ -51,7 +51,7 @@ static void onPropertyChangedResult (XcpMessage *result, void *ctx)
 
 void XcpwsClientLoopHook(Channel *thiz, void *ctx)
 {
-    Product *product = (Product *)thiz;
+    Product *product = (Product *)ctx;
     PropertyOperations *operations = Product_GetChangedProperties(product);
 
     LOG_D(TAG, "XcpwsClientLoopHook: %s, TODO: check product properties changed", thiz->id);
