@@ -38,7 +38,7 @@ XcpMessage *QueryVerifyFinish_New(const char *id, const char *udid, const char *
             break;
         }
 
-        strncpy(thiz->iq.content.query.content.verifyFinish.udid, udid, UDID_LENGTH);
+        strncpy(thiz->iq.content.query.content.verifyFinish.udid, udid, IOT_UDID_LENGTH);
         strncpy(thiz->iq.content.query.content.verifyFinish.signature, signature, XCP_SIGNATURE_LENGTH);
         thiz->iq.content.query.content.verifyFinish.codec = codec;
     } while (false);

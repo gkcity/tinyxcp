@@ -210,12 +210,12 @@ static void _sign(XcpClientVerifier *thiz, char signatureBase64[128])
 TINY_LOR
 static void _encode_udid(XcpClientVerifier *thiz, char udidEncryptAndBase64[256])
 {
-    char udid[UDID_LENGTH + 1];
+    char udid[IOT_UDID_LENGTH + 1];
     uint8_t udidEncrypt[256];
     uint32_t length = 0;
 
-    memset(udid, 0, UDID_LENGTH + 1);
-    tiny_snprintf(udid, UDID_LENGTH, "%s@%d/%d",
+    memset(udid, 0, IOT_UDID_LENGTH + 1);
+    tiny_snprintf(udid, IOT_UDID_LENGTH, "%s@%d/%d",
             thiz->product->config.serialNumber,
             thiz->product->config.productId,
             thiz->product->config.productVersion);

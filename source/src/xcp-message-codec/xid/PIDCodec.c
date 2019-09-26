@@ -34,7 +34,7 @@ TinyRet PIDCodec_Decode(PID *pid, const char *string)
             break;
         }
 
-        strncpy(pid->did, group[0], DEVICE_ID_LENGTH);
+        strncpy(pid->did, group[0], IOT_DEVICE_ID_LENGTH);
         pid->siid = (uint16_t) strtol(group[1], &p, 10);
         pid->iid = (uint16_t) strtol(group[2], &p, 10);
     } while (false);

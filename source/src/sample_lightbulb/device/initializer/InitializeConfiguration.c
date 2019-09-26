@@ -18,13 +18,13 @@
 
 void InitializeConfiguration(ProductConfig *thiz, const char *serialNumber, const char *ip)
 {
-    strncpy(thiz->serialNumber, serialNumber, DEVICE_ID_LENGTH);
+    strncpy(thiz->serialNumber, serialNumber, IOT_DEVICE_ID_LENGTH);
     strncpy(thiz->ip, ip, TINY_IP_LEN);
-    strncpy(thiz->ltsk, LTSK, DEVICE_LTSK_BASE64_LENGTH);
-    strncpy(thiz->ltpk, LTPK, DEVICE_LTPK_BASE64_LENGTH);
+    strncpy(thiz->ltsk, LTSK, IOT_DEVICE_LTSK_BASE64_LENGTH);
+    strncpy(thiz->ltpk, LTPK, IOT_DEVICE_LTPK_BASE64_LENGTH);
     thiz->productId = PRODUCT_ID;
     thiz->productVersion = PRODUCT_VERSION;
     thiz->port = 0;
 
-    tiny_snprintf(thiz->did, DEVICE_ID_LENGTH, "%s@%d", thiz->serialNumber, thiz->productId);
+    tiny_snprintf(thiz->did, IOT_DEVICE_ID_LENGTH, "%s@%d", thiz->serialNumber, thiz->productId);
 }

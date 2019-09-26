@@ -25,7 +25,7 @@ TINY_BEGIN_DECLS
 
 typedef struct _QueryVerifyFinish
 {
-    char                udid[UDID_LENGTH];
+    char                udid[IOT_UDID_LENGTH];
     char                signature[XCP_SIGNATURE_LENGTH];
     uint8_t             codec;
 } QueryVerifyFinish;
