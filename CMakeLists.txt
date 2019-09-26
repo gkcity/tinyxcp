@@ -216,12 +216,14 @@ SET(Xcpws_Header
         ${SOURCE_ROOT}/xcp-websocket/XcpwsClientRuntime.h
         ${SOURCE_ROOT}/xcp-websocket/XcpwsServerRuntime.h
         ${SOURCE_ROOT}/xcp-websocket/client/XcpwsClient.h
+		${SOURCE_ROOT}/xcp-websocket/client/hook/XcpwsClientLoopHook.h
         ${SOURCE_ROOT}/xcp-websocket/client/handler/XcpwsClientHandler.h
         ${SOURCE_ROOT}/xcp-websocket/client/handler/XcpwsClientHandlerContext.h
         ${SOURCE_ROOT}/xcp-websocket/client/verifier/XcpClientVerifier.h
         ${SOURCE_ROOT}/xcp-websocket/server/XcpwsServer.h
         ${SOURCE_ROOT}/xcp-websocket/server/XcpwsServerContext.h
         ${SOURCE_ROOT}/xcp-websocket/server/XcpwsBonjour.h
+		${SOURCE_ROOT}/xcp-websocket/server/hook/XcpwsServerLoopHook.h
         ${SOURCE_ROOT}/xcp-websocket/server/handler/XcpwsServerHandler.h
         ${SOURCE_ROOT}/xcp-websocket/server/handler/XcpwsServerHandlerContext.h
         ${SOURCE_ROOT}/xcp-websocket/codec-message/CustomDataType.h
@@ -238,13 +240,15 @@ SET(Xcpws_Source
         ${SOURCE_ROOT}/xcp-websocket/XcpwsClientRuntime.c
         ${SOURCE_ROOT}/xcp-websocket/XcpwsServerRuntime.c
         ${SOURCE_ROOT}/xcp-websocket/client/XcpwsClient.c
-        ${SOURCE_ROOT}/xcp-websocket/client/handler/XcpwsClientHandler.c
+		${SOURCE_ROOT}/xcp-websocket/client/hook/XcpwsClientLoopHook.c
+		${SOURCE_ROOT}/xcp-websocket/client/handler/XcpwsClientHandler.c
         ${SOURCE_ROOT}/xcp-websocket/client/handler/XcpwsClientHandlerContext.c
         ${SOURCE_ROOT}/xcp-websocket/client/verifier/XcpClientVerifier.c
         ${SOURCE_ROOT}/xcp-websocket/server/XcpwsServer.c
         ${SOURCE_ROOT}/xcp-websocket/server/XcpwsServerContext.c
         ${SOURCE_ROOT}/xcp-websocket/server/XcpwsBonjour.c
-        ${SOURCE_ROOT}/xcp-websocket/server/handler/XcpwsServerHandler.c
+		${SOURCE_ROOT}/xcp-websocket/server/hook/XcpwsServerLoopHook.c
+		${SOURCE_ROOT}/xcp-websocket/server/handler/XcpwsServerHandler.c
         ${SOURCE_ROOT}/xcp-websocket/server/handler/XcpwsServerHandlerContext.c
         ${SOURCE_ROOT}/xcp-websocket/codec-message/MessageCodec.c
         ${SOURCE_ROOT}/xcp-websocket/codec-message/MessageCodecContext.c
@@ -257,31 +261,6 @@ SET(Xcpws_Source
 SOURCE_GROUP(Xcpws\\headers FILES ${Xcpws_Header})
 SOURCE_GROUP(Xcpws\\sources FILES ${Xcpws_Source})
 
-SET(XcpWebcmd_Header
-		${SOURCE_ROOT}/xcp-webcmd/server/WebcmdServer.h
-		${SOURCE_ROOT}/xcp-webcmd/server/handler/WebcmdServerHandler.h
-		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleCommon.h
-		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleGetAccessKey.h
-		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleResetAccessKey.h
-		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandlePropertyChanged.h
-		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleEventOccurred.h
-		${SOURCE_ROOT}/xcp-webcmd/client/WebcmdClient.h
-		)
-
-SET(XcpWebcmd_Source
-		${SOURCE_ROOT}/xcp-webcmd/server/WebcmdServer.c
-		${SOURCE_ROOT}/xcp-webcmd/server/handler/WebcmdServerHandler.c
-		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleCommon.c
-		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleGetAccessKey.c
-		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleResetAccessKey.c
-		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandlePropertyChanged.c
-		${SOURCE_ROOT}/xcp-webcmd/server/handler/HandleEventOccurred.c
-		${SOURCE_ROOT}/xcp-webcmd/client/WebcmdClient.c
-		)
-
-SOURCE_GROUP(XcpWebcmd\\headers FILES ${XcpWebcmd_Header})
-SOURCE_GROUP(XcpWebcmd\\sources FILES ${XcpWebcmd_Source})
-
 SET(SRC
         ${XcpCommon_Header}
         ${XcpCommon_Source}
@@ -291,8 +270,6 @@ SET(SRC
         ${XcpMessageCodec_Source}
         ${Xcpws_Header}
         ${Xcpws_Source}
-		${XcpWebcmd_Header}
-		${XcpWebcmd_Source}
         )
 
 
