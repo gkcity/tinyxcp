@@ -55,8 +55,6 @@ Channel * XcpwsClient_New(Product *product, const char *ip, uint16_t port)
             thiz->_onRemove(thiz);
             break;
         }
-
-        thiz->_loopHook = NULL;
     } while (false);
 
     return thiz;

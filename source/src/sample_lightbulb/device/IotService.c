@@ -13,8 +13,6 @@
 #include <tiny_malloc.h>
 #include <tiny_log.h>
 #include <IotLauncher.h>
-#include <XcpwsClientRuntime.h>
-#include <XcpwsServerRuntime.h>
 #include <iq/basic/GetAccessKeyFactory.h>
 #include <iq/basic/SetAccessKeyFactory.h>
 #include "IotService.h"
@@ -26,7 +24,7 @@ static IotRuntime *_client = NULL;
 
 static void _LoopHook(Bootstrap *thiz, void *ctx)
 {
-    printf("[%s] _LoopHook", TAG);
+    LOG_D(TAG, "_LoopHook");
 }
 
 void IotService_Run(Product *product)
